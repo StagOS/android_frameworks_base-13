@@ -4088,6 +4088,9 @@ public class StatusBar extends SystemUI implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4097,6 +4100,9 @@ public class StatusBar extends SystemUI implements
                 case Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN:
                 case Settings.System.DOUBLE_TAP_SLEEP_GESTURE:
                     setDoubleTapToSleepGesture();
+		    break;
+                case Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN:
+                    setStatusBarWindowViewOptions();
             }
 
             if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL)) ||
@@ -4109,6 +4115,7 @@ public class StatusBar extends SystemUI implements
         void update() {
             setScreenBrightnessMode();
             setDoubleTapToSleepGesture();
+            setStatusBarWindowViewOptions();
         }
 
         private void setDoubleTapToSleepGesture() {
@@ -4128,6 +4135,12 @@ public class StatusBar extends SystemUI implements
         mBrightnessControl = Settings.System.getIntForUser(
             mContext.getContentResolver(), Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL, 0,
             UserHandle.USER_CURRENT) == 1;
+    }
+
+    private void setStatusBarWindowViewOptions() {
+        if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.setStatusBarWindowViewOptions();
+        }
     }
 
     private final BroadcastReceiver mBannerActionBroadcastReceiver = new BroadcastReceiver() {
