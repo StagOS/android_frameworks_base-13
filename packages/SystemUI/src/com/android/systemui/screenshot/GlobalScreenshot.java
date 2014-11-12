@@ -692,8 +692,8 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
                 });
 
                 // Play the shutter sound to notify that we've taken a screenshot
-                mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
-
+                if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1) == 1)
+	                mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
                 mScreenshotPreview.setLayerType(View.LAYER_TYPE_HARDWARE, null);
                 mScreenshotPreview.buildLayer();
                 mScreenshotAnimation.start();

@@ -5764,7 +5764,13 @@ public final class Settings {
         public static final String BATTERY_LIGHT_REALLYFULL_COLOR = "battery_light_reallyfull_color";
 
         /**
+         * Enable/Disable screenshot sound
          * @hide
+         */
+        public static final String SCREENSHOT_SOUND = "screenshot_sound";
+
+        /**
+	 * @hide
          */
         public static final String SWITCH_STYLE = "switch_style";
 
@@ -5934,6 +5940,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
             PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS_FORCE);
+            PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
         }
 
         /**
