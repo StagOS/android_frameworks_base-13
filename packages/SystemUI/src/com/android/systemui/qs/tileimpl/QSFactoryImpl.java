@@ -51,6 +51,7 @@ import com.android.systemui.qs.tiles.SoundTile;
 import com.android.systemui.qs.tiles.WifiTile;
 import com.android.systemui.qs.tiles.WorkModeTile;
 import com.android.systemui.util.leak.GarbageMonitor;
+import com.android.systemui.qs.tiles.UsbTetherTile;
 
 import javax.inject.Inject;
 import javax.inject.Provider;
@@ -88,6 +89,7 @@ public class QSFactoryImpl implements QSFactory {
     private final Provider<RebootTile> mRebootTileProvider;
     private final Provider<SoundTile> mSoundTileProvider;
     private final Provider<CaffeineTile> mCaffeineTileProvider;
+    private final Provider<UsbTetherTile> mUsbTetherTileProvider;
 
     private final Lazy<QSHost> mQsHostLazy;
 
@@ -117,7 +119,8 @@ public class QSFactoryImpl implements QSFactory {
             Provider<CPUInfoTile> cpuInfoTileProvider,
             Provider<RebootTile> rebootTileProvider,
             Provider<SoundTile> soundTileProvider,
-            Provider<CaffeineTile> caffeineTileProvider) {
+            Provider<CaffeineTile> caffeineTileProvider,
+            Provider<UsbTetherTile> usbTetherTileProvider) {
         mQsHostLazy = qsHostLazy;
         mWifiTileProvider = wifiTileProvider;
         mBluetoothTileProvider = bluetoothTileProvider;
@@ -144,6 +147,7 @@ public class QSFactoryImpl implements QSFactory {
         mRebootTileProvider = rebootTileProvider;
         mSoundTileProvider = soundTileProvider;
         mCaffeineTileProvider = caffeineTileProvider;
+        mUsbTetherTileProvider = usbTetherTileProvider;
     }
 
     public QSTile createTile(String tileSpec) {
@@ -206,6 +210,8 @@ public class QSFactoryImpl implements QSFactory {
                 return mSoundTileProvider.get();
             case "caffeine":
                 return mCaffeineTileProvider.get();
+            case "usb_tether":
+                return mUsbTetherTileProvider.get();
         }
 
         // Custom tiles
