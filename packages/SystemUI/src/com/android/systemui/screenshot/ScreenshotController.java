@@ -1130,8 +1130,11 @@ public class ScreenshotController {
                  }
                  break;
             case AudioManager.RINGER_MODE_NORMAL:
-                 // Play the shutter sound to notify that we've taken a screenshot
-                 playCameraSound();
+                 if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                     Settings.System.SCREENSHOT_SHUTTER_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
+                     // Play the shutter sound to notify that we've taken a screenshot
+                     playCameraSound();
+                 }
                  break;
         }
 
@@ -1187,8 +1190,11 @@ public class ScreenshotController {
                  }
                  break;
             case AudioManager.RINGER_MODE_NORMAL:
-                 // Play the shutter sound to notify that we've taken a screenshot
-                 playCameraSound();
+                 if (Settings.System.getIntForUser(mContext.getContentResolver(),
+                     Settings.System.SCREENSHOT_SHUTTER_SOUND, 1, UserHandle.USER_CURRENT) == 1) {
+                     // Play the shutter sound to notify that we've taken a screenshot
+                     playCameraSound();
+                 }
                  break;
         }
 
