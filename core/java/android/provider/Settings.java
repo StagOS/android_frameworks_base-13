@@ -5580,6 +5580,13 @@ public final class Settings {
          */
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
+	/**
+         * Toast icon
+         * @hide
+         */
+        @Readable
+        public static final String TOAST_ICON = "toast_icon";
+
         /**
          * These are all public system settings
          *
