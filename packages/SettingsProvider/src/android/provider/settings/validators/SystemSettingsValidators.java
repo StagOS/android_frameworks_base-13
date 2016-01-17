@@ -206,5 +206,7 @@ public class SystemSettingsValidators {
         VALIDATORS.put(System.DOUBLE_TAP_SLEEP_GESTURE, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.SCREEN_OFF_FOD, BOOLEAN_VALIDATOR);
         VALIDATORS.put(System.DOZE_ON_CHARGE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.TORCH_LONG_PRESS_POWER_GESTURE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.TORCH_LONG_PRESS_POWER_TIMEOUT, new InclusiveIntegerRangeValidator(0, 3600));
     }
 }

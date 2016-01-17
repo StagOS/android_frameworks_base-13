@@ -709,6 +709,11 @@
     <protected-broadcast android:name="android.app.action.ACTION_SHOW_NEW_USER_DISCLAIMER" />
     <protected-broadcast android:name="stag.intent.action.GO_TO_SLEEP" />
 
+    <!-- LineageOS additions -->
+
+    <!-- Used for long press power torch feature - automatic turn off on timeout -->
+    <protected-broadcast android:name="com.android.server.policy.PhoneWindowManager.ACTION_TORCH_OFF" />
+
     <!-- ====================================================================== -->
     <!--                          RUNTIME PERMISSIONS                           -->
     <!-- ====================================================================== -->
