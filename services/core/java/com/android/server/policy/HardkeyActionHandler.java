@@ -668,7 +668,6 @@ public class HardkeyActionHandler {
             resolver.registerContentObserver(
                     Settings.Secure.getUriFor(Settings.Secure.HARDWARE_KEYS_DISABLE), false, this,
                     UserHandle.USER_ALL);
-
             updateKeyAssignments();
         }
 
@@ -681,7 +680,7 @@ public class HardkeyActionHandler {
     private void updateKeyAssignments() {
         ContentResolver cr = mContext.getContentResolver();
         synchronized (mLock) {
-            mHwKeysDisabled = Settings.Secure.getIntForUser(cr,
+            mHwKeysDisabled = Settings.Secure.getIntForUser(mContext.getContentResolver(),
                     Settings.Secure.HARDWARE_KEYS_DISABLE, 0,
                     UserHandle.USER_CURRENT) != 0;
 
