@@ -448,6 +448,12 @@ public class StatusBarIconControllerImpl implements Tunable,
         return s;
     }
 
+    public void setKeyguardShowing(boolean showing) {
+        for (IconManager manager : mIconGroups) {
+            manager.setKeyguardShowing(showing);
+        }
+    }
+
     /** */
     @Override
     public void onDensityOrFontScaleChanged() {
