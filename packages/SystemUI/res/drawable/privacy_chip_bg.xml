@@ -21,4 +21,3 @@
         android:paddingBottom="@dimen/ongoing_appops_chip_bg_padding" />
     <corners android:radius="@dimen/ongoing_appops_chip_bg_corner_radius" />
 </shape>
-
