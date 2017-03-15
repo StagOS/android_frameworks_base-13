@@ -5991,10 +5991,23 @@ public final class Settings {
         public static final String FORCE_SHOW_NAVBAR = "navigation_bar_show_new";
 
 	/**
+         * Whether to show Roaming indicator
+         * @hide
+	 */
+        public static final String ROAMING_INDICATOR_ICON = "roaming_indicator_icon";
+
+        /**
          * Whether the Home button works during call
          * @hide
          */
         public static final String ALLOW_INCALL_HOME = "allow_incall_home";
+
+        /**
+         * IMPORTANT: If you add a new public settings you also have to add it to
+         * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
+         * it to PRIVATE_SETTINGS below. Also add a validator that can validate
+         * the setting value. See an example above.
+         */
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
