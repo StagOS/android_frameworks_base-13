@@ -38,6 +38,7 @@ import com.android.systemui.demomode.DemoModeController;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.statusbar.CommandQueue;
 import com.android.systemui.statusbar.StatusIconDisplayable;
+import com.android.systemui.statusbar.connectivity.ImsIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.CallIndicatorIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.MobileIconState;
 import com.android.systemui.statusbar.phone.StatusBarSignalPolicy.WifiIconState;
@@ -354,13 +355,30 @@ public class StatusBarIconControllerImpl implements Tunable,
         public void setIcon(String slot, StatusBarIcon icon) {
             // Icons that come from CommandQueue are from external services.
             setExternalIcon(slot, icon);
-        }
+	}
 
         @Override
         public void removeIcon(String slot) {
             removeAllIconsForExternalSlot(slot);
         }
     };
+
+    @Override
+    public void setImsIcon(String slot, ImsIconState state) {
+        if (state == null) {
+            removeIcon(slot, 0);
+            return;
+        }
+
+        StatusBarIconHolder holder = mStatusBarIconList.getIconHolder(slot, 0);
+        if (holder == null) {
+            holder = StatusBarIconHolder.fromImsIconState(state);
+            setIcon(slot, holder);
+        } else {
+            holder.setImsState(state);
+            handleSet(slot, holder);
+        }
+    }
 
     @Override
     public void setIconFromTile(String slot, StatusBarIcon icon) {
