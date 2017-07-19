@@ -5595,6 +5595,12 @@ public final class Settings {
         public static final String TOAST_ICON = "toast_icon";
 
         /**
+         * Whether to display 4G icon instead LTE
+         * @hide
+         */
+        public static final String SHOW_FOURG_ICON = "show_fourg_icon";
+
+        /**
          * These are all public system settings
          *
          * @hide
