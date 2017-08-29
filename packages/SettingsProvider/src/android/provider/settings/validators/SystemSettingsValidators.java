@@ -222,5 +222,6 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(System.USE_OLD_MOBILETYPE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.DOUBLE_TAP_SLEEP_GESTURE, BOOLEAN_VALIDATOR);
     }
 }
