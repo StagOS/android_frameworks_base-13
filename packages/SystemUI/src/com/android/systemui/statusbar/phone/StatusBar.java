@@ -243,6 +243,7 @@ import com.android.systemui.statusbar.policy.ConfigurationController.Configurati
 import com.android.systemui.statusbar.policy.DeviceProvisionedController;
 import com.android.systemui.statusbar.policy.DeviceProvisionedController.DeviceProvisionedListener;
 import com.android.systemui.statusbar.policy.ExtensionController;
+import com.android.systemui.statusbar.policy.FlashlightController;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.statusbar.policy.UserInfoControllerImpl;
 import com.android.systemui.statusbar.policy.UserSwitcherController;
@@ -691,6 +692,7 @@ public class StatusBar extends SystemUI implements
     private boolean mIsOccluded;
     private boolean mIsLaunchingActivityOverLockscreen;
 
+    private FlashlightController mFlashlightController;
     private final UserSwitcherController mUserSwitcherController;
     private final NetworkController mNetworkController;
     private final LifecycleRegistry mLifecycle = new LifecycleRegistry(this);
@@ -1397,6 +1399,8 @@ public class StatusBar extends SystemUI implements
 
         mMinBrightness = mPowerManager.getMinimumScreenBrightnessSetting();
         mMaxBrightness = mPowerManager.getMaximumScreenBrightnessSetting();
+
+        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
 
@@ -2142,6 +2146,16 @@ public class StatusBar extends SystemUI implements
         }
     }
 
+    @Override
+    public void toggleCameraFlash() {
+        if (DEBUG) {
+            Log.d(TAG, "Toggling camera flashlight");
+        }
+        if (mFlashlightController.isAvailable()) {
+            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        }
+    }
+
     void makeExpandedVisible(boolean force) {
         if (SPEW) Log.d(TAG, "Make expanded visible: expanded visible=" + mExpandedVisible);
         if (!force && (mExpandedVisible || !mCommandQueue.panelsEnabled())) {
@@ -2562,6 +2576,10 @@ public class StatusBar extends SystemUI implements
         pw.println("   Secure camera: " + CameraIntents.getSecureCameraIntent(mContext));
         pw.println("   Override package: "
                 + CameraIntents.getOverrideCameraPackage(mContext));
+
+        if (mFlashlightController != null) {
+            mFlashlightController.dump(fd, pw, args);
+        }
     }
 
     public static void dumpBarTransitions(

@@ -158,4 +158,9 @@ interface IStatusBarService
      * display.
      */
     void suppressAmbientDisplay(boolean suppress);
+
+    /**
+     * StagOS
+     */
+    void toggleCameraFlash();
 }
