@@ -5253,6 +5253,13 @@ public final class Settings {
         @Readable
         public static final String SMART_SPACE = "smart_space";
 
+        /**
+         * Double tap on lockscreen to sleep
+         * @hide
+         */
+        @Readable
+        public static final String DOUBLE_TAP_SLEEP_LOCKSCREEN = "double_tap_sleep_lockscreen";
+
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
