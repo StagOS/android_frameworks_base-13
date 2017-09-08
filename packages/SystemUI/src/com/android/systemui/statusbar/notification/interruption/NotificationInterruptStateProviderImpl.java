@@ -21,7 +21,6 @@ import static com.android.systemui.statusbar.StatusBarState.SHADE;
 import android.app.ActivityManager;
 import android.app.NotificationManager;
 import android.content.ComponentName;
-import android.content.Context;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.database.ContentObserver;
@@ -69,7 +68,6 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     private final StatusBarStateController mStatusBarStateController;
     private final NotificationFilter mNotificationFilter;
     private final ContentResolver mContentResolver;
-    private final Context mContext;
     private final PowerManager mPowerManager;
     private final IDreamManager mDreamManager;
     private final AmbientDisplayConfiguration mAmbientDisplayConfiguration;
