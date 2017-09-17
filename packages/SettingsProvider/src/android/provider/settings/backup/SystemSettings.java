@@ -95,5 +95,12 @@ public class SystemSettings {
         Settings.System.QS_BLUR,
 	Settings.System.THEMING_SETTINGS_DASHBOARD_ICONS,
         Settings.System.FOD_GESTURE,
+        Settings.System.BATTERY_LIGHT_ENABLED,
+        Settings.System.BATTERY_LIGHT_ALLOW_ON_DND,
+        Settings.System.BATTERY_LIGHT_LOW_BLINKING,
+        Settings.System.BATTERY_LIGHT_LOW_COLOR,
+        Settings.System.BATTERY_LIGHT_MEDIUM_COLOR,
+        Settings.System.BATTERY_LIGHT_FULL_COLOR,
+        Settings.System.BATTERY_LIGHT_REALLYFULL_COLOR,
     };
 }
