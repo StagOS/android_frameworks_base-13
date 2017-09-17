@@ -122,4 +122,7 @@
 
     <java-symbol type="bool" name="config_has_weird_dt_sensor" />
 
+    <!-- Battery LED -->
+    <java-symbol type="bool" name="config_multiColorBatteryLed" />
+    <java-symbol type="bool" name="config_ledCanPulse" />
 </resources>
