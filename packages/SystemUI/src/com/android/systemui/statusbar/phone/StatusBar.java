@@ -681,33 +681,6 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private ActivityIntentHelper mActivityIntentHelper;
 
-    private StatusBarSettingsObserver mStatusBarSettingsObserver = new StatusBarSettingsObserver(mHandler);
-    private class StatusBarSettingsObserver extends ContentObserver {
-        StatusBarSettingsObserver(Handler handler) {
-            super(handler);
-        }
-
-        void observe() {
-            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
-                    false, this, UserHandle.USER_ALL);
-            mContext.getContentResolver().registerContentObserver(Settings.System.getUriFor(
-                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
-                    false, this, UserHandle.USER_ALL);
-        }
-
-        @Override
-        public void onChange(boolean selfChange) {
-            update();
-        }
-
-        public void update() {
-            if (mNotificationShadeWindowViewController != null) {
-                mNotificationShadeWindowViewController.updateSettings();
-            }
-        }
-    }
-
     /**
      * Public constructor for StatusBar.
      *
@@ -938,9 +911,6 @@ public class StatusBar extends SystemUI implements DemoMode,
         mHornSettingsObserver.observe();
         mHornSettingsObserver.update();
 
-        mStatusBarSettingsObserver.observe();
-        mStatusBarSettingsObserver.update();
-
         if (mWallpaperSupported) {
             // Make sure we always have the most current wallpaper info.
             IntentFilter wallpaperChangedFilter = new IntentFilter(Intent.ACTION_WALLPAPER_CHANGED);
@@ -953,6 +923,10 @@ public class StatusBar extends SystemUI implements DemoMode,
 
         // Set up the initial notification state. This needs to happen before CommandQueue.disable()
         setUpPresenter();
+
+        mCustomSettingsObserver.observe();
+        mCustomSettingsObserver.update();
+
 
         if (containsType(result.mTransientBarTypes, ITYPE_STATUS_BAR)) {
             showTransientUnchecked();
@@ -1989,6 +1963,61 @@ public class StatusBar extends SystemUI implements DemoMode,
         }
     }
 
+    private CustomSettingsObserver mCustomSettingsObserver = new CustomSettingsObserver(mHandler);
+    private class CustomSettingsObserver extends ContentObserver {
+
+        CustomSettingsObserver(Handler handler) {
+            super(handler);
+        }
+
+        void observe() {
+            ContentResolver resolver = mContext.getContentResolver();
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_GESTURE),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_STOPLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.System.getUriFor(
+                    Settings.System.HEADS_UP_BLACKLIST_VALUES),
+                    false, this, UserHandle.USER_ALL);
+        }
+
+        @Override
+        public void onChange(boolean selfChange, Uri uri) {
+            /*if (uri.equals(Settings.System.getUriFor(
+                    Settings.System.XXX))) {
+                doXXX();
+            }*/
+        }
+
+    public void update() {
+        setStatusDoubleTapToSleep();
+        setHeadsUpStoplist();
+        setHeadsUpBlacklist();
+        }
+    }
+
+    private void setStatusDoubleTapToSleep() {
+        if (mNotificationShadeWindowViewController != null) {
+            mNotificationShadeWindowViewController.updateSettings();
+        }
+    }
+
+    private void setHeadsUpStoplist() {
+        if (mNotificationInterruptStateProvider != null) {
+            mNotificationInterruptStateProvider.setHeadsUpStoplist();
+        }
+    }
+
+    private void setHeadsUpBlacklist() {
+        if (mNotificationInterruptStateProvider != null) {
+            mNotificationInterruptStateProvider.setHeadsUpBlacklist();
+        }
+    }
     @Override
     public void onExpandAnimationFinished(boolean launchIsFullScreen) {
         if (!mPresenter.isCollapsing()) {

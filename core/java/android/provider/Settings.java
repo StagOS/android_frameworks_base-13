@@ -4964,8 +4964,19 @@ public final class Settings {
         public static final String GLOBAL_ACTIONS_LOCKDOWN = "global_actions_lockdown";
 
         /**
+         * Applications list where heasdup should't show
+         * @hide
+         */
+        public static final String HEADS_UP_STOPLIST_VALUES = "heads_up_stoplist_values";
+
+         /**
+         * Which applications to disable heads up notifications for
+         * @hide
+         */
+        public static final String HEADS_UP_BLACKLIST_VALUES = "heads_up_blacklist_values";
+
+        /**
          * Whether to display airplane in the power menu
-         *
          * @hide
          */
         public static final String GLOBAL_ACTIONS_AIRPLANE = "global_actions_airplane";
@@ -5282,6 +5293,8 @@ public final class Settings {
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
             PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_ART);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
+            PRIVATE_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
+            PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
         }
 
         /**
