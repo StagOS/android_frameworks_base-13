@@ -56,6 +56,7 @@ import android.annotation.Nullable;
 import android.app.Fragment;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
+import android.content.Context;
 import android.database.ContentObserver;
 import android.graphics.Color;
 import android.graphics.Insets;
@@ -80,6 +81,7 @@ import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
 import android.view.InputDevice;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -322,6 +324,8 @@ public final class NotificationPanelViewController implements Dumpable {
 
     private static final String STATUS_BAR_QUICK_QS_PULLDOWN =
             "system:" + Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN;
+    private static final String DOUBLE_TAP_SLEEP_GESTURE =
+            "system:" + Settings.System.DOUBLE_TAP_SLEEP_GESTURE;
 
     private final InteractionJankMonitor mInteractionJankMonitor;
     private final LayoutInflater mLayoutInflater;
@@ -553,6 +557,8 @@ public final class NotificationPanelViewController implements Dumpable {
     private final NotificationShadeDepthController mDepthController;
     private final NavigationBarController mNavigationBarController;
     private final int mDisplayId;
+    private boolean mDoubleTapToSleepEnabled;
+    private GestureDetector mDoubleTapGesture;
 
     private final KeyguardIndicationController mKeyguardIndicationController;
 
@@ -797,13 +803,15 @@ public final class NotificationPanelViewController implements Dumpable {
             ShadeTransitionController shadeTransitionController,
             SystemClock systemClock,
             KeyguardBottomAreaViewModel keyguardBottomAreaViewModel,
+            KeyguardBottomAreaInteractor keyguardBottomAreaInteractor,
             TunerService tunerService,
             KeyguardBottomAreaInteractor keyguardBottomAreaInteractor,
             DreamingToLockscreenTransitionViewModel dreamingToLockscreenTransitionViewModel,
             OccludedToLockscreenTransitionViewModel occludedToLockscreenTransitionViewModel,
             @Main CoroutineDispatcher mainDispatcher,
             KeyguardTransitionInteractor keyguardTransitionInteractor,
-            DumpManager dumpManager) {
+            DumpManager dumpManager,
+            Context context) {
         keyguardStateController.addCallback(new KeyguardStateController.Callback() {
             @Override
             public void onKeyguardFadingAwayChanged() {
@@ -936,6 +944,16 @@ public final class NotificationPanelViewController implements Dumpable {
         });
         mBottomAreaShadeAlphaAnimator.setDuration(160);
         mBottomAreaShadeAlphaAnimator.setInterpolator(Interpolators.ALPHA_OUT);
+        mDoubleTapGesture = new GestureDetector(context,
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent e) {
+                if (mPowerManager != null) {
+                    mPowerManager.goToSleep(e.getEventTime());
+                }
+                return true;
+            }
+        });
         mConversationNotificationManager = conversationNotificationManager;
         mAuthController = authController;
         mLockIconViewController = lockIconViewController;
@@ -5781,6 +5799,7 @@ public final class NotificationPanelViewController implements Dumpable {
             mStatusBarStateListener.onStateChanged(mStatusBarStateController.getState());
             mConfigurationController.addCallback(mConfigurationListener);
             mTunerService.addTunable(this, STATUS_BAR_QUICK_QS_PULLDOWN);
+            mTunerService.addTunable(this, DOUBLE_TAP_SLEEP_GESTURE);
             // Theme might have changed between inflating this view and attaching it to the
             // window, so
             // force a call to onThemeChanged
@@ -5808,6 +5827,10 @@ public final class NotificationPanelViewController implements Dumpable {
                     mOneFingerQuickSettingsIntercept =
                             TunerService.parseInteger(newValue, 0);
                     break;
+		case DOUBLE_TAP_SLEEP_GESTURE:
+		    mDoubleTapToSleepEnabled =
+			    TunerService.parseIntegerSwitch(newValue, true);
+		    break;
                 default:
                     break;
             }
@@ -6151,6 +6174,10 @@ public final class NotificationPanelViewController implements Dumpable {
                 mShadeLog.logMotionEvent(event,
                         "onTouch: ignore touch, bouncer scrimmed or showing over dream");
                 return false;
+            }
+
+            if (mDoubleTapToSleepEnabled && !mPulsing && !mDozing) {
+                mDoubleTapGesture.onTouchEvent(event);
             }
 
             // Make sure the next touch won't the blocked after the current ends.
