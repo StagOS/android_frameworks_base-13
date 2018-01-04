@@ -99,4 +99,6 @@
   <!-- Whether device supports in-display fingerprint when screen is turned off -->
   <java-symbol type="bool" name="config_supportsInDisplayFingerprintGesture" />
 
+  <!-- Whether the device supports Smart Pixels -->
+  <java-symbol type="bool" name="config_enableSmartPixels" />
 </resources>
