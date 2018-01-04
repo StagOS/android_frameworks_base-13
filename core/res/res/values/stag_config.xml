@@ -1,4 +1,3 @@
-
 <resources>
     <!-- The list of vendor package signatures that should also be considered
          platform signatures, specifically for use on devices with a vendor partition. -->
@@ -70,4 +69,6 @@
     <!-- Whether device supports in-display fingerprint when screen is turned off -->
     <bool name="config_supportsInDisplayFingerprintGesture">false</bool>
 
+    <!-- Whether the device supports Smart Pixels -->
+    <bool name="config_enableSmartPixels">false</bool>
 </resources>
