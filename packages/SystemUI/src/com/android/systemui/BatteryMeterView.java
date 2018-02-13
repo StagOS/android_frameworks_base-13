@@ -25,6 +25,7 @@ import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STY
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_BIG_DOTTED_CIRCLE;
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_SOLID;
 import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_HIDDEN;
+import static com.android.settingslib.graph.BatteryMeterDrawableBase.BATTERY_STYLE_TEXT;
 
 import static com.android.systemui.DejankUtils.whitelistIpcs;
 import static com.android.systemui.util.SysuiLifecycle.viewAttachLifecycle;
@@ -436,7 +437,14 @@ public class BatteryMeterView extends LinearLayout implements
     }
 
     private void setPercentTextAtCurrentLevel() {
-        batteryPercentViewSetText(
+        // Use the high voltage symbol ⚡ (u26A1 unicode) but prevent the system
+        // to load its emoji colored variant with the uFE0E flag
+        String bolt = "\u26A1\uFE0E";
+        CharSequence mChargeIndicator =
+                mCharging && (mBatteryStyle == BATTERY_STYLE_TEXT
+                || mBatteryStyle == BATTERY_STYLE_HIDDEN)
+                ? (bolt + " ") : "";
+        mBatteryPercentView.setText(mChargeIndicator +
                 NumberFormat.getPercentInstance().format(mLevel / 100f));
         setContentDescription(
                 getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
@@ -485,6 +493,7 @@ public class BatteryMeterView extends LinearLayout implements
             mDrawable.setShowPercent(drawPercentInside);
             mXDrawable.setShowPercent(drawPercentInside);
         }
+        updatePercentText();
     }
 
     public void updateVisibility() {
