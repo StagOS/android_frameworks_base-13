@@ -5524,6 +5524,12 @@ public final class Settings {
         public static final String DOZE_BRIGHTNESS = "doze_brightness";
 
         /**
+         * Whether to show battery percent on ambient bottom
+         * @hide
+         */
+        public static final String AMBIENT_BATTERY_PERCENT = "ambient_battery_percent";
+
+        /**
          * @hide
          */
         public static final String DOZE_BRIGHTNESS_FORCE = "doze_brightness_force";
