@@ -25,6 +25,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.pm.ParceledListSlice;
 import android.content.res.Resources;
+import android.content.ContentResolver;
 import android.database.ContentObserver;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
