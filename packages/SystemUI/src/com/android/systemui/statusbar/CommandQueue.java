@@ -129,7 +129,8 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_SHOW_IN_DISPLAY_FINGERPRINT_VIEW  = 57 << MSG_SHIFT;
     private static final int MSG_HIDE_IN_DISPLAY_FINGERPRINT_VIEW  = 58 << MSG_SHIFT;
     private static final int MSG_TOGGLE_CAMERA_FLASH               = 69 << MSG_SHIFT;
-
+    private static final int MSG_TOGGLE_CAMERA_FLASH_ON            = 70 << MSG_SHIFT;
+    private static final int MSG_TOGGLE_CAMERA_FLASH_OFF           = 71 << MSG_SHIFT;
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
     public static final int FLAG_EXCLUDE_RECENTS_PANEL = 1 << 1;
@@ -193,6 +194,8 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void dismissKeyboardShortcutsMenu() { }
         default void toggleKeyboardShortcutsMenu(int deviceId) { }
         default void cancelPreloadRecentApps() { }
+        default void toggleCameraFlashOn() { }
+        default void toggleCameraFlashOff() { }
 
         /**
          * Called to notify window state changes.
@@ -987,6 +990,21 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         }
     }
 
+    public void toggleCameraFlashOn() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH_ON);
+            mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH_ON);
+        }
+    }
+
+    @Override
+    public void toggleCameraFlashOff() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH_OFF);
+            mHandler.sendEmptyMessage(MSG_TOGGLE_CAMERA_FLASH_OFF);
+        }
+    }
+
     public void toggleCameraFlash() {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH);
@@ -1347,6 +1365,16 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_HIDE_IN_DISPLAY_FINGERPRINT_VIEW:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).hideInDisplayFingerprintView();
+		    }
+		    break;
+                case MSG_TOGGLE_CAMERA_FLASH_ON:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleCameraFlashOn();
+                    }
+                    break;
+                case MSG_TOGGLE_CAMERA_FLASH_OFF:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).toggleCameraFlashOff();
                     }
                     break;
             }

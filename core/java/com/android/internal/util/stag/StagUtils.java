@@ -51,6 +51,13 @@ public class StagUtils {
         FireActions.toggleCameraFlash();
     }
 
+    public static void toggleCameraFlashOn() {
+        FireActions.toggleCameraFlashOn();
+    }
+     public static void toggleCameraFlashOff() {
+        FireActions.toggleCameraFlashOff();
+    }
+
     public static void takeScreenshot(boolean full) {
         IWindowManager wm = WindowManagerGlobal.getWindowManagerService();
         try {
@@ -82,5 +89,29 @@ public class StagUtils {
                 }
             }
         }
+
+        public static void toggleCameraFlashOn(){
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleCameraFlashOn();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+        public static void toggleCameraFlashOff(){
+            IStatusBarService service = getStatusBarService();
+            if (service != null) {
+                try {
+                    service.toggleCameraFlashOff();
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+
+
     }
 }
