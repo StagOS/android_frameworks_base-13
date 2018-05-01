@@ -155,4 +155,7 @@ interface IStatusBarService
      * Camera flash toggle
      */
     void toggleCameraFlash();
+
+    void toggleCameraFlashOn();
+    void toggleCameraFlashOff();
 }
