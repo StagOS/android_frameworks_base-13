@@ -307,6 +307,7 @@
     <protected-broadcast android:name="com.android.systemui.doze.pulse" />
 
     <uses-permission android:name="lineageos.permission.MANAGE_LIVEDISPLAY" />
+    <uses-permission android:name="lineageos.permission.HARDWARE_ABSTRACTION_ACCESS" />
 
     <application
         android:name=".SystemUIApplication"
