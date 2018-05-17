@@ -244,6 +244,10 @@ public abstract class CameraDevice implements AutoCloseable {
             @NonNull CameraCaptureSession.StateCallback callback, @Nullable Handler handler)
             throws CameraAccessException;
 
+    /** @hide */
+    public abstract void setVendorStreamConfigMode(int index)
+            throws CameraAccessException;
+
     /**
      * <p>Create a new camera capture session by providing the target output set of Surfaces and
      * its corresponding surface configuration to the camera device.</p>
@@ -1078,10 +1082,6 @@ public abstract class CameraDevice implements AutoCloseable {
      */
     @Override
     public abstract void close();
-
-    /** @hide */
-    public abstract void setVendorStreamConfigMode(int index)
-            throws CameraAccessException;
 
     /**
      * Checks whether a particular {@link SessionConfiguration} is supported by the camera device.
