@@ -85,6 +85,7 @@ public class SystemSettings {
         Settings.System.ALARM_ALERT,
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.ACCENT_COLOR,
-        Settings.System.COLOR_BUCKET_OVERLAY
+        Settings.System.COLOR_BUCKET_OVERLAY,
+        Settings.System.USE_OLD_MOBILETYPE,
     };
 }

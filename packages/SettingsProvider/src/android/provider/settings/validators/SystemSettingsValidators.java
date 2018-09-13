@@ -230,5 +230,6 @@ public class SystemSettingsValidators {
                     }
                 });
         VALIDATORS.put(System.FOD_GESTURE, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(System.USE_OLD_MOBILETYPE, BOOLEAN_VALIDATOR);
     }
 }
