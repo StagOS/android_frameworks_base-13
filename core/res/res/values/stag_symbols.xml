@@ -85,4 +85,9 @@
   <java-symbol type="style" name="GlobalActionsAnimationTranslucent" />
   <java-symbol type="style" name="GlobalActionsAnimationXylon" />
   <java-symbol type="style" name="GlobalActionsAnimationCard" />
+
+  <!-- SystemUI Restart -->
+  <java-symbol type="string" name="systemui_restart_title" />
+  <java-symbol type="string" name="systemui_restart_message" />
+
 </resources>
