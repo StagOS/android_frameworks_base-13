@@ -4827,6 +4827,15 @@ public final class Settings {
         public static final String MULTI_AUDIO_FOCUS_ENABLED = "multi_audio_focus_enabled";
 
         /**
+         * 0 - Default
+         * 1 - Round with ring
+         * 2 - Two-toned round with ring
+         * 3 - Squircle with ring
+         * @hide
+         */
+        public static final String QS_TILE_STYLE = "qs_tile_style";
+
+        /**
          * Accent Color
          * @hide
          */
@@ -5394,6 +5403,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_TIMEOUT);
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED);
+            PRIVATE_SETTINGS.add(QS_TILE_STYLE);
             PRIVATE_SETTINGS.add(ACCENT_COLOR);
             PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);
             PRIVATE_SETTINGS.add(VOLUME_PANEL_ON_LEFT);
