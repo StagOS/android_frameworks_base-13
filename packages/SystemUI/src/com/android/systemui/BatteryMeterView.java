@@ -453,7 +453,13 @@ public class BatteryMeterView extends LinearLayout implements
         } else {
             mBatteryIconView.setImageDrawable(mDrawable);
         }
+        updateShowPercent();
+    }
 
+    @Override
+    public void onOverlayChanged() {
+        mShowPercentAvailable = getContext().getResources().getBoolean(
+                com.android.internal.R.bool.config_battery_percentage_setting_available);
         updateShowPercent();
     }
 
