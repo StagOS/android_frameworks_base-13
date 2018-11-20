@@ -32,8 +32,8 @@ import javax.net.ssl.HttpsURLConnection;
  */
 public final class DogbinUtils {
     private static final String TAG = "DogbinUtils";
-    private static final String BASE_URL = "https://del.dog";
-    private static final String API_URL = String.format("%s/documents", BASE_URL);
+    private static final String BASE_URL = "https://katb.in";
+    private static final String API_URL = "https://api.katb.in/api/paste";
     private static Handler handler;
 
     private DogbinUtils() {
@@ -52,11 +52,14 @@ public final class DogbinUtils {
                 try {
                     HttpsURLConnection urlConnection = (HttpsURLConnection) new URL(API_URL).openConnection();
                     try {
+			urlConnection.setRequestProperty("User-Agent","Mozilla/5.0 ( compatible ) ");
+			urlConnection.setRequestProperty("Accept", "*/*");
+	                urlConnection.setRequestProperty("Content-Type", "application/json");
                         urlConnection.setRequestProperty("Accept-Charset", "UTF-8");
                         urlConnection.setDoOutput(true);
-
+			String data = String.format("{\n\t\"content\": \"%s\"\n}", content);
                         try (OutputStream output = urlConnection.getOutputStream()) {
-                            output.write(content.getBytes("UTF-8"));
+                            output.write(data.getBytes("UTF-8"));
                         }
                         String key = "";
                         try (JsonReader reader = new JsonReader(
@@ -64,7 +67,7 @@ public final class DogbinUtils {
                             reader.beginObject();
                             while (reader.hasNext()) {
                                 String name = reader.nextName();
-                                if (name.equals("key")) {
+                                if (name.equals("paste_id")) {
                                     key = reader.nextString();
                                     break;
                                 } else {
@@ -76,14 +79,14 @@ public final class DogbinUtils {
                         if (!key.isEmpty()) {
                             callback.onSuccess(getUrl(key));
                         } else {
-                            String msg = "Failed to upload to dogbin: No key retrieved";
+                            String msg = "Failed to upload to katbin: No id retrieved";
                             callback.onFail(msg, new DogbinException(msg));
                         }
                     } finally {
                         urlConnection.disconnect();
                     }
                 } catch (Exception e) {
-                    callback.onFail("Failed to upload to dogbin", e);
+                    callback.onFail("Failed to upload to katbin", e);
                 }
             }
         });
