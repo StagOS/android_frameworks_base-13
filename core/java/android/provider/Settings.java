@@ -5403,6 +5403,14 @@ public final class Settings {
                 "statusbar_battery_bar_charging_color";
 
         /**
+         * Whether to show the kill app button in notification guts
+         *
+         * @hide
+         */
+        public static final String NOTIFICATION_GUTS_KILL_APP_BUTTON =
+                "notification_guts_kill_app_button";
+
+        /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_BATTERY_LOW_COLOR =
