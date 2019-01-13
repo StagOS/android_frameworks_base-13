@@ -61,4 +61,11 @@
     <!-- Width of the big battery circle icon in the status bar. -->
     <dimen name="status_bar_battery_bigcircle_icon_width">20.5dp</dimen>
 
- </resources>
+    <!-- Network traffic monitor -->
+    <dimen name="net_traffic_multi_text_size">8dp</dimen>
+    <dimen name="net_traffic_txt_img_padding">2dp</dimen>
+
+    <!-- Sets a custom extra padding for the QS icons and statusbar date -->
+    <dimen name="qs_items_padding">8dp</dimen>
+
+</resources>
