@@ -1,4 +1,4 @@
-<!--
+ <!--
 /* Copyright 2012, The Android Open Source Project
 **
 ** Licensed under the Apache License, Version 2.0 (the "License");
@@ -4053,5 +4053,13 @@
 
   <!-- Enable face auth when swiping security view -->
   <java-symbol type="bool" name="config_faceAuthOnSecurityView" />
+
+  <!-- StagOS gradients -->
+  <java-symbol type="color" name="gradient_start_light" />
+  <java-symbol type="color" name="gradient_start_dark" />
+  <java-symbol type="color" name="gradient_end_light" />
+  <java-symbol type="color" name="gradient_end_dark" />
+  <java-symbol type="color" name="gradient_start" />
+  <java-symbol type="color" name="gradient_end" />
 
 </resources>
