@@ -52,6 +52,7 @@ import com.android.systemui.statusbar.phone.StatusBarContentInsetsProvider;
 import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconManager;
 import com.android.systemui.statusbar.phone.StatusIconContainer;
 import com.android.systemui.statusbar.policy.Clock;
+import com.android.systemui.statusbar.policy.ClockEQS;
 import com.android.systemui.statusbar.policy.VariableDateView;
 import com.android.systemui.util.LargeScreenUtils;
 
@@ -163,7 +164,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
         mPrivacyContainer = findViewById(R.id.privacy_container);
 
         mClockContainer = findViewById(R.id.clock_container);
-        mClockView = findViewById(R.id.clock);
+        mClockView = findViewById(R.id.clock_eqs);
         mClockView.setOnClickListener(this);
         mClockView.setOnLongClickListener(this);
         mClockView.setQsHeader();
