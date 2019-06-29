@@ -85,6 +85,8 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
     @VisibleForTesting
     protected boolean mUseHeadsUp = false;
 
+    private boolean mSkipHeadsUp;
+
     @Inject
     public NotificationInterruptStateProviderImpl(
             Context context,
@@ -353,15 +355,6 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         mLessBoringHeadsUp = lessBoring;
     }
 
-    public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
-        boolean isImportantHeadsUp = false;
-        String notificationPackageName = sbn.getPackageName();
-        isImportantHeadsUp = notificationPackageName.equals(getDefaultDialerPackage(mTm))
-                || notificationPackageName.equals(getDefaultSmsPackage(mContext))
-                || notificationPackageName.contains("clock");
-        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isImportantHeadsUp;
-    }
-
     private static String getDefaultSmsPackage(Context ctx) {
         return Sms.getDefaultSmsPackage(ctx);
         // for reference, there's also a new RoleManager api with getDefaultSmsPackage(context, userid) 
@@ -460,6 +453,26 @@ public class NotificationInterruptStateProviderImpl implements NotificationInter
         }
 
         return true;
+    }
+
+    @Override
+    public void setGamingPeekMode(boolean skipHeadsUp) {
+        mSkipHeadsUp = skipHeadsUp;
+    }
+
+    public boolean shouldSkipHeadsUp(StatusBarNotification sbn) {
+        String notificationPackageName = sbn.getPackageName().toLowerCase();
+        // Gaming mode takes precedence since messaging headsup is intrusive
+        if (mSkipHeadsUp) {
+            boolean isNonInstrusive = notificationPackageName.equals("com.android.dialer")
+                || notificationPackageName.contains("clock");
+            return !mStatusBarStateController.isDozing() &&  mSkipHeadsUp && !isNonInstrusive;
+        }
+        boolean isLessBoring = notificationPackageName.equals("com.android.dialer") ||
+                notificationPackageName.contains("clock") ||
+                notificationPackageName.equals("com.android.messages");
+
+        return !mStatusBarStateController.isDozing() && mLessBoringHeadsUp && !isLessBoring;
     }
 
     /**
