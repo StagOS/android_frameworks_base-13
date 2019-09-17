@@ -4815,6 +4815,13 @@ public final class Settings {
          */
         public static final String FLASH_ON_CALLWAITING_DELAY = "flash_on_call_waiting_delay";
 
+        /**
+         * Setting to hold the current set overlay for color bucket.
+         * overlay package name (String)
+         * @hide
+         */
+        public static final String COLOR_BUCKET_OVERLAY = "color_bucket_overlay";
+
 
         /**
          * IMPORTANT: If you add a new public settings you also have to add it to
@@ -5021,6 +5028,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(BUTTON_BRIGHTNESS);
             PRIVATE_SETTINGS.add(BUTTON_BACKLIGHT_ONLY_WHEN_PRESSED);
             PRIVATE_SETTINGS.add(ACCENT_COLOR);
+            PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);
         }
 
         /**
