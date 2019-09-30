@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2021 AospExtended ROM
-=======
-<!--
-     Copyright (C) 2018-2021 ArrowOS
->>>>>>> 1982967dce15 (policy: Add support for device alert sliders)
+     Copyright (C) 2022 StagOS
 
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
@@ -55,4 +50,10 @@
     <!-- Alert slider proc nodes paths -->
     <string name="alert_slider_state_path"></string>
     <string name="alert_slider_uevent_match_path"></string>
+
+
+      <!-- The location of the devices physical tri state switch
+         0: Left side
+         1: Right side -->
+    <integer name="config_alertSliderLocation">0</integer>
 </resources>
