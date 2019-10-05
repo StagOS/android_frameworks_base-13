@@ -55,4 +55,7 @@
     <!-- Width of the big battery circle icon in the status bar. -->
     <dimen name="status_bar_battery_bigcircle_icon_width">20.5dp</dimen>
 
- </resources>
+   <!-- Bottom margin size when fingerprint in display is active -->
+    <dimen name="keyguard_indication_margin_bottom_fingerprint_in_display">30dp</dimen>
+
+</resources>
