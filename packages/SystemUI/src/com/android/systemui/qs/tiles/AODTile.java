@@ -18,6 +18,8 @@
 package com.android.systemui.qs.tiles;
 
 import android.content.Intent;
+import android.database.ContentObserver;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.provider.Settings;
@@ -41,6 +43,9 @@ import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.qs.logging.QSLogger;
+import com.android.systemui.qs.tileimpl.QSTileImpl;
+import com.android.systemui.qs.QSHost;
+import com.android.systemui.R;
 import com.android.systemui.util.settings.SecureSettings;
 
 import javax.inject.Inject;
@@ -50,8 +55,10 @@ public class AODTile extends QSTileImpl<BooleanState> implements
 
     private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_aod);
     private final BatteryController mBatteryController;
+    private boolean mListening;
 
     private final SecureSetting mSetting;
+    private final ContentObserver mObserver;
 
     @Inject
     public AODTile(
@@ -73,6 +80,12 @@ public class AODTile extends QSTileImpl<BooleanState> implements
             protected void handleValueChanged(int value, boolean observedChange) {
                 handleRefreshState(value);
             }
+        };
+        mObserver = new ContentObserver(mainHandler) {
+             @Override
+             public void onChange(boolean selfChange, Uri uri) {
+                 refreshState();
+             }
         };
 
         mBatteryController = batteryController;
