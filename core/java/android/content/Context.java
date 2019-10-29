@@ -6071,6 +6071,15 @@ public abstract class Context {
     public static final String LINEARMOTOR_VIBRATOR_SERVICE = "linearmotor";
 
     /**
+     * {@link android.os.PocketManager} for accessing and listening to device pocket state.
+     *
+     * @hide
+     * @see #getSystemService
+     * @see android.os.PocketManager
+     */
+    public static final String POCKET_SERVICE = "pocket";
+
+    /**
      * Determine whether the given permission is allowed for a particular
      * process and user ID running in the system.
      *
