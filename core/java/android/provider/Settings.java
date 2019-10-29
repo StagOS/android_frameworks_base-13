@@ -5393,6 +5393,15 @@ public final class Settings {
          */
         public static final String STATUS_BAR_BATTERY_STYLE = "status_bar_battery_style";
 
+	/**
+         * Whether allowing pocket service to register sensors and dispatch informations.
+         *   0 = disabled
+         *   1 = enabled
+         * @author Carlo Savignano
+         * @hide
+         */
+        public static final String POCKET_JUDGE = "pocket_judge";
+
         /**
           * Statusbar Battery %
           * 0: Hide the battery percentage
@@ -5519,6 +5528,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_CONNECT);
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
+            PRIVATE_SETTINGS.add(POCKET_JUDGE);
         }
 
         /**
