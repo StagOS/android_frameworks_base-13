@@ -17,4 +17,11 @@
 <resources>
     <color name="toast_bg">@color/background_floating_device_default_light</color>
     <color name="toast_text">@color/black</color>
+
+    <!-- Pocket Lock -->
+    <java-symbol type="layout" name="pocket_lock_view_layout" />
+    <java-symbol type="id" name="pocket_hint_container" />
+    <java-symbol type="id" name="pocket_hint_image" />
+    <java-symbol type="id" name="pocket_hint_message" />
+
 </resources>
