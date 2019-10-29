@@ -377,6 +377,8 @@ public final class SystemServer {
      */
     private static LinkedList<Pair<String, ApplicationErrorReport.CrashInfo>> sPendingWtfs;
 
+    public boolean safeMode = false;
+
     /**
      * Start the sensor service. This is a blocking call and can take time.
      */
@@ -1246,7 +1248,10 @@ public final class SystemServer {
 
         // Before things start rolling, be sure we have decided whether
         // we are in safe mode.
-        final boolean safeMode = wm.detectSafeMode();
+
+        if(wm != null) {
+            safeMode = wm.detectSafeMode();
+        }
         if (safeMode) {
             // If yes, immediately turn on the global setting for airplane mode.
             // Note that this does not send broadcasts at this stage because
@@ -2008,7 +2013,7 @@ public final class SystemServer {
             mSystemServiceManager.startService(CrossProfileAppsService.class);
             t.traceEnd();
 
-            traceBeginAndSlog("StartPocketService");
+            t.traceBegin("StartPocketService");
             mSystemServiceManager.startService(PocketService.class);
             t.traceEnd();
 

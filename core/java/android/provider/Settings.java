@@ -4992,6 +4992,7 @@ public final class Settings {
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
          * the setting value. See an example above.
+         * @hide
          */
         public static final String GLOBAL_ACTIONS_MAX_COLUMNS = "global_actions_max_columns";
 
