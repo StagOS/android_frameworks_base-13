@@ -399,6 +399,11 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
             }
         }
     };
+
+    public boolean isPocketLockVisible(){
+        return mPocketManager.isPocketLockVisible();
+    }
+
     private SparseBooleanArray mBiometricEnabledForUser = new SparseBooleanArray();
     private BiometricManager mBiometricManager;
     private IBiometricEnabledOnKeyguardCallback mBiometricEnabledCallback =
@@ -1962,7 +1967,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                         handleRequireUnlockForNfc();
                         break;
                     case MSG_POCKET_STATE_CHANGED:
-                        updateBiometricListeningState();
+                        updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE);
                         break;
                     default:
                         super.handleMessage(msg);
