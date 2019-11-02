@@ -224,4 +224,9 @@ public class AmbientDisplayConfiguration {
         return Settings.System.getIntForUser(mContext.getContentResolver(),
                 Settings.System.PULSE_ON_NEW_TRACKS, 1, user) != 0;
     }
+
+    public boolean isAmbientGestureEnabled(int user) {
+        return Settings.System.getIntForUser(mContext.getContentResolver(),
+                Settings.System.AMBIENT_WAKE_GESTURES, 1, user) != 0;
+    }
 }
