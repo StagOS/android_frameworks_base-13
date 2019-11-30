@@ -52,8 +52,12 @@
     <string name="alert_slider_uevent_match_path"></string>
 
 
-      <!-- The location of the devices physical tri state switch
+    <!-- The location of the devices physical tri state switch
          0: Left side
          1: Right side -->
     <integer name="config_alertSliderLocation">0</integer>
+
+    <!-- Width of the battery icon in the status bar when set to circle style. -->
+    <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
+
 </resources>
