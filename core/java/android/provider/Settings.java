@@ -4483,6 +4483,12 @@ public final class Settings {
          */
         public static final String ACCELEROMETER_ROTATION_ANGLES = "accelerometer_rotation_angles";
 
+	/**
+         * Whether or not to vibrate when a touchscreen gesture is detected
+         * @hide
+         */
+        public static final String TOUCHSCREEN_GESTURE_HAPTIC_FEEDBACK = "touchscreen_gesture_haptic_feedback";
+
         /**
          * Control whether the accelerometer will be used to change screen
          * orientation.  If 0, it will not be used unless explicitly requested
