@@ -44,4 +44,7 @@
     <java-symbol type="string" name="optimized_charge_notification_title" />
     <java-symbol type="string" name="optimized_charge_notification_text" />
 
+    <!-- Light / Regular style fonts -->
+    <java-symbol type="string" name="config_lightFontFamily" />
+    <java-symbol type="string" name="config_regularFontFamily" />
 </resources>
