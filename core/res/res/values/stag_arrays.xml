@@ -28,4 +28,5 @@
     <string-array translatable="false" name="config_customPermissionsList">
         <item>com.android.wallpaper.livepicker</item>
     </string-array>
+
 </resources>
