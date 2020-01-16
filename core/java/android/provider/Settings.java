@@ -5428,6 +5428,30 @@ public final class Settings {
         public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS = "statusbar_battery_bar_blend_color";
 
         /**
+         * Whether to enable PULSE Edge lights
+         * @hide
+         */
+        public static final String PULSE_AMBIENT_LIGHT = "pulse_ambient_light";
+
+        /**
+         * Whether to enable Ambient Edge lights
+         * @hide
+         */
+        public static final String AMBIENT_NOTIFICATION_LIGHT_ENABLED = "ambient_notification_light_enabled";
+
+        /**
+         * Whether to enable Ambient Edge lights
+         * @hide
+         */
+        public static final String AMBIENT_NOTIFICATION_LIGHT = "ambient_notification_light";
+
+        /**
+         * Whether Ambient Edge lights are activated
+         * @hide
+         */
+        public static final String AMBIENT_NOTIFICATION_LIGHT_ACTIVATED = "ambient_notification_light_activated";
+
+        /**
          * @hide
          */
         public static final String STATUSBAR_BATTERY_BAR_BLEND_COLORS_REVERSE =
@@ -9731,6 +9755,12 @@ public final class Settings {
          * @hide
          */
         public static final String DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
+
+        /**
+         * Whether to hide lock icon on lockscreen
+         * {@hide}
+         */
+        public static final String HIDE_LOCKICON = "hide_lockicon";
 
         /**
          * Keys we no longer back up under the current schema, but want to continue to
