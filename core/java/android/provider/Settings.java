@@ -5328,6 +5328,17 @@ public final class Settings {
         public static final String INCREASING_RING_RAMP_UP_TIME = "increasing_ring_ramp_up_time";
 
         /**
+         * Which Vibration Pattern to use
+         * 0: dzzz-dzzz
+         * 1: dzzz-da
+         * 2: mm-mm-mm
+         * 3: da-da-dzzz
+         * 4: da-dzzz-da
+         * @hide
+         */
+        public static final String RINGTONE_VIBRATION_PATTERN = "ringtone_vibration_pattern";
+
+        /**
          * These are all public system settings
          *
          * @hide
