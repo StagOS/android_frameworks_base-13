@@ -7441,5 +7441,7 @@ message MetricsEvent {
     // CustomSettings constant
     HORNS = 2500;
 
+    // Panel for Bluetooth
+    PANEL_BLUETOOTH = 2003;
   }
 }
