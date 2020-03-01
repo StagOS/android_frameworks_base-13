@@ -133,6 +133,7 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
     private static final int MSG_TOGGLE_CAMERA_FLASH_OFF           = 71 << MSG_SHIFT;
     private static final int MSG_TOGGLE_SETTINGS_PANEL             = 72 << MSG_SHIFT;
     private static final int MSG_SET_BLOCKED_GESTURAL_NAVIGATION   = 91 << MSG_SHIFT;
+    private static final int MSG_KILL_FOREGROUND_APP               = 73 << MSG_SHIFT;
 
     public static final int FLAG_EXCLUDE_NONE = 0;
     public static final int FLAG_EXCLUDE_SEARCH_PANEL = 1 << 0;
@@ -353,6 +354,8 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         default void onTracingStateChanged(boolean enabled) { }
 
         default void toggleCameraFlash() { }
+
+        default void killForegroundApp() { }
     }
 
     public CommandQueue(Context context) {
@@ -1010,6 +1013,14 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
         }
     }
 
+    @Override
+    public void killForegroundApp() {
+        synchronized (mLock) {
+            mHandler.removeMessages(MSG_KILL_FOREGROUND_APP);
+            mHandler.sendEmptyMessage(MSG_KILL_FOREGROUND_APP);
+        }
+    }
+
     public void toggleCameraFlashOn() {
         synchronized (mLock) {
             mHandler.removeMessages(MSG_TOGGLE_CAMERA_FLASH_ON);
@@ -1405,6 +1416,11 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                 case MSG_SET_BLOCKED_GESTURAL_NAVIGATION:
                     for (int i = 0; i < mCallbacks.size(); i++) {
                         mCallbacks.get(i).setBlockedGesturalNavigation((Boolean) msg.obj);
+                    }
+                    break;
+                case MSG_KILL_FOREGROUND_APP:
+                    for (int i = 0; i < mCallbacks.size(); i++) {
+                        mCallbacks.get(i).killForegroundApp();
                     }
                     break;
             }

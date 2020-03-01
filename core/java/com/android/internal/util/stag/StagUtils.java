@@ -320,9 +320,24 @@ public class StagUtils {
             }
         }
 
+        public static void killForegroundApp() {
+           IStatusBarService service = getStatusBarService();
+           if (service != null) {
+               try { 
+                   service.killForegroundApp();
+               } catch (RemoteException e) {
+                  // do nothing.
+               }
+           }
+        }
     }
 
-	    // Check if device has a notch
+
+    public static void killForegroundApp() {
+	FireActions.killForegroundApp();
+    }
+
+    // Check if device has a notch
     public static boolean hasNotch(Context context) {
         int result = 0;
         int resid;
