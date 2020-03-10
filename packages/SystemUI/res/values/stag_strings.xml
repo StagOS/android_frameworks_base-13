@@ -78,4 +78,7 @@
 
     <!-- Reboot/Recovery QS Tile -->
     <string name="horns_label">Horns</string>
+
+    <!-- FPS Info tile -->
+    <string name="quick_settings_fpsinfo_label">FPS Info</string>
 </resources>
