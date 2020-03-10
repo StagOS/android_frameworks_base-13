@@ -44,6 +44,7 @@ public abstract class InternalEnumerateClient<T> extends HalClientMonitor<T>
     private List<? extends BiometricAuthenticator.Identifier> mEnrolledList;
     // List of templates to remove from the HAL
     private List<BiometricAuthenticator.Identifier> mUnknownHALTemplates = new ArrayList<>();
+    final boolean mNocleanup = android.os.SystemProperties.getBoolean("fingerprint.nocleanup", false);
 
     protected InternalEnumerateClient(@NonNull Context context, @NonNull Supplier<T> lazyDaemon,
             @NonNull IBinder token, int userId, @NonNull String owner,
@@ -120,6 +121,10 @@ public abstract class InternalEnumerateClient<T> extends HalClientMonitor<T>
             mUtils.removeBiometricForUser(getContext(),
                     getTargetUserId(), identifier.getBiometricId());
 
+           if (!mNocleanup) {
+              mUtils.removeBiometricForUser(getContext(),
+                       getTargetUserId(), identifier.getBiometricId());
+            }
             getLogger().logUnknownEnrollmentInFramework();
         }
         mEnrolledList.clear();
