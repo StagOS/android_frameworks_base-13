@@ -413,6 +413,18 @@ public class NotificationPanelViewController extends PanelViewController {
                             }
                         }).setCustomInterpolator(
                     mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_IN);
+    private final AnimationProperties PANEL_ALPHA_OUT_FAST_PROPERTIES = new AnimationProperties()
+            .setDuration(100)
+            .setCustomInterpolator(mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_OUT);
+    private final AnimationProperties PANEL_ALPHA_IN_FAST_PROPERTIES = new AnimationProperties()
+            .setDuration(100)
+	    .setAnimationEndAction((property) -> {
+                            if (mPanelAlphaEndAction != null) {
+                                mPanelAlphaEndAction.run();
+                            }
+                        }).setCustomInterpolator(
+                    mPanelAlphaAnimator.getProperty(), Interpolators.ALPHA_IN);
+
     private final NotificationEntryManager mEntryManager;
 
     private final CommandQueue mCommandQueue;
@@ -2579,6 +2591,18 @@ public class NotificationPanelViewController extends PanelViewController {
                     animate);
         }
     }
+
+
+    public boolean setPanelAlphaFast(int alpha, boolean animate) {
+        if (mPanelAlpha != alpha) {
+            mPanelAlpha = alpha;
+            PropertyAnimator.setProperty(this, mPanelAlphaAnimator, alpha,
+                    alpha == 255 ? PANEL_ALPHA_IN_FAST_PROPERTIES : PANEL_ALPHA_OUT_FAST_PROPERTIES, animate);
+            return true;
+        }
+        return false;
+    }
+
 
     public void setPanelAlphaEndAction(Runnable r) {
         mPanelAlphaEndAction = r;
