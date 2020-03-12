@@ -18,6 +18,7 @@ package com.android.systemui.biometrics;
 
 import android.content.Context;
 import android.content.res.Resources;
+import android.content.res.TypedArray;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.PixelFormat;
 import android.provider.Settings;
@@ -42,31 +43,8 @@ public class FODAnimation extends ImageView {
     private boolean mIsRecognizingAnimEnabled;
 
     private int mSelectedAnim;
-    private final int[] ANIMATION_STYLES = {
-        R.drawable.fod_miui_normal_recognizing_anim,
-        R.drawable.fod_miui_aod_recognizing_anim,
-        R.drawable.fod_miui_aurora_recognizing_anim,
-        R.drawable.fod_miui_aurora_cas_recognizing_anim,
-        R.drawable.fod_miui_light_recognizing_anim,
-        R.drawable.fod_miui_pop_recognizing_anim,
-        R.drawable.fod_miui_pulse_recognizing_anim,
-        R.drawable.fod_miui_pulse_recognizing_white_anim,
-        R.drawable.fod_miui_rhythm_recognizing_anim,
-        R.drawable.fod_miui_star_cas_recognizing_anim,
-        R.drawable.fod_op_cosmos_recognizing_anim,
-        R.drawable.fod_op_energy_recognizing_anim,
-        R.drawable.fod_op_mclaren_recognizing_anim,
-        R.drawable.fod_op_ripple_recognizing_anim,
-        R.drawable.fod_op_stripe_recognizing_anim,
-        R.drawable.fod_op_wave_recognizing_anim,
-        R.drawable.fod_pureview_dna_recognizing_anim,
-        R.drawable.fod_pureview_future_recognizing_anim,
-        R.drawable.fod_pureview_halo_ring_recognizing_anim,
-        R.drawable.fod_pureview_molecular_recognizing_anim,
-        R.drawable.fod_rog_fusion_recognizing_anim,
-        R.drawable.fod_rog_pulsar_recognizing_anim,
-        R.drawable.fod_rog_supernova_recognizing_anim,
-    };
+    private TypedArray mAnimationStyles;
+    private int mAnimationStylesCount;
 
     public FODAnimation(Context context, int mPositionX, int mPositionY) {
         super(context);
@@ -95,15 +73,20 @@ public class FODAnimation extends ImageView {
     }
 
     public void update(boolean isEnabled) {
-        mSelectedAnim = Settings.System.getInt(mContext.getContentResolver(),
-                Settings.System.FOD_ANIM, 0);
+        mAnimationStyles = mContext.getResources().obtainTypedArray(R.array.fod_animation_resources);
+        mAnimationStylesCount = mAnimationStyles.length();
 
         if (isEnabled)
             setAlpha(1.0f);
         else
             setAlpha(0.0f);
-
-        setBackgroundResource(ANIMATION_STYLES[mSelectedAnim]);
+        if (mAnimationStylesCount > 0) {
+            mSelectedAnim = Settings.System.getInt(mContext.getContentResolver(),
+                    Settings.System.FOD_ANIM, 0);
+            setBackgroundResource(mAnimationStyles.getResourceId(mSelectedAnim, -1));
+        } else {
+            setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_white_anim);
+        }
         recognizingAnim = (AnimationDrawable) getBackground();
     }
 
