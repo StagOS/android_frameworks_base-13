@@ -90,4 +90,9 @@
   <java-symbol type="string" name="systemui_restart_title" />
   <java-symbol type="string" name="systemui_restart_message" />
 
+  <!-- Library path of screen off fod handler -->
+  <java-symbol type="string" name="config_fodScreenOffHandlerLib" />
+
+  <!-- Class name of screen off fod handler -->
+  <java-symbol type="string" name="config_fodScreenOffHandlerClass" />
 </resources>
