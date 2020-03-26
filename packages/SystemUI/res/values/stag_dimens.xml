@@ -15,6 +15,7 @@
  * limitations under the License.
 */
 -->
+<resources>
     <!-- Tri-state UI -->
     <dimen name="tri_state_down_dialog_position">850.0px</dimen>
     <dimen name="tri_state_down_dialog_position_l">650.0px</dimen>
