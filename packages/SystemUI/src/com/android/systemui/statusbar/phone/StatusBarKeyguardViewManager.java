@@ -144,6 +144,8 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private float mFraction = -1f;
     private boolean mTracking = false;
 
+    private boolean mBouncerVisible = false;
+
     private final PrimaryBouncerExpansionCallback mExpansionCallback =
             new PrimaryBouncerExpansionCallback() {
             private boolean mPrimaryBouncerAnimating;
@@ -185,6 +187,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
                 mCentralSurfaces.setBouncerShowingOverDream(
                         isVisible && mDreamOverlayStateController.isOverlayActive());
 
+                mBouncerVisible = isVisible;
                 if (!isVisible) {
                     mCentralSurfaces.setPrimaryBouncerHiddenFraction(
                             KeyguardBouncer.EXPANSION_HIDDEN);
@@ -277,6 +280,8 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private boolean mFaceRecognitionRunning = false;
     private Handler mHandler;
     private Handler mFaceRecognizingHandler;
+
+    private Handler mHandler;
 
     private final KeyguardUpdateMonitorCallback mUpdateMonitorCallback =
             new KeyguardUpdateMonitorCallback() {
@@ -713,6 +718,11 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             }
         }
         updateStates();
+        mHandler.postDelayed(() -> {
+            if (mBouncerVisible) {
+                mKeyguardUpdateManager.updateFaceListeningStateForBehavior(mBouncerVisible);
+            }
+        }, 100);
     }
 
     private boolean isWakeAndUnlocking() {
