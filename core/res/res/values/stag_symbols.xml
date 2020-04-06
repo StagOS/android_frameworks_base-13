@@ -112,4 +112,8 @@
 
     <!-- Pocket Service -->
     <java-symbol type="string" name="config_pocketJudgeVendorSensorName" />
+
+    <!-- Whether usage of the proximity sensor during doze is supported -->
+    <java-symbol type="bool" name="config_doze_proximity_sensor_supported" />
+
 </resources>
