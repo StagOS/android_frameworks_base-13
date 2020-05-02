@@ -26,14 +26,38 @@ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
 import com.android.systemui.R;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.plugins.qs.QSTile.BooleanState;
+import com.android.systemui.SysUIToast;
 import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 
+import android.widget.Toast;
+
+import java.util.Random;
 import javax.inject.Inject;
 
 public class HornsTile extends QSTileImpl<BooleanState> {
 
     private final ActivityStarter mActivityStarter;
+
+
+   // Random Strings
+   public final static java.lang.String[] insults = {
+             "Hahaha, n00b!",
+             "What are you doing??",
+             "n00b alert!",
+             "What is this...? Amateur hour!?",
+             "This is not Windows",
+             "Please step away from the device!",
+             "error code: 1D10T",
+             "Go outside",
+             "¯\\_(ツ)_/¯",
+             "Pro tip: Stop doing this!",
+             "Y u no speak computer???",
+             "Why are you so stupid?!",
+             "Perhaps this Android thing is not for you...",
+             "Don't you have anything better to do?!",
+             "This is why nobody likes you...",
+             "Are you even trying?!",};
 
     @Inject
     public HornsTile(QSHost host, ActivityStarter activityStarter) {
@@ -49,6 +73,12 @@ public class HornsTile extends QSTileImpl<BooleanState> {
     @Override
     public void handleClick() {
         refreshState();
+        // Collapse the panels, so the user can see the toast.
+        mHost.collapsePanels();
+        Random randomInsult = new Random();
+        final int toasts = randomInsult.nextInt(insults.length);
+        SysUIToast.makeText(mContext, insults[toasts],
+                      Toast.LENGTH_LONG).show();
     }
 
     @Override
