@@ -5426,6 +5426,12 @@ public final class Settings {
          */
         public static final String NETWORK_TRAFFIC_LAYOUT = "network_traffic_layout";
 
+	/**
+         * Network traffic font style
+         * @hide
+         */
+        public static final String NETWORK_TRAFFIC_FONT_STYLE = "network_traffic_font_style";
+
         /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
