@@ -444,7 +444,7 @@ public class BatteryMeterView extends LinearLayout implements
                 mCharging && (mBatteryStyle == BATTERY_STYLE_TEXT
                 || mBatteryStyle == BATTERY_STYLE_HIDDEN)
                 ? (bolt + " ") : "";
-        mBatteryPercentView.setText(mChargeIndicator +
+        batteryPercentViewSetText(mChargeIndicator +
                 NumberFormat.getPercentInstance().format(mLevel / 100f));
         setContentDescription(
                 getContext().getString(mCharging ? R.string.accessibility_battery_level_charging
