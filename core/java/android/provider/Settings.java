@@ -5505,6 +5505,12 @@ public final class Settings {
         public static final String VOWIFI_ICON_STYLE = "vowifi_icon_style";
 
         /**
+         * Whether VoWiFi icon should override VoLTE icon
+         * @hide
+         */
+        public static final String VOLTE_VOWIFI_OVERRIDE = "volte_vowifi_override";
+
+        /**
          * Activate torchlight when power button is
          * long-pressed while the display is off
          * The value is boolean (1 or 0).
