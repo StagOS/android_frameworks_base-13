@@ -325,7 +325,7 @@ public class StatusBar extends SystemUI implements DemoMode,
 
     private static final String[] QS_TILE_THEMES = {
         "com.android.systemui.qstile.default", // 0
-        "com.android.systemui.qstile.circletrim", // 1
+        "com.android.systemui.qstile.deletround", // 1
         "com.android.systemui.qstile.dualtonecircletrim", // 2
         "com.android.systemui.qstile.squircletrim", // 3
         "com.android.systemui.qstile.wavey", // 4
@@ -342,6 +342,7 @@ public class StatusBar extends SystemUI implements DemoMode,
         "com.bootleggers.qstile.neonlike", // 15
         "com.bootleggers.qstile.oos", // 16
         "com.bootleggers.qstile.triangles", // 17
+        "com.android.systemui.qstile.circletrim", // 18
     };
 
     /** If true, the system is in the half-boot-to-decryption-screen state.
