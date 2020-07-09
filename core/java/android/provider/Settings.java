@@ -4856,10 +4856,15 @@ public final class Settings {
          */
         public static final String THREE_FINGER_GESTURE = "three_finger_gesture";
 
-	/**
+       /**
+         * Screen off fod
+         * @hide
+         */
+        public static final String FOD_GESTURE = "fod_gesture";
+
+        /**
          * @hide
          * Volume panel on left
-         * @hide
          */
         public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
 
