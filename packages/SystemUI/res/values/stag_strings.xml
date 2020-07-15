@@ -123,4 +123,6 @@
     <!-- Name of the volte/vowifi status bar icon. -->
     <string name="status_bar_ims">VoLTE/VoWiFi</string>
 
+    <!-- Tux clock -->
+    <string name="clock_title_tux" translatable="false">Tux</string>
 </resources>
