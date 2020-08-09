@@ -87,7 +87,7 @@ public class Toast {
     static final String TAG = "Toast";
     static final boolean localLOGV = false;
 
-    static Drawable mCustomIcon;
+    private Drawable mCustomIcon;
 
     /** @hide */
     @IntDef(prefix = { "LENGTH_" }, value = {
@@ -202,6 +202,7 @@ public class Toast {
         String pkg = mContext.getOpPackageName();
         TN tn = mTN;
         tn.mNextView = mNextView;
+        tn.mCustomIcon = mCustomIcon;
         final int displayId = mContext.getDisplayId();
 
         try {
@@ -608,6 +609,8 @@ public class Toast {
         int mDuration;
 
         WindowManager mWM;
+
+        Drawable mCustomIcon;
 
         final String mPackageName;
         final Binder mToken;
