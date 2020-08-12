@@ -95,5 +95,6 @@ public class SystemSettings {
         Settings.System.QS_PANEL_BG_USE_NEW_TINT,
         Settings.System.QS_BLUR,
 	Settings.System.THEMING_SETTINGS_DASHBOARD_ICONS,
+        Settings.System.FOD_GESTURE,
     };
 }
