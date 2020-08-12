@@ -65,4 +65,8 @@
 
     <!-- Class name of screen off fod handler -->
     <string name="config_fodScreenOffHandlerClass" translatable="false"></string>
+
+    <!-- Whether device supports in-display fingerprint when screen is turned off -->
+    <bool name="config_supportsInDisplayFingerprintGesture">false</bool>
+
 </resources>

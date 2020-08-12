@@ -4987,6 +4987,12 @@ public final class Settings {
                 "theming_settings_dashboard_icons";
 
         /**
+         * Screen off fod
+         * @hide
+         */
+        public static final String FOD_GESTURE = "fod_gesture";
+
+        /**
          * Show battery percentage when charging
          * @hide
          */
@@ -5440,6 +5446,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
+            PRIVATE_SETTINGS.add(FOD_GESTURE);
         }
 
         /**
