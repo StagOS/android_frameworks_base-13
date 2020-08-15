@@ -3889,7 +3889,8 @@ public class CentralSurfacesImpl extends CoreStartable implements
 
         boolean launchingAffordanceWithPreview =
                 mNotificationPanelViewController.isLaunchingAffordanceWithPreview();
-        mScrimController.setLaunchingAffordanceWithPreview(launchingAffordanceWithPreview);
+        mScrimController.setLaunchingAffordanceWithPreview(launchingAffordanceWithPreview
+                || mBiometricUnlockController.isWakeAndUnlock());
 
         if (mStatusBarKeyguardViewManager.isShowingAlternateAuth()) {
             if (mState == StatusBarState.SHADE || mState == StatusBarState.SHADE_LOCKED
