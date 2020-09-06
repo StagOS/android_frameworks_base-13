@@ -5888,6 +5888,12 @@ public final class Settings {
         public static final String DISPLAY_PICTURE_ADJUSTMENT = "display_picture_adjustment";
 
         /**
+         * Show app volume rows in volume panel
+         * @hide
+         */
+        public static final String SHOW_APP_VOLUME = "show_app_volume";
+
+        /**
          * Did we tell about how they can stop breaking their eyes?
          * @hide
          */
