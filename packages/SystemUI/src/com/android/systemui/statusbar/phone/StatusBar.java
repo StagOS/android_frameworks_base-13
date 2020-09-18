@@ -800,6 +800,7 @@ public class StatusBar extends SystemUI implements
             PluginManager pluginManager,
             Optional<LegacySplitScreen> splitScreenOptional,
             LightsOutNotifController lightsOutNotifController,
+            FlashlightController flashlightController,
             StatusBarNotificationActivityStarter.Builder
                     statusBarNotificationActivityStarterBuilder,
             ShadeController shadeController,
@@ -887,6 +888,7 @@ public class StatusBar extends SystemUI implements
         mNavigationBarController = navigationBarController;
         mAccessibilityFloatingMenuController = accessibilityFloatingMenuController;
         mAssistManagerLazy = assistManagerLazy;
+        mFlashlightController = flashlightController;
         mConfigurationController = configurationController;
         mNotificationShadeWindowController = notificationShadeWindowController;
         mDozeServiceHost = dozeServiceHost;
@@ -1400,7 +1402,6 @@ public class StatusBar extends SystemUI implements
         mMinBrightness = mPowerManager.getMinimumScreenBrightnessSetting();
         mMaxBrightness = mPowerManager.getMaximumScreenBrightnessSetting();
 
-        mFlashlightController = Dependency.get(FlashlightController.class);
     }
 
 
