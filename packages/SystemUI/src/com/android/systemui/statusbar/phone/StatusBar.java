@@ -802,6 +802,7 @@ public class StatusBar extends SystemUI implements
             PluginManager pluginManager,
             Optional<LegacySplitScreen> splitScreenOptional,
             LightsOutNotifController lightsOutNotifController,
+            FlashlightController flashlightController,
             StatusBarNotificationActivityStarter.Builder
                     statusBarNotificationActivityStarterBuilder,
             ShadeController shadeController,
@@ -889,6 +890,7 @@ public class StatusBar extends SystemUI implements
         mNavigationBarController = navigationBarController;
         mAccessibilityFloatingMenuController = accessibilityFloatingMenuController;
         mAssistManagerLazy = assistManagerLazy;
+        mFlashlightController = flashlightController;
         mConfigurationController = configurationController;
         mNotificationShadeWindowController = notificationShadeWindowController;
         mDozeServiceHost = dozeServiceHost;
@@ -1399,8 +1401,6 @@ public class StatusBar extends SystemUI implements
         // Private API call to make the shadows look better for Recents
         ThreadedRenderer.overrideProperty("ambientRatio", String.valueOf(1.5f));
 
-
-        mFlashlightController = Dependency.get(FlashlightController.class);
 
         mMinBrightness = mPowerManager.getMinimumScreenBrightnessSetting();
         mMaxBrightness = mPowerManager.getMaximumScreenBrightnessSetting();
