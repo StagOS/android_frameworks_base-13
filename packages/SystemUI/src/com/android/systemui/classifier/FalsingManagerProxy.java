@@ -22,6 +22,7 @@ import android.content.Context;
 import android.content.res.Resources;
 import android.hardware.SensorManager;
 import android.net.Uri;
+import android.content.res.Resources;
 import android.provider.DeviceConfig;
 import android.view.MotionEvent;
 
@@ -39,6 +40,7 @@ import com.android.systemui.dock.DockManager;
 import com.android.systemui.dump.DumpManager;
 import com.android.systemui.plugins.FalsingManager;
 import com.android.systemui.plugins.FalsingPlugin;
+import com.android.systemui.R;
 import com.android.systemui.plugins.PluginListener;
 import com.android.systemui.plugins.statusbar.StatusBarStateController;
 import com.android.systemui.shared.plugins.PluginManager;
