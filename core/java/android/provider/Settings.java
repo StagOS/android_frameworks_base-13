@@ -4919,8 +4919,12 @@ public final class Settings {
         public static final String GLOBAL_ACTIONS_SOUNDPANEL = "global_actions_soundpanel";
 
         /**
+         * @hide
+         */
+        public static final String LOCKSCREEN_MEDIA_ART = "lockscreen_media_art";
+
+        /**
          * Whether to display screenshot in the power menu
-         *
          * @hide
          */
         public static final String GLOBAL_ACTIONS_SCREENSHOT = "global_actions_screenshot";
@@ -5133,6 +5137,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
+            PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_ART);
         }
 
         /**
