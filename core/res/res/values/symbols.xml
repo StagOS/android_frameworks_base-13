@@ -4057,6 +4057,4 @@
 
   <java-symbol type="array" name="config_keep_warming_services" />
 
-  <!-- Package Manager -->
-  <java-symbol type="array" name="config_disabledComponents" />
 </resources>
