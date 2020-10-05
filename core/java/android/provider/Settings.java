@@ -5553,6 +5553,9 @@ public final class Settings {
          */
         public static final String NOTIFICATION_PULSE_DURATION = "ambient_notification_light_duration";
 
+        /** @hide */
+        public static final String BACK_GESTURE_HAPTIC = "back_gesture_haptic";
+
         /**
          * Use doubletap as doze pulse triggers
          * @hide
@@ -6317,6 +6320,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(ANBI_ENABLED_OPTION);
             PRIVATE_SETTINGS.add(FORCE_SHOW_NAVBAR);
             PRIVATE_SETTINGS.add(ALLOW_INCALL_HOME);
+            PRIVATE_SETTINGS.add(BACK_GESTURE_HAPTIC);
         }
 
         /**
