@@ -27,6 +27,10 @@ public class AccentUtils {
                 || resName.contains("accent_device_default_dark");
     }
 
+    private AccentUtils() {
+	// thank you API LINT
+    }
+
     public static int getNewAccentColor(int defaultColor) {
         return getAccentColor(defaultColor, ACCENT_COLOR_PROP);
     }
