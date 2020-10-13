@@ -32,4 +32,6 @@
     <!-- Label for current user in power menu options dialog -->
     <string name="global_action_current_user">Current</string>
 
+    <!-- Shows when people have clicked on the custom lockscreen shortcut [CHAR LIMIT=60] -->
+    <string name="custom_hint">Swipe from icon to launch</string>
 </resources>
