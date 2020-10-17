@@ -115,8 +115,6 @@
     <!-- Enable face auth only when swiping security view -->
     <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
 
-    <!-- Ambient Pulse Light -->
-    <java-symbol type="integer" name="config_AmbientPulseLightColor" />
     <!-- Ambient notification light color -->
     <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
 
