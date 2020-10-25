@@ -719,6 +719,15 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
                 try {
                     mBar.enterStageSplitFromRunningApp(leftOrTop);
                 } catch (RemoteException ex) { }
+	    }
+	}
+
+        public void leftInLandscapeChanged(boolean isLeft) {
+            if (mBar != null) {
+                try {
+                    mBar.leftInLandscapeChanged(isLeft);
+                } catch (RemoteException ex) {
+                }
             }
         }
 
@@ -1206,6 +1215,23 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
                             displayId, token, vis, backDisposition, showImeSwitcher);
                 } catch (RemoteException ex) { }
             });
+        }
+    }
+
+    /**
+     * Let systemui know screen pinning state change. This is independent of the
+     * showScreenPinningRequest() call as it does not reflect state
+     *
+     * @hide
+     */
+    @Override
+    public void screenPinningStateChanged(boolean enabled) {
+        enforceStatusBar();
+        if (mBar != null) {
+            try {
+                mBar.screenPinningStateChanged(enabled);
+            } catch (RemoteException ex) {
+            }
         }
     }
 
