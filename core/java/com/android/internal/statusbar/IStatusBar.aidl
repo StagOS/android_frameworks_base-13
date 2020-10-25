@@ -293,4 +293,7 @@ oneway interface IStatusBar
      * YAAP extensions
      */
     void toggleCameraFlash();
+
+    void screenPinningStateChanged(boolean enabled);
+    void leftInLandscapeChanged(boolean isLeft);
 }
