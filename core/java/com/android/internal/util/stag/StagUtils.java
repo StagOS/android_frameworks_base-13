@@ -144,6 +144,10 @@ public class StagUtils {
         }
     }
 
+    public static void toggleCameraFlash() {
+        FireActions.toggleCameraFlash();
+    }
+
     private static final class FireActions {
         private static IStatusBarService mStatusBarService = null;
         private static IStatusBarService getStatusBarService() {
@@ -155,6 +159,17 @@ public class StagUtils {
                 return mStatusBarService;
             }
         }
+
+        public static void toggleCameraFlash() {
+             IStatusBarService service = getStatusBarService();
+             if (service != null) {
+                 try {
+                     service.toggleCameraFlash();
+                 } catch (RemoteException e) {
+                     // do nothing.
+                 }
+             }
+         }
     }
 
     public static boolean isWifiOnly(Context context) {
