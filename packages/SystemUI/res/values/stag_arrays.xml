@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-     Copyright (C) 2021 The PixelDust Project
+     Copyright (C) 2016-2022 crDroid Android Project
      Licensed under the Apache License, Version 2.0 (the "License");
      you may not use this file except in compliance with the License.
      You may obtain a copy of the License at
@@ -12,13 +12,14 @@
      limitations under the License.
 -->
 <resources>
-    <!-- Pure Tuner Theme-->
-    <style name="ExTunerSettings" parent="@android:style/Theme.DeviceDefault.Settings">
-        <item name="preferenceTheme">@style/TunerPreferenceTheme</item>
-    </style>
-
-    <style name="TextAppearance.Notifications.reTicker" parent="@*android:style/TextAppearance.StatusBar.Icon">
-        <item name="android:textSize">14dp</item>
-        <item name="android:fontFamily">@*android:string/config_bodyFontFamily</item>
-    </style>
-</resources>
+    <string-array name="app_exceptions" translatable="false">
+         <item>org.kde.kdeconnect_tp</item>
+         <item>#FF808080</item>
+         <item>com.instagram.android</item>
+         <item>#FF833AB4</item>
+         <item>com.google.android.dialer</item>
+         <item>#FF2162D7</item>
+         <item>com.google.android.youtube</item>
+         <item>#FFDE4B4B</item>
+     </string-array>
+ </resources>
