@@ -102,4 +102,5 @@
     <!-- Color of background circle of user avatars in quick settings user switcher -->
     <color name="qs_user_switcher_avatar_background">#3C4043</color>
 
+    <color name="qs_bg_primary">#90000000</color>
 </resources>
