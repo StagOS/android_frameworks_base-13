@@ -81,6 +81,7 @@ public class DozeSensors {
     private long mDebounceFrom;
     private boolean mSettingRegistered;
     private boolean mListening;
+    private boolean mDisableProx;
 
     @VisibleForTesting
     public enum DozeSensorsUiEvent implements UiEventLogger.UiEventEnum {
