@@ -5392,6 +5392,12 @@ public final class Settings {
          */
         public static final String INCREASING_RING_START_VOLUME = "increasing_ring_start_vol";
 
+	/**
+         * Whether to show heads up only for dialer and sms apps
+         * @hide
+         */
+        public static final String LESS_BORING_HEADS_UP = "less_boring_heads_up";
+
         /**
          * Ramp up time (seconds) for increasing ring
          * @hide
