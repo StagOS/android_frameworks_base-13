@@ -11,14 +11,9 @@
  * KIND, either express or implied. See the License for the specific language governing
  * permissions and limitations under the License.
  */
-
 package com.android.systemui.qs.customize;
-
-import android.app.AlertDialog;
-import android.app.AlertDialog.Builder;
 import android.content.ComponentName;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.res.Resources;
 import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
@@ -28,10 +23,10 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnLayoutChangeListener;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.core.view.AccessibilityDelegateCompat;
 import androidx.core.view.ViewCompat;
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup;
 import androidx.recyclerview.widget.ItemTouchHelper;
@@ -39,7 +34,6 @@ import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.RecyclerView.ItemDecoration;
 import androidx.recyclerview.widget.RecyclerView.State;
 import androidx.recyclerview.widget.RecyclerView.ViewHolder;
-
 import com.android.internal.logging.UiEventLogger;
 import com.android.systemui.R;
 import com.android.systemui.qs.QSEditEvent;
@@ -49,72 +43,67 @@ import com.android.systemui.qs.customize.TileQueryHelper.TileInfo;
 import com.android.systemui.qs.customize.TileQueryHelper.TileStateListener;
 import com.android.systemui.qs.external.CustomTile;
 import com.android.systemui.qs.tileimpl.QSIconViewImpl;
-import com.android.systemui.statusbar.phone.SystemUIDialog;
-
 import java.util.ArrayList;
 import java.util.List;
-
 public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileStateListener {
     private static final long DRAG_LENGTH = 100;
     private static final float DRAG_SCALE = 1.2f;
     public static final long MOVE_DURATION = 150;
-
     private static final int TYPE_TILE = 0;
     private static final int TYPE_EDIT = 1;
     private static final int TYPE_ACCESSIBLE_DROP = 2;
     private static final int TYPE_HEADER = 3;
     private static final int TYPE_DIVIDER = 4;
-
     private static final long EDIT_ID = 10000;
     private static final long DIVIDER_ID = 20000;
-
     private static final int ACTION_NONE = 0;
     private static final int ACTION_ADD = 1;
     private static final int ACTION_MOVE = 2;
-
     private final Context mContext;
-
     private final Handler mHandler = new Handler();
     private final List<TileInfo> mTiles = new ArrayList<>();
     private final ItemTouchHelper mItemTouchHelper;
     private final ItemDecoration mDecoration;
-    private final AccessibilityManager mAccessibilityManager;
     private final int mMinNumTiles;
     private int mEditIndex;
     private int mTileDividerIndex;
+    private int mFocusIndex;
     private boolean mNeedsFocus;
     private List<String> mCurrentSpecs;
     private List<TileInfo> mOtherTiles;
     private List<TileInfo> mAllTiles;
-
     private Holder mCurrentDrag;
     private int mAccessibilityAction = ACTION_NONE;
     private int mAccessibilityFromIndex;
-    private CharSequence mAccessibilityFromLabel;
     private QSTileHost mHost;
     private final UiEventLogger mUiEventLogger;
-
+    private final AccessibilityDelegateCompat mAccessibilityDelegate;
+    private RecyclerView mRecyclerView;
     public TileAdapter(Context context, UiEventLogger uiEventLogger) {
         mContext = context;
         mUiEventLogger = uiEventLogger;
-        mAccessibilityManager = context.getSystemService(AccessibilityManager.class);
         mItemTouchHelper = new ItemTouchHelper(mCallbacks);
         mDecoration = new TileItemDecoration(context);
         mMinNumTiles = context.getResources().getInteger(R.integer.quick_settings_min_num_tiles);
+        mAccessibilityDelegate = new TileAdapterDelegate();
     }
-
+    @Override
+    public void onAttachedToRecyclerView(@NonNull RecyclerView recyclerView) {
+        mRecyclerView = recyclerView;
+    }
+    @Override
+    public void onDetachedFromRecyclerView(@NonNull RecyclerView recyclerView) {
+        mRecyclerView = null;
+    }
     public void setHost(QSTileHost host) {
         mHost = host;
     }
-
     public ItemTouchHelper getItemTouchHelper() {
         return mItemTouchHelper;
     }
-
     public ItemDecoration getItemDecoration() {
         return mDecoration;
     }
-
     public void saveSpecs(QSTileHost host) {
         List<String> newSpecs = new ArrayList<>();
         clearAccessibilityState();
@@ -124,24 +113,20 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         host.changeTiles(mCurrentSpecs, newSpecs);
         mCurrentSpecs = newSpecs;
     }
-
     private void clearAccessibilityState() {
         if (mAccessibilityAction == ACTION_ADD) {
             // Remove blank tile from last spot
             mTiles.remove(--mEditIndex);
             // Update the tile divider position
-            mTileDividerIndex--;
             notifyDataSetChanged();
         }
         mAccessibilityAction = ACTION_NONE;
     }
-
     public void resetTileSpecs(QSTileHost host, List<String> specs) {
         // Notify the host so the tiles get removed callbacks.
         host.changeTiles(mCurrentSpecs, specs);
         setTileSpecs(specs);
     }
-
     public void setTileSpecs(List<String> currentSpecs) {
         if (currentSpecs.equals(mCurrentSpecs)) {
             return;
@@ -149,13 +134,11 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         mCurrentSpecs = currentSpecs;
         recalcSpecs();
     }
-
     @Override
     public void onTilesChanged(List<TileInfo> tiles) {
         mAllTiles = tiles;
         recalcSpecs();
     }
-
     private void recalcSpecs() {
         if (mCurrentSpecs == null || mAllTiles == null) {
             return;
@@ -183,7 +166,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         updateDividerLocations();
         notifyDataSetChanged();
     }
-
     private TileInfo getAndRemoveOther(String s) {
         for (int i = 0; i < mOtherTiles.size(); i++) {
             if (mOtherTiles.get(i).spec.equals(s)) {
@@ -192,7 +174,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         }
         return null;
     }
-
     @Override
     public int getItemViewType(int position) {
         if (position == 0) {
@@ -209,7 +190,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         }
         return TYPE_TILE;
     }
-
     @Override
     public Holder onCreateViewHolder(ViewGroup parent, int viewType) {
         final Context context = parent.getContext();
@@ -228,29 +208,23 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         frame.addView(new CustomizeTileView(context, new QSIconViewImpl(context)));
         return new Holder(frame);
     }
-
     @Override
     public int getItemCount() {
         return mTiles.size();
     }
-
     @Override
     public boolean onFailedToRecycleView(Holder holder) {
         holder.clearDrag();
         return true;
     }
-
     private void setSelectableForHeaders(View view) {
-        if (mAccessibilityManager.isTouchExplorationEnabled()) {
-            final boolean selectable = mAccessibilityAction == ACTION_NONE;
-            view.setFocusable(selectable);
-            view.setImportantForAccessibility(selectable
-                    ? View.IMPORTANT_FOR_ACCESSIBILITY_YES
-                    : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
-            view.setFocusableInTouchMode(selectable);
-        }
+        final boolean selectable = mAccessibilityAction == ACTION_NONE;
+        view.setFocusable(selectable);
+        view.setImportantForAccessibility(selectable
+                ? View.IMPORTANT_FOR_ACCESSIBILITY_YES
+                : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
+        view.setFocusableInTouchMode(selectable);
     }
-
     @Override
     public void onBindViewHolder(final Holder holder, int position) {
         if (holder.getItemViewType() == TYPE_HEADER) {
@@ -272,10 +246,8 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             } else {
                 titleText = res.getString(R.string.drag_to_remove_tiles);
             }
-
             ((TextView) holder.itemView.findViewById(android.R.id.title)).setText(titleText);
             setSelectableForHeaders(holder.itemView);
-
             return;
         }
         if (holder.getItemViewType() == TYPE_ACCESSIBLE_DROP) {
@@ -285,75 +257,59 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             holder.mTileView.setVisibility(View.VISIBLE);
             holder.mTileView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
             holder.mTileView.setContentDescription(mContext.getString(
-                    R.string.accessibility_qs_edit_tile_add, mAccessibilityFromLabel,
-                    position));
+                    R.string.accessibility_qs_edit_tile_add_to_position, position));
             holder.mTileView.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    selectPosition(holder.getAdapterPosition(), v);
+                    selectPosition(holder.getLayoutPosition());
                 }
             });
             focusOnHolder(holder);
             return;
         }
-
         TileInfo info = mTiles.get(position);
-
-        if (position > mEditIndex) {
+        final boolean selectable = 0 < position && position < mEditIndex;
+        if (selectable && mAccessibilityAction == ACTION_ADD) {
             info.state.contentDescription = mContext.getString(
-                    R.string.accessibility_qs_edit_add_tile_label, info.state.label);
-        } else if (mAccessibilityAction == ACTION_ADD) {
+                    R.string.accessibility_qs_edit_tile_add_to_position, position);
+        } else if (selectable && mAccessibilityAction == ACTION_MOVE) {
             info.state.contentDescription = mContext.getString(
-                    R.string.accessibility_qs_edit_tile_add, mAccessibilityFromLabel, position);
-        } else if (mAccessibilityAction == ACTION_MOVE) {
-            info.state.contentDescription = mContext.getString(
-                    R.string.accessibility_qs_edit_tile_move, mAccessibilityFromLabel, position);
+                    R.string.accessibility_qs_edit_tile_move_to_position, position);
         } else {
-            info.state.contentDescription = mContext.getString(
-                    R.string.accessibility_qs_edit_tile_label, position, info.state.label);
+            info.state.contentDescription = info.state.label;
         }
+        info.state.expandedAccessibilityClassName = "";
         holder.mTileView.handleStateChanged(info.state);
         holder.mTileView.setShowAppLabel(position > mEditIndex && !info.isSystem);
-
-        final boolean selectable = mAccessibilityAction == ACTION_NONE || position < mEditIndex;
-        if (!(mAccessibilityManager.isTouchExplorationEnabled() && selectable)) {
-            holder.mTileView.setOnClickListener(v -> move(holder.getAdapterPosition(),
-                    mEditIndex, holder.mTileView));
-        }
-
-        if (mAccessibilityManager.isTouchExplorationEnabled()) {
+        holder.mTileView.setImportantForAccessibility(View.IMPORTANT_FOR_ACCESSIBILITY_YES);
+        holder.mTileView.setClickable(true);
+        holder.mTileView.setOnClickListener(null);
+        holder.mTileView.setFocusable(true);
+        holder.mTileView.setFocusableInTouchMode(true);
+        if (mAccessibilityAction != ACTION_NONE) {
             holder.mTileView.setClickable(selectable);
             holder.mTileView.setFocusable(selectable);
+            holder.mTileView.setFocusableInTouchMode(selectable);
             holder.mTileView.setImportantForAccessibility(selectable
                     ? View.IMPORTANT_FOR_ACCESSIBILITY_YES
                     : View.IMPORTANT_FOR_ACCESSIBILITY_NO_HIDE_DESCENDANTS);
-            holder.mTileView.setFocusableInTouchMode(selectable);
             if (selectable) {
                 holder.mTileView.setOnClickListener(new OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        int position = holder.getAdapterPosition();
+                        int position = holder.getLayoutPosition();
                         if (position == RecyclerView.NO_POSITION) return;
                         if (mAccessibilityAction != ACTION_NONE) {
-                            selectPosition(position, v);
-                        } else {
-                            if (position < mEditIndex && canRemoveTiles()) {
-                                showAccessibilityDialog(position, v);
-                            } else if (position < mEditIndex && !canRemoveTiles()) {
-                                startAccessibleMove(position);
-                            } else {
-                                startAccessibleAdd(position);
-                            }
+                            selectPosition(position);
                         }
                     }
                 });
-                if (position == mAccessibilityFromIndex) {
-                    focusOnHolder(holder);
-                }
             }
         }
+        if (position == mFocusIndex) {
+            focusOnHolder(holder);
+        }
     }
-
     private void focusOnHolder(Holder holder) {
         if (mNeedsFocus) {
             // Wait for this to get laid out then set its focus.
@@ -365,82 +321,79 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                         int oldLeft, int oldTop, int oldRight, int oldBottom) {
                     holder.mTileView.removeOnLayoutChangeListener(this);
                     holder.mTileView.requestFocus();
+                    if (mAccessibilityAction == ACTION_NONE) {
+                        holder.mTileView.clearFocus();
+                    }
                 }
             });
             mNeedsFocus = false;
+            mFocusIndex = RecyclerView.NO_POSITION;
         }
     }
-
     private boolean canRemoveTiles() {
         return mCurrentSpecs.size() > mMinNumTiles;
     }
-
-    private void selectPosition(int position, View v) {
+    private void selectPosition(int position) {
         if (mAccessibilityAction == ACTION_ADD) {
             // Remove the placeholder.
             mTiles.remove(mEditIndex--);
-            notifyItemRemoved(mEditIndex);
         }
         mAccessibilityAction = ACTION_NONE;
-        move(mAccessibilityFromIndex, position, v);
+        move(mAccessibilityFromIndex, position, false);
+        mFocusIndex = position;
+        mNeedsFocus = true;
         notifyDataSetChanged();
     }
-
-    private void showAccessibilityDialog(final int position, final View v) {
-        final TileInfo info = mTiles.get(position);
-        CharSequence[] options = new CharSequence[] {
-                mContext.getString(R.string.accessibility_qs_edit_move_tile, info.state.label),
-                mContext.getString(R.string.accessibility_qs_edit_remove_tile, info.state.label),
-        };
-        AlertDialog dialog = new Builder(mContext)
-                .setItems(options, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (which == 0) {
-                            startAccessibleMove(position);
-                        } else {
-                            move(position, info.isSystem ? mEditIndex : mTileDividerIndex, v);
-                            notifyItemChanged(mTileDividerIndex);
-                            notifyDataSetChanged();
-                        }
-                    }
-                }).setNegativeButton(android.R.string.cancel, null)
-                .create();
-        SystemUIDialog.setShowForAllUsers(dialog, true);
-        SystemUIDialog.applyFlags(dialog);
-        dialog.show();
-    }
-
     private void startAccessibleAdd(int position) {
         mAccessibilityFromIndex = position;
-        mAccessibilityFromLabel = mTiles.get(position).state.label;
         mAccessibilityAction = ACTION_ADD;
         // Add placeholder for last slot.
         mTiles.add(mEditIndex++, null);
         // Update the tile divider position
         mTileDividerIndex++;
+        mFocusIndex = mEditIndex - 1;
         mNeedsFocus = true;
+        if (mRecyclerView != null) {
+            mRecyclerView.post(() -> mRecyclerView.smoothScrollToPosition(mFocusIndex));
+        }
         notifyDataSetChanged();
     }
-
     private void startAccessibleMove(int position) {
         mAccessibilityFromIndex = position;
-        mAccessibilityFromLabel = mTiles.get(position).state.label;
         mAccessibilityAction = ACTION_MOVE;
+        mFocusIndex = position;
         mNeedsFocus = true;
         notifyDataSetChanged();
     }
-
+    private boolean canRemoveFromPosition(int position) {
+        return canRemoveTiles() && isCurrentTile(position);
+    }
+    private boolean isCurrentTile(int position) {
+        return position < mEditIndex;
+    }
+    private boolean canAddFromPosition(int position) {
+        return position > mEditIndex;
+    }
+    private void addFromPosition(int position) {
+        if (!canAddFromPosition(position)) return;
+        move(position, mEditIndex);
+    }
+    private void removeFromPosition(int position) {
+        if (!canRemoveFromPosition(position)) return;
+        TileInfo info = mTiles.get(position);
+        move(position, info.isSystem ? mEditIndex : mTileDividerIndex);
+    }
     public SpanSizeLookup getSizeLookup() {
         return mSizeLookup;
     }
-
-    private boolean move(int from, int to, View v) {
+    private boolean move(int from, int to) {
+        return move(from, to, true);
+    }
+    private boolean move(int from, int to, boolean notify) {
         if (to == from) {
             return true;
         }
-        CharSequence fromLabel = mTiles.get(from).state.label;
-        move(from, to, mTiles);
+        move(from, to, mTiles, notify);
         updateDividerLocations();
         if (to >= mEditIndex) {
             mUiEventLogger.log(QSEditEvent.QS_EDIT_REMOVE, 0, strip(mTiles.get(to)));
@@ -452,7 +405,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         saveSpecs(mHost);
         return true;
     }
-
     private void updateDividerLocations() {
         // The first null is the header label (index 0) so we can skip it,
         // the second null is the edit tiles label, the third null is the tile divider.
@@ -472,7 +424,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             notifyItemChanged(mTileDividerIndex);
         }
     }
-
     private static String strip(TileInfo tileInfo) {
         String spec = tileInfo.spec;
         if (spec.startsWith(CustomTile.PREFIX)) {
@@ -481,24 +432,24 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
         }
         return spec;
     }
-
-    private <T> void move(int from, int to, List<T> list) {
+    private <T> void move(int from, int to, List<T> list, boolean notify) {
         list.add(to, list.remove(from));
-        notifyItemMoved(from, to);
+        if (notify) {
+            notifyItemMoved(from, to);
+        }
     }
-
     public class Holder extends ViewHolder {
         private CustomizeTileView mTileView;
-
         public Holder(View itemView) {
             super(itemView);
             if (itemView instanceof FrameLayout) {
                 mTileView = (CustomizeTileView) ((FrameLayout) itemView).getChildAt(0);
                 mTileView.setBackground(null);
                 mTileView.getIcon().disableAnimation();
+                mTileView.setTag(this);
+                ViewCompat.setAccessibilityDelegate(mTileView, mAccessibilityDelegate);
             }
         }
-
         public void clearDrag() {
             itemView.clearAnimation();
             mTileView.findViewById(R.id.tile_label).clearAnimation();
@@ -506,7 +457,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             mTileView.getAppLabel().clearAnimation();
             mTileView.getAppLabel().setAlpha(.6f);
         }
-
         public void startDrag() {
             itemView.animate()
                     .setDuration(DRAG_LENGTH)
@@ -519,7 +469,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                     .setDuration(DRAG_LENGTH)
                     .alpha(0);
         }
-
         public void stopDrag() {
             itemView.animate()
                     .setDuration(DRAG_LENGTH)
@@ -532,8 +481,38 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                     .setDuration(DRAG_LENGTH)
                     .alpha(.6f);
         }
+        boolean canRemove() {
+            return canRemoveFromPosition(getLayoutPosition());
+        }
+        boolean canAdd() {
+            return canAddFromPosition(getLayoutPosition());
+        }
+        void toggleState() {
+            if (canAdd()) {
+                add();
+            } else {
+                remove();
+            }
+        }
+        private void add() {
+            addFromPosition(getLayoutPosition());
+        }
+        private void remove() {
+            removeFromPosition(getLayoutPosition());
+        }
+        boolean isCurrentTile() {
+            return TileAdapter.this.isCurrentTile(getLayoutPosition());
+        }
+        void startAccessibleAdd() {
+            TileAdapter.this.startAccessibleAdd(getLayoutPosition());
+        }
+        void startAccessibleMove() {
+            TileAdapter.this.startAccessibleMove(getLayoutPosition());
+        }
+        boolean canTakeAccessibleAction() {
+            return mAccessibilityAction == ACTION_NONE;
+        }
     }
-
     private final SpanSizeLookup mSizeLookup = new SpanSizeLookup() {
         @Override
         public int getSpanSize(int position) {
@@ -541,19 +520,14 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             return type == TYPE_EDIT || type == TYPE_DIVIDER || type == TYPE_HEADER ? 3 : 1;
         }
     };
-
     private class TileItemDecoration extends ItemDecoration {
         private final Drawable mDrawable;
-
         private TileItemDecoration(Context context) {
             mDrawable = context.getDrawable(R.drawable.qs_customize_tile_decoration);
         }
-
-
         @Override
         public void onDraw(Canvas c, RecyclerView parent, State state) {
             super.onDraw(c, parent, state);
-
             final int childCount = parent.getChildCount();
             final int width = parent.getWidth();
             final int bottom = parent.getBottom();
@@ -564,7 +538,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                         holder.getAdapterPosition() < mEditIndex && !(child instanceof TextView)) {
                     continue;
                 }
-
                 final RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) child
                         .getLayoutParams();
                 final int top = child.getTop() + params.topMargin +
@@ -576,19 +549,15 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             }
         }
     }
-
     private final ItemTouchHelper.Callback mCallbacks = new ItemTouchHelper.Callback() {
-
         @Override
         public boolean isLongPressDragEnabled() {
             return true;
         }
-
         @Override
         public boolean isItemViewSwipeEnabled() {
             return false;
         }
-
         @Override
         public void onSelectedChanged(ViewHolder viewHolder, int actionState) {
             super.onSelectedChanged(viewHolder, actionState);
@@ -616,7 +585,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                 }
             });
         }
-
         @Override
         public boolean canDropOver(RecyclerView recyclerView, ViewHolder current,
                 ViewHolder target) {
@@ -629,7 +597,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
             }
             return position <= mEditIndex + 1;
         }
-
         @Override
         public int getMovementFlags(RecyclerView recyclerView, ViewHolder viewHolder) {
             switch (viewHolder.getItemViewType()) {
@@ -644,7 +611,6 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                     return makeMovementFlags(dragFlags, 0);
             }
         }
-
         @Override
         public boolean onMove(RecyclerView recyclerView, ViewHolder viewHolder, ViewHolder target) {
             int from = viewHolder.getAdapterPosition();
@@ -653,9 +619,8 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
                     to == 0 || to == RecyclerView.NO_POSITION) {
                 return false;
             }
-            return move(from, to, target.itemView);
+            return move(from, to);
         }
-
         @Override
         public void onSwiped(ViewHolder viewHolder, int direction) {
         }
