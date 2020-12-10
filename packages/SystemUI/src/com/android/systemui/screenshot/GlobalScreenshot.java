@@ -558,7 +558,7 @@ public class GlobalScreenshot implements ViewTreeObserver.OnComputeInternalInset
     /**
      * Takes a screenshot of the current display and shows an animation.
      */
-    private void takeScreenshot(Consumer<Uri> finisher, Rect crop) {
+    private void takeScreenshotInternal(Consumer<Uri> finisher, Rect crop) {
         // Dismiss the old screenshot first to prevent it from showing up in the new screenshot
         dismissScreenshot("new screenshot requested", true);
 
