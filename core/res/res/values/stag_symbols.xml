@@ -118,4 +118,6 @@
     <!-- Ambient notification light color -->
     <java-symbol type="integer" name="config_ambientNotificationDefaultColor" />
 
+    <!-- Pulse brightness -->
+    <java-symbol type="integer" name="config_screenBrightnessPulse" />
 </resources>

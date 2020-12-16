@@ -5500,6 +5500,25 @@ public final class Settings {
                 "statusbar_battery_bar_blend_color_reverse";
 
         /**
+         * User definable value of pulse notification screen brightness
+         *
+         * @hide
+         */
+        public static final String PULSE_BRIGHTNESS = "pulse_brightness";
+
+        /**
+         * User definable value of aod screen brightness
+         *
+         * @hide
+         */
+        public static final String DOZE_BRIGHTNESS = "doze_brightness";
+
+        /**
+         * @hide
+         */
+        public static final String DOZE_BRIGHTNESS_FORCE = "doze_brightness_force";
+
+        /**
          * Keys we no longer back up under the current schema, but want to continue to
          * process when restoring historical backup datasets.
          *
@@ -5661,6 +5680,9 @@ public final class Settings {
             PRIVATE_SETTINGS.add(THEMING_SETTINGS_DASHBOARD_ICONS);
             PRIVATE_SETTINGS.add(FOD_GESTURE);
             PRIVATE_SETTINGS.add(LOCKSCREEN_BATTERY_INFO);
+            PRIVATE_SETTINGS.add(PULSE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS);
+            PRIVATE_SETTINGS.add(DOZE_BRIGHTNESS_FORCE);
         }
 
         /**
