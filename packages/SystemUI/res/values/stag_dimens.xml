@@ -43,4 +43,7 @@
     <dimen name="udfps_animation_size">280dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
 
+    <!-- Bolt Battery Icon -->
+    <dimen name="status_bar_battery_bolt_icon_height">13.5dp</dimen> 
+    <dimen name="status_bar_battery_bolt_icon_width">9.7dp</dimen>
 </resources>
