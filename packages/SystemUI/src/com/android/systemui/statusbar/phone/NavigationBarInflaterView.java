@@ -156,9 +156,6 @@ public class NavigationBarInflaterView extends FrameLayout
                 : mOverviewProxyService.shouldShowSwipeUpUI()
                         ? R.string.config_navBarLayoutQuickstep
                         : R.string.config_navBarLayout;
-        if (!mIsHintEnabled && defaultResource == R.string.config_navBarLayoutHandle) {
-            return getContext().getString(defaultResource).replace(HOME_HANDLE, "");
-        }
         return getContext().getString(defaultResource);
     }
 
@@ -201,6 +198,10 @@ public class NavigationBarInflaterView extends FrameLayout
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
         updateLayoutInversion();
+    }
+
+    public boolean isHintEnabled() {
+        return mIsHintEnabled;
     }
 
     public void onLikelyDefaultLayoutChange() {
