@@ -70,6 +70,9 @@
     <!-- Whether device has VOOC charging support -->
     <bool name="config_hasVoocCharger">false</bool>
 
+    <!-- Whether device has turbo power charging support -->
+    <bool name="config_hasTurboPowerCharger">false</bool>
+
     <!-- Paths to OP warp charging status file -->
     <string name="config_opWarpChargerStatusPaths" translatable="false"></string>
 </resources>
