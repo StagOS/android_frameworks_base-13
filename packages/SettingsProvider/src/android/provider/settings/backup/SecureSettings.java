@@ -172,5 +172,6 @@ public class SecureSettings {
         Settings.Secure.ASSIST_HANDLES_LEARNING_EVENT_COUNT,
         Settings.Secure.VOLUME_LINK_NOTIFICATION,
         Settings.Secure.TORCH_POWER_BUTTON_GESTURE,
+        Settings.Secure.FOD_ON_DOZE
     };
 }
