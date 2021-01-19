@@ -1358,7 +1358,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     public void updateBlurVisibility() {
         float QSBlurAlpha = mNotificationPanel.getExpandedFraction();
 
-        if (QSBlurAlpha > 0f && !blurperformed && !mIsKeyguard) {
+        if (QSBlurAlpha > 0f && !blurperformed && !mIsKeyguard && isQSBlurEnabled()) {
             drawBlurView();
             blurperformed = true;
             mQSBlurView.setVisibility(View.VISIBLE);
@@ -1376,6 +1376,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         } else {
             mQSBlurView.setImageBitmap(ImageUtilities.blurImage(mContext, surfaceBitmap));
         }
+    }
+
+    private boolean isQSBlurEnabled() {
+        return Settings.System.getInt(mContext.getContentResolver(),
+                Settings.System.QS_BLUR, 1) != 0;
     }
 
     protected QS createDefaultQSFragment() {
