@@ -2596,7 +2596,7 @@ public class NotificationPanelViewController extends PanelViewController {
     public boolean setPanelAlphaFast(int alpha, boolean animate) {
         if (mPanelAlpha != alpha) {
             mPanelAlpha = alpha;
-            PropertyAnimator.setProperty(this, mPanelAlphaAnimator, alpha,
+            PropertyAnimator.setProperty(mView, mPanelAlphaAnimator, alpha,
                     alpha == 255 ? PANEL_ALPHA_IN_FAST_PROPERTIES : PANEL_ALPHA_OUT_FAST_PROPERTIES, animate);
             return true;
         }
