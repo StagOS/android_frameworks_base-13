@@ -1356,7 +1356,7 @@ public class StatusBar extends SystemUI implements DemoMode,
     }
 
     public void updateBlurVisibility() {
-        float QSBlurAlpha = mNotificationPanel.getExpandedFraction();
+        float QSBlurAlpha = mNotificationPanelViewController.getExpandedFraction();
 
         if (QSBlurAlpha > 0f && !blurperformed && !mIsKeyguard && isQSBlurEnabled()) {
             drawBlurView();
@@ -3123,11 +3123,11 @@ public class StatusBar extends SystemUI implements DemoMode,
         mScreenPinningRequest.onConfigurationChanged();
 
         if (blurperformed) {
-            mNotificationPanel.setPanelAlpha(0, false);
+            mNotificationPanelViewController.setPanelAlpha(0, false);
             mHandler.postDelayed(new Runnable() {
                 public void run() {
                     drawBlurView();
-                    mNotificationPanel.setPanelAlphaFast(255, true);
+                    mNotificationPanelViewController.setPanelAlphaFast(255, true);
                 }
             }, Math.max(390, Math.round(455f * Settings.Global.getFloat(
                     mContext.getContentResolver(),
