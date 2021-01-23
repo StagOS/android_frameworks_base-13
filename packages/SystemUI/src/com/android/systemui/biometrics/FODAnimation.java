@@ -70,7 +70,7 @@ public class FODAnimation extends ImageView {
         "fod_rog_supernova_recognizing_anim",
     };
 
-    private final String FOD_ANIMATIONS_PACKAGE = "com.stag.fod.animations";
+    private final String FOD_ANIMATIONS_PACKAGE = "com.superior.fod.animations";
 
     private static final boolean DEBUG = true;
     private static final String LOG_TAG = "FODAnimations";

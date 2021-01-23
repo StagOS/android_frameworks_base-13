@@ -258,8 +258,7 @@ public class FODCircleView extends ImageView {
           } else {
             hide();
             dispatchFodScreenStateChanged(false);
-          }
-	}
+        }
 
         @Override
         public void onStartedWakingUp() {
@@ -279,6 +278,12 @@ public class FODCircleView extends ImageView {
             }
             mScreenTurnedOn = true;
             dispatchFodScreenStateChanged(true);
+        }
+
+        @Override
+        public void onBiometricRunningStateChanged(boolean running,
+            BiometricSourceType biometricSourceType) {
+            dispatchFodFingerprintRunningStateChanged(running);
         }
 
         @Override
