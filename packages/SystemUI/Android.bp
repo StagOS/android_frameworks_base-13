@@ -72,6 +72,7 @@ android_library {
         "jsr330",
         "tensorflowlite_java",
         "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java",
+        "faceunlock_framework",
     ],
     manifest: "AndroidManifest.xml",
 
