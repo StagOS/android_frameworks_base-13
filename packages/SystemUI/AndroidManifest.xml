@@ -334,6 +334,8 @@
 
     <!-- Custom permissions -->
     <uses-permission android:name="android.permission.ACCESS_SURFACE_FLINGER" />
+    
+    <uses-permission android:name="android.permission.MAINLINE_NETWORK_STACK" />
 
     <application
         android:name=".SystemUIApplication"
