@@ -4941,11 +4941,6 @@ public final class Settings {
          */
 
         /**
-         * @hide
-         */
-        public static final String LOCKSCREEN_MEDIA_ART = "lockscreen_media_art";
-
-        /**
          * Applications list where heasdup should't show
          * @hide
          */
@@ -5496,7 +5491,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_LOCKSCREEN);
-            PRIVATE_SETTINGS.add(LOCKSCREEN_MEDIA_ART);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
             PRIVATE_SETTINGS.add(HEADS_UP_STOPLIST_VALUES);
             PRIVATE_SETTINGS.add(HEADS_UP_BLACKLIST_VALUES);
