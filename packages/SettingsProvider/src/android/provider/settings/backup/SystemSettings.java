@@ -90,6 +90,7 @@ public class SystemSettings {
         Settings.System.USE_OLD_MOBILETYPE,
         Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
+        Settings.System.LOCKSCREEN_MEDIA_ART,
         Settings.System.QS_PANEL_BG_USE_NEW_TINT,
         Settings.System.QS_BLUR,
 	Settings.System.THEMING_SETTINGS_DASHBOARD_ICONS,
