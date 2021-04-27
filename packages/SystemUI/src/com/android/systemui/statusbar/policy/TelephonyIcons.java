@@ -40,7 +40,6 @@ public class TelephonyIcons {
     static int ICON_1X = R.drawable.ic_1x_mobiledata;
     static final int ICON_5G = R.drawable.ic_5g_mobiledata;
     static final int ICON_5G_PLUS = R.drawable.ic_5g_plus_mobiledata;
-    static final int ICON_DATA_DISABLED = R.drawable.stat_sys_data_disabled;
 
     static final MobileIconGroup CARRIER_NETWORK_CHANGE = new MobileIconGroup(
             "CARRIER_NETWORK_CHANGE",
