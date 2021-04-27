@@ -172,12 +172,7 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         } else {
             mMobileGroup.setVisibility(View.VISIBLE);
         }
-        if (mState.strengthId > 0) {
-            mMobile.setVisibility(View.VISIBLE);
-            mMobileDrawable.setLevel(mState.strengthId);
-        } else {
-            mMobile.setVisibility(View.GONE);
-        }
+        mMobileDrawable.setLevel(mState.strengthId);
         if (mState.typeId > 0) {
             mMobileType.setContentDescription(mState.typeContentDescription);
             mMobileType.setImageResource(mState.typeId);
@@ -192,10 +187,10 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
         mOut.setVisibility(mState.activityOut ? View.VISIBLE : View.GONE);
         mInoutContainer.setVisibility((mState.activityIn || mState.activityOut)
                 ? View.VISIBLE : View.GONE);
-        if (mState.volteId > 0) {
+        if (mState.volteId > 0 ) {
             mVolte.setImageResource(mState.volteId);
             mVolte.setVisibility(View.VISIBLE);
-        } else {
+        }else {
             mVolte.setVisibility(View.GONE);
         }
     }
@@ -208,11 +203,8 @@ public class StatusBarMobileView extends FrameLayout implements DarkReceiver,
             mMobileGroup.setVisibility(state.visible ? View.VISIBLE : View.GONE);
             needsLayout = true;
         }
-        if (state.strengthId > 0) {
+        if (mState.strengthId != state.strengthId) {
             mMobileDrawable.setLevel(state.strengthId);
-            mMobile.setVisibility(View.VISIBLE);
-        } else {
-            mMobile.setVisibility(View.GONE);
         }
         if (mState.typeId != state.typeId) {
             needsLayout |= state.typeId == 0 || mState.typeId == 0;
