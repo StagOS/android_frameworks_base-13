@@ -4922,12 +4922,6 @@ public final class Settings {
         public static final String SHOW_FOURG = "show_fourg";
 
 	/**
-         * Whether to show VoLTE icon or not
-         * @hide
-         */
-        public static final String SHOW_VOLTE_ICON = "show_volte_icon";
-
-	/**
          * Whether to use the custom quick unlock screen control
          * @hide
          */
@@ -5851,7 +5845,6 @@ public final class Settings {
             PRIVATE_SETTINGS.add(COLOR_BUCKET_OVERLAY);
             PRIVATE_SETTINGS.add(VOLUME_PANEL_ON_LEFT);
             PRIVATE_SETTINGS.add(SHOW_FOURG);
-            PRIVATE_SETTINGS.add(SHOW_VOLTE_ICON);
             PRIVATE_SETTINGS.add(LOCKSCREEN_PIN_SCRAMBLE_LAYOUT);
             PRIVATE_SETTINGS.add(USE_OLD_MOBILETYPE);
             PRIVATE_SETTINGS.add(DOUBLE_TAP_SLEEP_GESTURE);
