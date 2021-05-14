@@ -99,7 +99,6 @@ final class UiModeManagerService extends SystemService {
 
     private IOverlayManager mOverlayManager;
     private static final String ACCENT_COLOR_PROP = "persist.sys.theme.accentcolor";
-    private IOverlayManager mOverlayManager;
 
     final Object mLock = new Object();
     private int mDockState = Intent.EXTRA_DOCK_STATE_UNDOCKED;
@@ -430,8 +429,6 @@ final class UiModeManagerService extends SystemService {
         }, TAG + ".onStart");
         publishBinderService(Context.UI_MODE_SERVICE, mService);
         publishLocalService(UiModeManagerInternal.class, mLocalService);
-        context.getContentResolver().registerContentObserver(System.getUriFor(System.ACCENT_COLOR),
-                false, mAccentObserver, UserHandle.USER_ALL);
     }
 
     private final BroadcastReceiver mOnShutdown = new BroadcastReceiver() {
@@ -605,22 +602,6 @@ final class UiModeManagerService extends SystemService {
 
     private void applyAccentColor() {
 	final Context context = getContext(); int intColor = System.getIntForUser(context.getContentResolver(),
-                System.ACCENT_COLOR, 0xFF1A73E8, UserHandle.USER_CURRENT);
-        String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
-        String accentVal = SystemProperties.get(ACCENT_COLOR_PROP);
-        if (!accentVal.equals(colorHex)) {
-            SystemProperties.set(ACCENT_COLOR_PROP, colorHex);
-            try {
-                mOverlayManager.reloadAndroidAssets(UserHandle.USER_CURRENT);
-                mOverlayManager.reloadAssets("com.android.settings", UserHandle.USER_CURRENT);
-                mOverlayManager.reloadAssets("com.android.systemui", UserHandle.USER_CURRENT);
-            } catch (Exception e) { }
-        }
-    }
-
-    private void applyAccentColor() {
-        final Context context = getContext();
-        int intColor = System.getIntForUser(context.getContentResolver(),
                 System.ACCENT_COLOR, 0xFF1A73E8, UserHandle.USER_CURRENT);
         String colorHex = String.format("%08x", (0xFFFFFFFF & intColor));
         String accentVal = SystemProperties.get(ACCENT_COLOR_PROP);
