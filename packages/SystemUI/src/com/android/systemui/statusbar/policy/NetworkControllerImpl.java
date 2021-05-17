@@ -364,7 +364,6 @@ public class NetworkControllerImpl extends BroadcastReceiver
         filter.addAction(Intent.ACTION_AIRPLANE_MODE_CHANGED);
         filter.addAction(CarrierConfigManager.ACTION_CARRIER_CONFIG_CHANGED);
         filter.addAction(IMS_STATUS_CHANGED);
-//        filter.addAction(TelephonyIntents.ACTION_VOWIFI_ENABLED);
         mBroadcastDispatcher.registerReceiverWithHandler(this, filter, mReceiverHandler);
         mListening = true;
 
@@ -710,7 +709,6 @@ public class NetworkControllerImpl extends BroadcastReceiver
                 mConfig = Config.readConfig(mContext);
                 mReceiverHandler.post(this::handleConfigurationChanged);
                 break;
-//            case TelephonyIntents.ACTION_VOWIFI_ENABLED:
             case IMS_STATUS_CHANGED:
                 updateImsIcon();
                 break;
