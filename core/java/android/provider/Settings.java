@@ -4634,19 +4634,6 @@ public final class Settings {
         @UnsupportedAppUsage
         public static final String NOTIFICATION_LIGHT_PULSE = "notification_light_pulse";
 
-
-        /**
-         * FOD recognizing animation
-         * @hide
-         */
-        public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
-
-        /**
-         * FOD recognizing animation picker
-         * @hide
-         */
-        public static final String FOD_ANIM = "fod_recognizing_animation_list";
-
         /**
          * Show pointer location on screen?
          * 0 = no

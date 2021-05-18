@@ -51,9 +51,6 @@
     <!-- QS detail view scrolling -->
     <dimen name="qs_detail_item_height_twoline">72dp</dimen>
 
-    <!-- Recognizing fingerprint animation -->
-    <dimen name="fod_animation_size">280dp</dimen>
-
     <!-- Width of the battery icon in the status bar when set to circle style. -->
     <dimen name="status_bar_battery_icon_circle_width">14.5dp</dimen>
     <!-- Height of the big battery circle icon in the status bar. -->
