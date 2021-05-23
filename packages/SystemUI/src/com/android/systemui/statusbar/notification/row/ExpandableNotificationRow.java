@@ -629,7 +629,7 @@ public class ExpandableNotificationRow extends ActivatableNotificationView
         if (colorize) {
             color = getOriginalIconColor();
         }
-        expandedIcon.setStaticDrawableColor(color);
+        expandedIcon.setStaticDrawableColorNotif(color);
     }
 
     public int getOriginalIconColor() {
