@@ -157,6 +157,27 @@ public final class LineageHardwareManager {
     }
 
     /**
+     * String version for preference constraints
+     *
+     * @hide
+     */
+    public boolean isSupported(String feature) {
+        if (!feature.startsWith("FEATURE_")) {
+            return false;
+        }
+        try {
+            Field f = getClass().getField(feature);
+            if (f != null) {
+                return isSupported((int) f.get(null));
+            }
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.d(TAG, e.getMessage(), e);
+        }
+
+        return false;
+    }
+
+    /**
      * Determine if the given feature is enabled or disabled.
      *
      * Only used for features which have simple enable/disable controls.
