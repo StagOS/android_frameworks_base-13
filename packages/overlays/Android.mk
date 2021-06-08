@@ -26,7 +26,6 @@ LOCAL_REQUIRED_MODULES := \
         AndroidBlackThemeOverlay \
 	DisplayCutoutEmulationTallOverlay \
 	DisplayCutoutEmulationWaterfallOverlay \
-	FontNotoSerifSourceOverlay \
 	IconPackCircularAndroidOverlay \
 	IconPackCircularLauncherOverlay \
 	IconPackCircularSettingsOverlay \
@@ -70,6 +69,7 @@ LOCAL_REQUIRED_MODULES := \
         NavigationBarMode2ButtonOverlay \
         IconPackAcherusAndroidOverlay \
 	IconPackAcherusSystemUIOverlay \
+	NavigationBarMode2ButtonOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
 	NavigationBarModeGesturalOverlayNarrowBack \
