@@ -139,6 +139,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private final PrimaryBouncerInteractor mPrimaryBouncerInteractor;
     private final BouncerView mPrimaryBouncerView;
     private final Lazy<ShadeController> mShadeController;
+    private boolean mBouncerVisible = false;
 
     // Local cache of expansion events, to avoid duplicates
     private float mFraction = -1f;
@@ -187,6 +188,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
                 mCentralSurfaces.setBouncerShowingOverDream(
                         isVisible && mDreamOverlayStateController.isOverlayActive());
 
+                mBouncerVisible = isVisible;
                 if (!isVisible) {
                     mCentralSurfaces.setPrimaryBouncerHiddenFraction(
                             KeyguardBouncer.EXPANSION_HIDDEN);
@@ -715,6 +717,11 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             }
         }
         updateStates();
+        mHandler.postDelayed(() -> {
+            if (mBouncerVisible) {
+                onKeyguardBouncerFullyShownChanged(mBouncerVisible);
+            }
+        }, 100);
     }
 
     private boolean isWakeAndUnlocking() {
@@ -1178,7 +1185,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private void onKeyguardBouncerFullyShownChanged(boolean fullyShown){
         mKeyguardUpdateManager.onKeyguardBouncerFullyShown(fullyShown);
     }
-    
+
     protected void updateStates() {
         if (!mCentralSurfacesRegistered) {
             return;
