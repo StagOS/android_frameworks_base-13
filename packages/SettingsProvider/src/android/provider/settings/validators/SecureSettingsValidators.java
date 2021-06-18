@@ -340,5 +340,6 @@ public class SecureSettingsValidators {
             return true;
         });
         VALIDATORS.put(Secure.LOCKSCREEN_PIN_SCRAMBLE_LAYOUT, BOOLEAN_VALIDATOR);
+        VALIDATORS.put(Secure.FACE_UNLOCK_METHOD, BOOLEAN_VALIDATOR);
     }
 }
