@@ -44,6 +44,7 @@ public class ThemesUtils {
         "com.android.system.switch.gradient", //8
         "com.android.system.switch.oos", // 9
         "com.android.system.switch.fluid", // 10
+        "com.android.system.switch.android_s", // 11
     };
 
     public static void updateSwitchStyle(IOverlayManager om, int userId, int switchStyle) {
