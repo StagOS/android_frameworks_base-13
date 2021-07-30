@@ -25,7 +25,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.PixelFormat;
 import android.graphics.Point;
-import android.hardware.biometrics.BiometricSourceType;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.RemoteException;
@@ -53,8 +52,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class FODCircleView extends ImageView {
-    private static final int FADE_ANIM_DURATION = 125;
-
     private final int mPositionX;
     private final int mPositionY;
     private final int mSize;
@@ -75,13 +72,9 @@ public class FODCircleView extends ImageView {
     private int mColor;
     private int mColorBackground;
 
-    private boolean mFading;
     private boolean mIsBouncer;
-    private boolean mIsBiometricRunning;
-    private boolean mIsCircleShowing;
     private boolean mIsDreaming;
-    private boolean mIsKeyguard;
-    private boolean mTouchedOutside;
+    private boolean mIsCircleShowing;
 
     private Handler mHandler;
 
@@ -108,50 +101,15 @@ public class FODCircleView extends ImageView {
 
     private KeyguardUpdateMonitorCallback mMonitorCallback = new KeyguardUpdateMonitorCallback() {
         @Override
-        public void onBiometricAuthenticated(int userId, BiometricSourceType biometricSourceType,
-                boolean isStrongBiometric) {
-            // We assume that if biometricSourceType matches Fingerprint it will be
-            // handled here, so we hide only when other biometric types authenticate
-            if (biometricSourceType != BiometricSourceType.FINGERPRINT) {
-                hide();
-            }
-        }
-
-        @Override
-        public void onBiometricRunningStateChanged(boolean running,
-                BiometricSourceType biometricSourceType) {
-            if (biometricSourceType == BiometricSourceType.FINGERPRINT) {
-                mIsBiometricRunning = running;
-            }
-        }
-
-        @Override
         public void onDreamingStateChanged(boolean dreaming) {
             mIsDreaming = dreaming;
             updateAlpha();
-
-            if (mIsKeyguard && mUpdateMonitor.isFingerprintDetectionRunning()) {
-                show();
-                updateAlpha();
-            } else {
-                hide();
-            }
 
             if (dreaming) {
                 mBurnInProtectionTimer = new Timer();
                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
             } else if (mBurnInProtectionTimer != null) {
                 mBurnInProtectionTimer.cancel();
-            }
-        }
-
-        @Override
-        public void onKeyguardVisibilityChanged(boolean showing) {
-            mIsKeyguard = showing;
-            if (!showing) {
-                hide();
-            } else {
-                updateAlpha();
             }
         }
 
@@ -172,13 +130,6 @@ public class FODCircleView extends ImageView {
         @Override
         public void onScreenTurnedOff() {
             hide();
-        }
-
-        @Override
-        public void onStartedWakingUp() {
-            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
-                show();
-            }
         }
 
         @Override
@@ -233,14 +184,11 @@ public class FODCircleView extends ImageView {
         mParams.packageName = "android";
         mParams.type = WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY;
         mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN |
-                WindowManager.LayoutParams.FLAG_HARDWARE_ACCELERATED |
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
         mParams.gravity = Gravity.TOP | Gravity.LEFT;
 
         mPressedParams.copyFrom(mParams);
-        mPressedParams.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND |
-                WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH;
+        mPressedParams.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
 
         mParams.setTitle("Fingerprint on display");
         mPressedParams.setTitle("Fingerprint on display.touched");
@@ -281,12 +229,6 @@ public class FODCircleView extends ImageView {
         float y = event.getAxisValue(MotionEvent.AXIS_Y);
 
         boolean newIsInside = (x > 0 && x < mSize) && (y > 0 && y < mSize);
-        mTouchedOutside = false;
-
-        if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-            mTouchedOutside = true;
-            return true;
-        }
 
         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
             showCircle();
@@ -324,7 +266,6 @@ public class FODCircleView extends ImageView {
     }
 
     public void dispatchPress() {
-        if (mFading) return;
         IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
         try {
             daemon.onPress();
@@ -361,7 +302,6 @@ public class FODCircleView extends ImageView {
     }
 
     public void showCircle() {
-        if (mFading || mTouchedOutside) return;
         mIsCircleShowing = true;
 
         setKeepScreenOn(true);
@@ -386,11 +326,6 @@ public class FODCircleView extends ImageView {
     }
 
     public void show() {
-        if (mUpdateMonitor.userNeedsStrongAuth()) {
-            // Keyguard requires strong authentication (not biometrics)
-            return;
-        }
-
         if (!mUpdateMonitor.isScreenOn()) {
             // Keyguard is shown just after screen turning off
             return;
@@ -401,35 +336,14 @@ public class FODCircleView extends ImageView {
             return;
         }
 
-        if (mIsKeyguard && mUpdateMonitor.getUserCanSkipBouncer(mUpdateMonitor.getCurrentUser())) {
-            // Ignore show calls if user can skip bouncer
-            return;
-        }
-
-        if (mIsKeyguard && !mIsBiometricRunning) {
-            return;
-        }
-
         updatePosition();
 
-        setVisibility(View.VISIBLE);
-        animate().withStartAction(() -> mFading = true)
-                .alpha(mIsDreaming ? 0.5f : 1.0f)
-                .setDuration(FADE_ANIM_DURATION)
-                .withEndAction(() -> mFading = false)
-                .start();
         dispatchShow();
+        setVisibility(View.VISIBLE);
     }
 
     public void hide() {
-        animate().withStartAction(() -> mFading = true)
-                .alpha(0)
-                .setDuration(FADE_ANIM_DURATION)
-                .withEndAction(() -> {
-                    setVisibility(View.GONE);
-                    mFading = false;
-                })
-                .start();
+        setVisibility(View.GONE);
         hideCircle();
         dispatchHide();
     }
