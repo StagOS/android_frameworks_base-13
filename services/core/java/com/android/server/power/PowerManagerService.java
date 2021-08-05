@@ -2100,6 +2100,13 @@ public final class PowerManagerService extends SystemService
         return powerGroup.sleepLocked(eventTime, uid, reason);
     }
 
+    private void sendSleepBroadcast() {
+        Intent intent = new Intent(
+                com.android.internal.util.stag.content.Intent.ACTION_GO_TO_SLEEP);
+        intent.setFlags(Intent.FLAG_RECEIVER_INCLUDE_BACKGROUND);
+        mContext.sendBroadcastAsUser(intent, UserHandle.SYSTEM);
+    }
+
     @VisibleForTesting
     @GuardedBy("mLock")
     void setWakefulnessLocked(int groupId, int wakefulness, long eventTime, int uid, int reason,
