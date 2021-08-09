@@ -31,17 +31,12 @@ import java.lang.ref.WeakReference;
 import java.util.ArrayList;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import com.android.internal.util.custom.fod.FodScreenOffHandler;
-
-import dalvik.system.PathClassLoader;
-import java.lang.reflect.Constructor;
 
 @Singleton
 public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callbacks {
     private static final String TAG = "FODCircleViewImpl";
 
     private FODCircleView mFodCircleView;
-    private FodScreenOffHandler mFodScreenOffHandler;
 
     private final ArrayList<WeakReference<FODCircleViewImplCallback>>
             mCallbacks = new ArrayList<>();
@@ -62,31 +57,8 @@ public class FODCircleViewImpl extends SystemUI implements CommandQueue.Callback
             return;
         }
         mCommandQueue.addCallback(this);
-
-        String fodScreenOffHandlerLib = mContext.getResources().getString(
-                com.android.internal.R.string.config_fodScreenOffHandlerLib);
-
-        String fodScreenOffHandlerClass = mContext.getResources().getString(
-                com.android.internal.R.string.config_fodScreenOffHandlerClass);
-
-        if (!fodScreenOffHandlerLib.isEmpty() && !fodScreenOffHandlerClass.isEmpty()) {
-            try {
-                PathClassLoader loader =  new PathClassLoader(fodScreenOffHandlerLib,
-                        getClass().getClassLoader());
-
-                Class<?> klass = loader.loadClass(fodScreenOffHandlerClass);
-                Constructor<?> constructor = klass.getConstructor(Context.class);
-                mFodScreenOffHandler = (FodScreenOffHandler) constructor.newInstance(
-                        mContext);
-            } catch (Exception e) {
-                Slog.w(TAG, "Could not instantiate fod screen off handler "
-                        + fodScreenOffHandlerClass + " from class "
-                        + fodScreenOffHandlerLib, e);
-            }
-        }
-
         try {
-            mFodCircleView = new FODCircleView(mContext, mFodScreenOffHandler);
+            mFodCircleView = new FODCircleView(mContext);
             for (int i = 0; i < mCallbacks.size(); i++) {
                 FODCircleViewImplCallback cb = mCallbacks.get(i).get();
                 if (cb != null) {
