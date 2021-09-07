@@ -184,4 +184,7 @@
   <java-symbol type="anim" name="custom_app_out" />
   <java-symbol type="integer" name="config_deviceHardwareKeys" />
 
+  <!-- Wheter device supports an gaming mode profiles -->
+  <java-symbol type="bool" name="config_gamingmode_performance" />
+
 </resources>
