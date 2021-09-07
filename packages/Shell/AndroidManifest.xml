@@ -343,6 +343,11 @@
             </intent-filter>
         </provider>
 -->
+        <provider android:name=".HeapDumpProvider"
+                  android:authorities="com.android.shell.heapdump"
+                  android:grantUriPermissions="true"
+                  android:exported="false" />
+
         <activity
             android:name=".BugreportWarningActivity"
             android:theme="@*android:style/Theme.DeviceDefault.Dialog.Alert.DayNight"
