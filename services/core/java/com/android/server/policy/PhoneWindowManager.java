@@ -209,7 +209,7 @@ import com.android.internal.policy.PhoneWindow;
 import com.android.internal.statusbar.IStatusBarService;
 import com.android.internal.util.hwkeys.ActionHandler;
 import com.android.internal.util.hwkeys.ActionUtils;
-import com.android.internal.util.xtended.XtendedUtils;
+import com.android.internal.util.stag.StagUtils;
 import com.android.internal.util.ArrayUtils;
 import com.android.internal.util.stag.StagUtils;
 import com.android.internal.util.ScreenshotHelper;
@@ -908,6 +908,7 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                     UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.Secure.getUriFor(
                     Settings.Secure.TORCH_POWER_BUTTON_GESTURE), false, this,
+                    UserHandle.USER_ALL);
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.ANBI_ENABLED_OPTION), false, this,
                     UserHandle.USER_ALL);
@@ -4051,6 +4052,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
                 keyCode != KeyEvent.KEYCODE_VOLUME_MUTE) {
                 return 0;
             }
+        }
+
         if (mANBIHandler != null && mANBIEnabled && mANBIHandler.isScreenTouched()
                 && !navBarKey && (appSwitchKey || homeKey || menuKey || backKey)) {
             return 0;
