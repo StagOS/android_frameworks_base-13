@@ -30,7 +30,7 @@ public class PixelPropsUtils {
 
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
-
+    private static volatile boolean sIsGms = false;
     private static ArrayList<String> allProps = new ArrayList<>(Arrays.asList("BRAND", "MANUFACTURER", "DEVICE", "PRODUCT", "MODEL", "FINGERPRINT"));
     public static final String PACKAGE_GMS = "com.google.android.gms";
     private static final boolean PRODUCT_SUPPORT_HIGH_FPS =
@@ -120,7 +120,6 @@ public class PixelPropsUtils {
                 propsToChange = propsToChangePixel5;
             }
 
-            if (DEBUG) Log.d(TAG, "Defining props for: " + packageName);
             for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
                 String key = prop.getKey();
                 Object value = prop.getValue();
