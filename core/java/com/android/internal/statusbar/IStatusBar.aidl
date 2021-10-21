@@ -340,5 +340,9 @@ oneway interface IStatusBar
     void enterStageSplitFromRunningApp(boolean leftOrTop);
 
     /** StagOS additions. */
+
+    /**
+     * Toggles flashlight of the device
+     */
     void toggleCameraFlash();
 }
