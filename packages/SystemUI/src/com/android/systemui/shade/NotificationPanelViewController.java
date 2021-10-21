@@ -55,6 +55,8 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.app.StatusBarManager;
 import android.content.ContentResolver;
+import android.content.Context;
+import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.database.ContentObserver;
 import android.graphics.Color;
@@ -81,6 +83,7 @@ import android.util.IndentingPrintWriter;
 import android.util.Log;
 import android.util.MathUtils;
 import android.view.InputDevice;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.VelocityTracker;
@@ -501,6 +504,9 @@ public final class NotificationPanelViewController implements Dumpable {
     private final int mDisplayId;
 
     private final KeyguardIndicationController mKeyguardIndicationController;
+
+    private GestureDetector mDoubleTapGestureListener;
+
     private int mHeadsUpInset;
     private boolean mHeadsUpPinnedMode;
     private boolean mAllowExpandForSmallExpansion;
@@ -880,6 +886,16 @@ public final class NotificationPanelViewController implements Dumpable {
         });
         mBottomAreaShadeAlphaAnimator.setDuration(160);
         mBottomAreaShadeAlphaAnimator.setInterpolator(Interpolators.ALPHA_OUT);
+        mDoubleTapGestureListener = new GestureDetector(mView.getContext(),
+                new GestureDetector.SimpleOnGestureListener() {
+            @Override
+            public boolean onDoubleTap(MotionEvent event) {
+                final PowerManager pm = (PowerManager) mView.getContext().getSystemService(
+                        Context.POWER_SERVICE);
+                pm.goToSleep(event.getEventTime());
+                return true;
+            }
+        });
         mConversationNotificationManager = conversationNotificationManager;
         mAuthController = authController;
         mLockIconViewController = lockIconViewController;
@@ -4808,6 +4824,11 @@ public final class NotificationPanelViewController implements Dumpable {
                         "onTouch: ignore touch, bouncer scrimmed or showing over dream");
                 return false;
             }
+
+            if (mBarState == StatusBarState.KEYGUARD) {
+                mDoubleTapGestureListener.onTouchEvent(event);
+            }
+
 
             // Make sure the next touch won't the blocked after the current ends.
             if (event.getAction() == MotionEvent.ACTION_UP
