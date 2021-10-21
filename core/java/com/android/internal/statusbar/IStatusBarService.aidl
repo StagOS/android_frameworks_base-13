@@ -232,5 +232,9 @@ interface IStatusBarService
     void showRearDisplayDialog(int currentBaseState);
 
     /** StagOS additions. */
+
+    /**
+     * Toggles flashlight of the device
+     */
     void toggleCameraFlash();
 }

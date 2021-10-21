@@ -347,5 +347,9 @@ oneway interface IStatusBar
     void showMediaOutputSwitcher(String packageName);
 
     /** StagOS additions. */
+
+    /**
+     * Toggles flashlight of the device
+     */
     void toggleCameraFlash();
 }
