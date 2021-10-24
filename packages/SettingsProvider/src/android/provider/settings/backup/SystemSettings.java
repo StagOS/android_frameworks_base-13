@@ -86,5 +86,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.SMART_SPACE,
         Settings.System.DOUBLE_TAP_SLEEP_LOCKSCREEN,
+        Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
     };
 }
