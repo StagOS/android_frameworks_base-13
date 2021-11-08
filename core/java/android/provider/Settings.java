@@ -5493,8 +5493,6 @@ public final class Settings {
         public static final String SHOW_APP_VOLUME = "show_app_volume";
 
 	/**
-<<<<<<< HEAD
-=======
          * Whether to enable DOZE only when charging
          * @hide
          */
@@ -5507,7 +5505,6 @@ public final class Settings {
         public static final String DOZE_ON_CHARGE_NOW = "doze_on_charge_now";
 
         /**
->>>>>>> c4383ea32860 (base: add option to enable AOD on charging only [1/2])
          * Whether StatusBar icons should use app icon
          * @hide
          */
