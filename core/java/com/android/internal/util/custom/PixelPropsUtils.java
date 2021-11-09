@@ -21,6 +21,7 @@ import android.util.Log;
 
 import java.util.Arrays;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
@@ -41,7 +42,9 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChange;
     private static final Map<String, ArrayList<String>> propsToKeep;
     private static final String[] extraPackagesToChange = {
-	   "com.google.android.tts"
+	   "com.google.android.tts",
+           "com.google.android.googlequicksearchbox",
+           "com.google.android.apps.recorder"
     };
 
     private static final String[] packagesToChangeCOD = {
@@ -68,7 +71,6 @@ public class PixelPropsUtils {
         "com.google.android.apps.nexuslauncher",
         "com.google.android.apps.messaging",
         "com.google.android.apps.pixelmigrate",
-        "com.google.android.apps.recorder",
         "com.google.android.apps.safetyhub",
         "com.google.android.apps.subscriptions.red",
         "com.google.android.apps.tachyon",
@@ -82,13 +84,11 @@ public class PixelPropsUtils {
         "com.google.android.dialer",
         "com.google.android.ext.services",
         "com.google.android.gms.location.history",
-        "com.google.android.googlequicksearchbox",
         "com.google.android.gsf",
         "com.google.android.gms",
         "com.google.android.inputmethod.latin",
         "com.google.android.soundpicker",
         "com.google.intelligence.sense",
-        "com.google.android.apps.googleassistant",
         "com.google.pixel.dynamicwallpapers",
         "com.google.pixel.livewallpaper",
         "com.google.android.apps.translate",
