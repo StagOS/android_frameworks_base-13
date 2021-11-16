@@ -31,6 +31,11 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.util.SparseArray;
+import android.content.ContentResolver;
+import android.database.ContentObserver;
+import android.os.Handler;
+import android.os.UserHandle;
+import android.provider.Settings;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -102,9 +107,6 @@ public class CollapsedStatusBarFragment extends Fragment implements CommandQueue
     private BatteryMeterView mBatteryMeterView;
     private StatusIconContainer mStatusIcons;
     private int mSignalClusterEndPadding = 0;
-
-    private SettingsObserver mSettingsObserver;
-    private ContentResolver mContentResolver;
 
     private SignalCallback mSignalCallback = new SignalCallback() {
         @Override
