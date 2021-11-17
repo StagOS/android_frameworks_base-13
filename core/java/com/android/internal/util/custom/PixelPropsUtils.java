@@ -36,7 +36,6 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChange;
     private static final Map<String, ArrayList<String>> propsToKeep;
     private static final String[] extraPackagesToChange = {
-           "com.android.vending",
 	   "com.google.android.tts"
     };
 
@@ -55,6 +54,7 @@ public class PixelPropsUtils {
     };
 
     private static final String[] packagesToChangePixel6pro = {
+        "com.android.vending",
         "com.breel.wallpapers20",
         "com.google.android.apps.customization.pixel",
         "com.google.android.apps.fitness",
