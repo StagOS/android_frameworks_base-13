@@ -31,6 +31,8 @@ public class PixelPropsUtils {
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
     private static final boolean DEBUG = false;
 
+    private static ArrayList<String> allProps = new ArrayList<>(Arrays.asList("BRAND", "MANUFACTURER", "DEVICE", "PRODUCT", "MODEL", "FINGERPRINT"));
+    public static final String PACKAGE_GMS = "com.google.android.gms";
     private static final boolean PRODUCT_SUPPORT_HIGH_FPS =
             SystemProperties.getBoolean("ro.device.support_high_fps", false);
     private static final boolean PRODUCT_SUPPORT_CONTENT_REFRESH =
@@ -75,6 +77,7 @@ public class PixelPropsUtils {
     static {
         propsToKeep = new HashMap<>();
         propsToKeep.put("com.google.android.settings.intelligence", new ArrayList<String>(Arrays.asList("FINGERPRINT")));
+        propsToKeep.put("com.google.android.GoogleCamera", allProps); 
         propsToChangePixel6 = new HashMap<>();
         propsToChangePixel6.put("BRAND", "google");
         propsToChangePixel6.put("MANUFACTURER", "Google");
