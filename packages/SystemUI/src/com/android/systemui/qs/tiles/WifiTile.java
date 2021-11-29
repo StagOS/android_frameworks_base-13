@@ -60,7 +60,7 @@ import javax.inject.Inject;
 public class WifiTile extends QSTileImpl<SignalState> {
 
     public static final String TILE_SPEC = "wifi";
-    private static final Intent WIFI_SETTINGS = new Intent(Settings.ACTION_WIFI_SETTINGS);
+    private static final Intent WIFI_SETTINGS = new Intent(Settings.Panel.ACTION_WIFI);
 
     protected final NetworkController mController;
     private final AccessPointController mWifiController;
