@@ -26,12 +26,55 @@ LOCAL_REQUIRED_MODULES := \
 	DisplayCutoutEmulationTallOverlay \
 	DisplayCutoutEmulationWaterfallOverlay \
 	FontNotoSerifSourceOverlay \
-	NavigationBarMode2ButtonOverlay \
+	IconPackCircularAndroidOverlay \
+	IconPackCircularLauncherOverlay \
+	IconPackCircularSettingsOverlay \
+	IconPackCircularSystemUIOverlay \
+	IconPackCircularThemePickerOverlay \
+        IconPackPUIAndroidOverlay \
+        IconPackPUILauncherOverlay \
+        IconPackPUISettingsOverlay \
+        IconPackPUISystemUIOverlay \
+        IconPackPUIThemePickerOverlay \
+	IconPackVictorAndroidOverlay \
+	IconPackVictorLauncherOverlay \
+	IconPackVictorSettingsOverlay \
+	IconPackVictorSystemUIOverlay \
+	IconPackVictorThemePickerOverlay \
+	IconPackSamAndroidOverlay \
+	IconPackSamLauncherOverlay \
+	IconPackSamSettingsOverlay \
+	IconPackSamSystemUIOverlay \
+	IconPackSamThemePickerOverlay \
+	IconPackKaiAndroidOverlay \
+	IconPackKaiLauncherOverlay \
+	IconPackKaiSettingsOverlay \
+	IconPackKaiSystemUIOverlay \
+	IconPackKaiThemePickerOverlay \
+	IconPackFilledAndroidOverlay \
+	IconPackFilledLauncherOverlay \
+	IconPackFilledSettingsOverlay \
+	IconPackFilledSystemUIOverlay \
+	IconPackFilledThemePickerOverlay \
+	IconPackRoundedAndroidOverlay \
+	IconPackRoundedLauncherOverlay \
+	IconPackRoundedSettingsOverlay \
+	IconPackRoundedSystemUIOverlay \
+	IconPackRoundedThemePickerOverlay \
+	IconPackOOSAndroidOverlay \
+	IconPackOOSSystemUIOverlay \
+        IconPackOOSLauncherOverlay \
+        IconPackOOSSettingsOverlay \
+        IconPackOOSThemePickerOverlay \
+        NavigationBarMode2ButtonOverlay \
+        IconPackAcherusAndroidOverlay \
+	IconPackAcherusSystemUIOverlay \
 	NavigationBarMode3ButtonOverlay \
 	NavigationBarModeGesturalOverlay \
 	NavigationBarModeGesturalOverlayNarrowBack \
 	NavigationBarModeGesturalOverlayWideBack \
 	NavigationBarModeGesturalOverlayExtraWideBack \
+	OneHandedModeGesturalOverlay \
 	preinstalled-packages-platform-overlays.xml
 
 include $(BUILD_PHONY_PACKAGE)
