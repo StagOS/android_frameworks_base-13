@@ -42,6 +42,7 @@ public class PixelPropsUtils {
     private static final Map<String, Object> propsToChangePixel6;
     private static final Map<String, Object> propsToChangePixel5;
     private static final Map<String, Object> propsToChangePixelXL;
+
     private static final Map<String, ArrayList<String>> propsToKeep;
     private static final String[] extraPackagesToChange = {
         "com.android.chrome",
@@ -118,6 +119,10 @@ public class PixelPropsUtils {
 
             if (Arrays.asList(packagesToChangePixel5).contains(packageName)) {
                 propsToChange = propsToChangePixel5;
+            }
+  
+            if (Arrays.asList(packagesToChangePixelXL).contains(packageName)) {
+                propsToChange = propsToChangePixelXL;
             }
 
             for (Map.Entry<String, Object> prop : propsToChange.entrySet()) {
