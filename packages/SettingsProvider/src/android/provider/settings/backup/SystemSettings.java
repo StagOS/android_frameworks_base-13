@@ -93,6 +93,5 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.NETWORK_TRAFFIC_STATE,
         Settings.System.NETWORK_TRAFFIC_AUTOHIDE_THRESHOLD,
-        Settings.System.FULLSCREEN_GESTURES,
     };
 }
