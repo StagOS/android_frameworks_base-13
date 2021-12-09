@@ -5705,6 +5705,13 @@ public final class Settings {
         public static final String SHOW_FOURG_ICON = "show_fourg_icon";
 
         /**
+         * Whether StatusBar icons should use app icon
+         * @hide
+         */
+        public static final String STATUSBAR_ICONS_STYLE = "statusbar_icons_style";
+
+
+        /**
          * These are all public system settings
          *
          * @hide
@@ -5821,6 +5828,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(OPTIMIZED_CHARGE_ENABLED);
             PRIVATE_SETTINGS.add(OPTIMIZED_CHARGE_CEILING);
             PRIVATE_SETTINGS.add(OPTIMIZED_CHARGE_FLOOR);
+            PRIVATE_SETTINGS.add(STATUSBAR_ICONS_STYLE);
         }
 
         /**
