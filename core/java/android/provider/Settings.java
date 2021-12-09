@@ -5438,8 +5438,13 @@ public final class Settings {
         public static final String SHOW_APP_VOLUME = "show_app_volume";
 
         /**
-         * Whether to display 4G icon instead LTE
+         * Whether StatusBar icons should use app icon
          * @hide
+         */
+        public static final String STATUSBAR_ICONS_STYLE = "statusbar_icons_style";
+
+        /**
+         * Whether to display 4G icon instead LTE
          */
         public static final String SHOW_FOURG_ICON = "show_fourg_icon";
 
@@ -5555,6 +5560,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(VIBRATE_ON_CALLWAITING);
             PRIVATE_SETTINGS.add(VIBRATE_ON_DISCONNECT);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
+            PRIVATE_SETTINGS.add(STATUSBAR_ICONS_STYLE);
         }
 
         /**
