@@ -368,6 +368,14 @@ public final class ShutdownThread extends Thread {
             pd.setMessage(context.getText(
                     com.android.internal.R.string.reboot_to_bootloader_message));
             pd.setIndeterminate(true);
+        } else if (mReason != null && PowerManager.REBOOT_SYSTEMUI.equals(mReason) && mRebootCustom) {
+            if (showSysuiReboot()) {
+                return null;
+            }
+            pd.setTitle(context.getText(com.android.internal.R.string.reboot_systemui_title));
+            pd.setMessage(context.getText(
+                    com.android.internal.R.string.reboot_systemui_message));
+            pd.setIndeterminate(true);
         } else if (mReason == null && mRebootCustom) {
             if (showSysuiReboot()) {
                 return null;

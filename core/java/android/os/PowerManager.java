@@ -708,6 +708,19 @@ public final class PowerManager {
     public static final String REBOOT_BOOTLOADER = "bootloader";
 
     /**
+     * The value to pass as the 'reason' argument to reboot() to
+     * reboot systemui
+     * <p>
+     * Requires the {@link android.Manifest.permission#RECOVERY}
+     * permission (in addition to
+     * {@link android.Manifest.permission#REBOOT}).
+     * </p>
+     * @hide
+     */
+    public static final String REBOOT_SYSTEMUI = "systemui";
+
+
+    /**
      * The value to pass as the 'reason' argument to reboot() to reboot into
      * recovery mode for applying system updates.
      * <p>
