@@ -123,6 +123,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     @NonNull private final SystemUIDialogManager mDialogManager;
     @NonNull private final KeyguardUpdateMonitor mKeyguardUpdateMonitor;
     @Nullable private final Vibrator mVibrator;
+    @NonNull private final Handler mMainHandler;
     @NonNull private final FalsingManager mFalsingManager;
     @NonNull private final PowerManager mPowerManager;
     @NonNull private final AccessibilityManager mAccessibilityManager;
@@ -578,6 +579,8 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
             @NonNull SystemUIDialogManager dialogManager) {
         mContext = context;
         mExecution = execution;
+        // TODO (b/185124905): inject main handler and vibrator once done prototyping
+        mMainHandler = mainHandler;
         mVibrator = vibrator;
         mInflater = inflater;
         // The fingerprint manager is queried for UDFPS before this class is constructed, so the
