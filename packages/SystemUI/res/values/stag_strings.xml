@@ -115,4 +115,7 @@
     <string name="tristate_rotation_0">Portrait</string>
     <string name="tristate_rotation_90">Landscape (90°)</string>
     <string name="tristate_rotation_270">Landscape (270°)</string>
+
+    <!-- Call strength icons in statusbar -->
+    <string name="status_bar_call_strength">Call strength</string>
 </resources>
