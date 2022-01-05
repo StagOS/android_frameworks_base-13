@@ -41,6 +41,8 @@ import com.android.systemui.qs.QSHost;
 import com.android.systemui.qs.tileimpl.QSTileImpl;
 import com.android.systemui.R;
 
+import java.io.File;
+
 import javax.inject.Inject;
 
 public class FPSInfoTile extends QSTileImpl<BooleanState> {
@@ -48,6 +50,7 @@ public class FPSInfoTile extends QSTileImpl<BooleanState> {
     public static final String TILE_SPEC = "fpsinfo";
 
     private boolean mServiceRunning = false;
+    private final boolean isAvailable;
 
     @Inject
     public FPSInfoTile(
@@ -62,6 +65,9 @@ public class FPSInfoTile extends QSTileImpl<BooleanState> {
     ) {
         super(host, backgroundLooper, mainHandler, falsingManager, metricsLogger,
                 statusBarStateController, activityStarter, qsLogger);
+        final String fpsInfoSysNode = mContext.getResources().getString(
+                R.string.config_fpsInfoSysNode);
+        isAvailable = fpsInfoSysNode != null && (new File(fpsInfoSysNode).isFile());
     }
 
     @Override
@@ -117,8 +123,6 @@ public class FPSInfoTile extends QSTileImpl<BooleanState> {
 
     @Override
     public boolean isAvailable() {
-        final String fpsInfoSysNode = mContext.getResources().getString(
-                R.string.config_fpsInfoSysNode);
-        return fpsInfoSysNode != null && !fpsInfoSysNode.isEmpty();
+        return isAvailable;
     }
 }
