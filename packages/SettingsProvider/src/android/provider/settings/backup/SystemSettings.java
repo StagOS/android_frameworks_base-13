@@ -88,5 +88,6 @@ public class SystemSettings {
         Settings.System.DOUBLE_TAP_SLEEP_GESTURE,
         Settings.System.SCREEN_OFF_FOD,
         Settings.System.DOZE_ON_CHARGE,
+        Settings.System.QS_SHOW_BATTERY_ESTIMATE,
     };
 }
