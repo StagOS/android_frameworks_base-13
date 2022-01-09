@@ -42,4 +42,7 @@
 
     <!-- Whether key handler sends intent when changing slider position -->
     <string name="config_alertSliderIntent"></string>
+
+    <!-- Whether to force enable multi resolution configuration for camera -->
+    <bool name="config_forceMultiResolution">false</bool>
 </resources>
