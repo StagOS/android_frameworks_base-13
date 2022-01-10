@@ -89,5 +89,6 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.VOLUME_PANEL_ON_LEFT,
+        Settings.System.ENABLE_RIPPLE_EFFECT,
     };
 }
