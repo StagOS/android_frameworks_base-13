@@ -3942,7 +3942,7 @@ public class StatusBar extends SystemUI implements
 
         boolean launchingAffordanceWithPreview =
                 mNotificationPanelViewController.isLaunchingAffordanceWithPreview();
-        mScrimController.setLaunchingAffordanceWithPreview(true);
+        mScrimController.setLaunchingAffordanceWithPreview(launchingAffordanceWithPreview);
 
         if (mStatusBarKeyguardViewManager.isShowingAlternateAuth()) {
             if (mState == StatusBarState.SHADE || mState == StatusBarState.SHADE_LOCKED) {
