@@ -1526,12 +1526,14 @@ public class CameraDeviceImpl extends CameraDevice
         if (packageList.length() > 0) {
             String[] packages = packageList.split(",");
             for (String str : packages) {
+		Log.i("Testing", str);
                 if (packageName.equals(str)) {
                     return true;
                 }
             }
-        }
-
+        }else{
+	    Log.i("Testing","No packagelist found");
+	}
         return false;
     }
 
@@ -1548,6 +1550,7 @@ public class CameraDeviceImpl extends CameraDevice
             MultiResolutionStreamConfigurationMap configMap = mCharacteristics.get(
                     CameraCharacteristics.SCALER_MULTI_RESOLUTION_STREAM_CONFIGURATION_MAP);
 
+	    Log.i("Testing", "Start check priv app");
             /*
              * don't check input format and size,
              * if the package name is in the white list
@@ -1556,7 +1559,7 @@ public class CameraDeviceImpl extends CameraDevice
                 Log.w(TAG, "ignore input format/size check for white listed app");
                 return;
             }
-
+	    Log.i("Testing", "Not priv app");
             int[] inputFormats = configMap.getInputFormats();
             boolean validFormat = false;
             for (int format : inputFormats) {
