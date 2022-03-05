@@ -5461,18 +5461,14 @@ public final class Settings {
         public static final String DOZE_ON_CHARGE = "doze_on_charge";
 
         /**
-         * Keys we no longer back up under the current schema, but want to continue to
-         * process when restoring historical backup datasets.
-         *
-         * All settings in {@link LEGACY_RESTORE_SETTINGS} array *must* have a non-null validator,
-         * otherwise they won't be restored.
-         *
+         * Hidden setting of the current atate of DOZE only when charging
          * @hide
          */
         public static final String STATUSBAR_ICONS_STYLE = "statusbar_icons_style";
 
         /**
          * Whether to display 4G icon instead LTE
+         * @hide
          */
         public static final String SHOW_FOURG_ICON = "show_fourg_icon";
 
