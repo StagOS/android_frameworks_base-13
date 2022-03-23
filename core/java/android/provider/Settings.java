@@ -5325,13 +5325,6 @@ public final class Settings {
         public static final String VOLBTN_MUSIC_CONTROLS = "volbtn_music_controls";
 
         /**
-         * Whether to enable SmartSpace
-         * @hide
-         */
-        @Readable
-        public static final String SMART_SPACE = "smart_space";
-
-        /**
          * Double tap on lockscreen to sleep
          * @hide
          */
