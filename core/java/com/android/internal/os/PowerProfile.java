@@ -44,8 +44,6 @@ import java.util.HashMap;
  * [hidden]
  */
 public class PowerProfile {
-    private static final String TAG = "PowerProfile";
-
     public static final String TAG = "PowerProfile";
 
     /*
