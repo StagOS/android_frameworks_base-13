@@ -299,7 +299,8 @@ public class QSPanel extends LinearLayout implements Tunable {
     public void onTuningChanged(String key, String newValue) {
         if (QS_SHOW_BRIGHTNESS.equals(key) && mBrightnessView != null) {
             updateViewVisibilityForTuningValue(mBrightnessView, newValue);
-        } else if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
+        }
+        if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
             mTop = newValue == null || Integer.parseInt(newValue) == 0;
             removeView(mBrightnessView);
             addView(mBrightnessView, mTop ? 0 : 1);
@@ -307,7 +308,9 @@ public class QSPanel extends LinearLayout implements Tunable {
             if (mBrightnessRunnable != null) {
                 mBrightnessRunnable.run();
             }
-        } else if (QS_SHOW_AUTO_BRIGHTNESS_BUTTON.equals(key)) {
+        }
+
+        if (QS_SHOW_AUTO_BRIGHTNESS_BUTTON.equals(key)) {
             mShowAutoBrightnessButton = newValue == null
                     || Integer.parseInt(newValue) == 1;
             mAutoBrightnessIcon.setVisibility(
