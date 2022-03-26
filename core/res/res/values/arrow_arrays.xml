@@ -15,13 +15,6 @@
      limitations under the License.
 -->
 <resources>
-
-    <string-array translatable="false" name="config_rebootActionsList">
-        <item>restart</item>
-        <item>reboot_recovery</item>
-        <item>reboot_bootloader</item>
-    </string-array>
-
     <!-- Width of the battery icon in the status bar when set to circle style. -->
     <dimen name="status_bar_battery_icon_circle_width">13.5dp</dimen>
     <!-- Height of the big battery circle icon in the status bar. -->
