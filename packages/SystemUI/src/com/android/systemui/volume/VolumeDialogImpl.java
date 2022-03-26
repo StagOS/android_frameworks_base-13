@@ -1099,8 +1099,8 @@ public class VolumeDialogImpl implements VolumeDialog,
                 Events.writeEvent(Events.EVENT_SETTINGS_CLICK);
                 Intent intent = new Intent(Settings.Panel.ACTION_APP_VOLUME);
                 dismissH(DISMISS_REASON_SETTINGS_CLICKED);
-                Dependency.get(MediaOutputDialogFactory.class).dismiss();
-                Dependency.get(ActivityStarter.class).startActivity(intent,
+                mMediaOutputDialogFactory.dismiss();
+                mActivityStarter.startActivity(intent,
                         true /* dismissShade */);
             });
         }
