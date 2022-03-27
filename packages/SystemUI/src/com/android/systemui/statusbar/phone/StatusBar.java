@@ -1503,7 +1503,7 @@ public class StatusBar extends SystemUI implements
             final int val = newBrightness;
             mDisplayManager.setTemporaryBrightness(mDisplayId,
                     BrightnessSynchronizer.brightnessIntToFloat(val));
-            AsyncTask.execute(new Runnable() {
+            mMainExecutor.execute(new Runnable() {
                 @Override
                 public void run() {
                     Settings.System.putIntForUser(mContext.getContentResolver(),
