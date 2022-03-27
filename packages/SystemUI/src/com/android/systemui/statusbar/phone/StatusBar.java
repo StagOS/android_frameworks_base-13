@@ -2295,7 +2295,7 @@ public class StatusBar extends SystemUI implements
         if (mBrightnessControl) {
             brightnessControl(event);
             if ((mDisabled1 & StatusBarManager.DISABLE_EXPAND) != 0) {
-                return true;
+                return;
             }
         }
 
@@ -2304,9 +2304,6 @@ public class StatusBar extends SystemUI implements
                 event.getAction() == MotionEvent.ACTION_CANCEL;
 
         if (mStatusBarWindowState == WINDOW_STATE_SHOWING) {
-            final boolean upOrCancel =
-                    event.getAction() == MotionEvent.ACTION_UP ||
-                    event.getAction() == MotionEvent.ACTION_CANCEL;
             setInteracting(StatusBarManager.WINDOW_STATUS_BAR, !upOrCancel || mExpandedVisible);
         }
         if (mBrightnessChanged && upOrCancel) {
