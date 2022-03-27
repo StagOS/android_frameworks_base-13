@@ -4047,11 +4047,11 @@ public class StatusBar extends SystemUI implements
         return mDeviceInteractive;
     }
 
-    private final SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver();
+    private final SbSettingsObserver mSbSettingsObserver = new SbSettingsObserver(mMainHandler);
 
     private class SbSettingsObserver extends ContentObserver {
-        SbSettingsObserver() {
-            super(mHandler);
+        SbSettingsObserver(Handler handler) {
+            super(handler);
         }
 
         void observe() {
