@@ -158,9 +158,4 @@ interface IStatusBarService
      * display.
      */
     void suppressAmbientDisplay(boolean suppress);
-
-    /**
-     * YAAP extensions
-     */
-    void toggleCameraFlash();
 }
