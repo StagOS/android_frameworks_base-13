@@ -24,6 +24,7 @@ import android.content.pm.PackageManager;
 import android.content.res.Resources;
 import android.graphics.PixelFormat;
 import android.graphics.drawable.AnimationDrawable;
+import android.hardware.biometrics.SensorLocationInternal;
 import android.hardware.fingerprint.FingerprintSensorPropertiesInternal;
 import android.provider.Settings;
 import android.util.AttributeSet;
@@ -97,7 +98,8 @@ public class UdfpsAnimation extends ImageView {
                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
                 | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
         mAnimParams.gravity = Gravity.TOP | Gravity.CENTER;
-        mAnimParams.y = props.sensorLocationY - props.sensorRadius
+	final SensorLocationInternal location = props.getLocation();
+        mAnimParams.y = location.sensorLocationY - location.sensorRadius
                 - (mAnimationSize / 2) + mAnimationOffset;
 
         try {
