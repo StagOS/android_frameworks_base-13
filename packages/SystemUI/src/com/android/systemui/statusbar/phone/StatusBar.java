@@ -970,6 +970,15 @@ public class StatusBar extends SystemUI implements
                 id -> onLaunchTransitionTimeout());
     }
 
+    public void toggleCameraFlash() {
+        if (DEBUG) {
+            Log.d(TAG, "Toggling camera flashlight");
+        }
+        if (mFlashlightController.isAvailable()) {
+            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
+        }
+    }
+
     @Override
     public void start() {
         mScreenLifecycle.addObserver(mScreenObserver);
@@ -2144,16 +2153,6 @@ public class StatusBar extends SystemUI implements
                     "com.android.systemui:full_screen_intent");
             mWakeUpComingFromTouch = false;
             mWakeUpTouchLocation = null;
-        }
-    }
-
-    @Override
-    public void toggleCameraFlash() {
-        if (DEBUG) {
-            Log.d(TAG, "Toggling camera flashlight");
-        }
-        if (mFlashlightController.isAvailable()) {
-            mFlashlightController.setFlashlight(!mFlashlightController.isEnabled());
         }
     }
 
