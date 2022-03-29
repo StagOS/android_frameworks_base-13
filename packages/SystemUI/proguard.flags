@@ -57,7 +57,3 @@
 
 # Custom rules
 -keep class com.pixys.** { *; }
-
-# Google rules
--keep class com.google.** { *; }
--keep class vendor.** { *; }

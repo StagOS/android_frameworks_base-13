@@ -7,9 +7,6 @@ import com.android.systemui.dagger.SystemUIBinder;
 import com.android.systemui.dagger.SysUIComponent;
 import com.android.systemui.dagger.SystemUIModule;
 
-import com.pixys.android.systemui.keyguard.PixysKeyguardSliceProvider;
-import com.pixys.android.systemui.smartspace.KeyguardSmartspaceController;
-
 import dagger.Subcomponent;
 
 @SysUISingleton
@@ -25,12 +22,4 @@ public interface PixysSysUIComponent extends SysUIComponent {
     interface Builder extends SysUIComponent.Builder {
         PixysSysUIComponent build();
     }
-
-    /**
-     * Member injection into the supplied argument.
-     */
-    void inject(PixysKeyguardSliceProvider keyguardSliceProvider);
-
-    @SysUISingleton
-    KeyguardSmartspaceController createKeyguardSmartspaceController();
 }
