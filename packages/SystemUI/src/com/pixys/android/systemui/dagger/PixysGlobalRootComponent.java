@@ -6,6 +6,8 @@ import com.android.systemui.dagger.GlobalModule;
 import com.android.systemui.dagger.GlobalRootComponent;
 import com.android.systemui.dagger.WMModule;
 
+import com.android.systemui.util.concurrency.ThreadFactory;
+
 import javax.inject.Singleton;
 
 import dagger.BindsInstance;

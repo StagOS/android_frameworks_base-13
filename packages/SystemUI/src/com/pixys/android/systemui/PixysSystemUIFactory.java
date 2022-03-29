@@ -2,6 +2,7 @@ package com.pixys.android.systemui;
 
 import android.content.Context;
 import android.content.res.AssetManager;
+import android.os.Handler;
 
 import com.pixys.android.systemui.dagger.PixysGlobalRootComponent;
 import com.pixys.android.systemui.dagger.PixysSysUIComponent;
