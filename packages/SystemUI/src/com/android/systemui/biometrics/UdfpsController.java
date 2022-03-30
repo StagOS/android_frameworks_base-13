@@ -678,7 +678,7 @@ public class UdfpsController implements DozeReceiver, UdfpsHbmProvider {
     }
 
     private void updateScreenOffFodState() {
-        mScreenOffFod = mSystemSettings.getInt(Settings.System.SCREEN_OFF_FOD, 1) == 1;
+        mScreenOffFod = mSystemSettings.getInt(Settings.System.SCREEN_OFF_FOD, 0) == 1;
     }
 
     /**
