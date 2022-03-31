@@ -297,8 +297,6 @@ public class StatusBar extends SystemUI implements
 
     private static final String NAVIGATION_BAR_SHOW =
             "customsystem:" + Settings.System.NAVIGATION_BAR_SHOW;
-    private static final String PULSE_ON_NEW_TRACKS =
-            Settings.Secure.PULSE_ON_NEW_TRACKS;
 
     private static final String BANNER_ACTION_CANCEL =
             "com.android.systemui.statusbar.banner_action_cancel";
@@ -1011,7 +1009,6 @@ public class StatusBar extends SystemUI implements
         mDisplayManager = mContext.getSystemService(DisplayManager.class);
 
         mTunerService.addTunable(this, NAVIGATION_BAR_SHOW);
-        mTunerService.addTunable(this, PULSE_ON_NEW_TRACKS);
 
         mWindowManager = (WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE);
         mDreamManager = IDreamManager.Stub.asInterface(
@@ -4095,6 +4092,9 @@ public class StatusBar extends SystemUI implements
             resolver.registerContentObserver(Settings.System.getUriFor(
                     Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN),
                     false, this, UserHandle.USER_ALL);
+            resolver.registerContentObserver(Settings.Secure.getUriFor(
+                    Settings.Secure.PULSE_ON_NEW_TRACKS),
+                    false, this, UserHandle.USER_ALL);
         }
 
         @Override
@@ -4107,6 +4107,10 @@ public class StatusBar extends SystemUI implements
 		    break;
                 case Settings.System.STATUS_BAR_QUICK_QS_PULLDOWN:
                     setStatusBarWindowViewOptions();
+	 	    break;
+                case Settings.Secure.PULSE_ON_NEW_TRACKS:
+                    setPulseOnNewTracks();
+		    break;
             }
 
             if (uri.equals(Settings.System.getUriFor(Settings.System.STATUS_BAR_BRIGHTNESS_CONTROL)) ||
@@ -4120,6 +4124,7 @@ public class StatusBar extends SystemUI implements
             setScreenBrightnessMode();
             setDoubleTapToSleepGesture();
             setStatusBarWindowViewOptions();
+            setPulseOnNewTracks();
         }
 
         private void setDoubleTapToSleepGesture() {
@@ -4144,6 +4149,14 @@ public class StatusBar extends SystemUI implements
     private void setStatusBarWindowViewOptions() {
         if (mNotificationShadeWindowViewController != null) {
             mNotificationShadeWindowViewController.setStatusBarWindowViewOptions();
+        }
+    }
+
+    private void setPulseOnNewTracks() {
+        if (KeyguardSliceProvider.getAttachedInstance() != null) {
+            KeyguardSliceProvider.getAttachedInstance().setPulseOnNewTracks(Settings.Secure.getIntForUser(mContext.getContentResolver(),
+                    Settings.Secure.PULSE_ON_NEW_TRACKS, 0,
+                    UserHandle.USER_CURRENT) == 1);
         }
     }
 
@@ -4487,16 +4500,6 @@ public class StatusBar extends SystemUI implements
                     mNavigationBarController.onDisplayRemoved(mDisplayId);
                 }
             }
-                break;
-            case PULSE_ON_NEW_TRACKS:
-                boolean showPulseOnNewTracks =
-                        TunerService.parseIntegerSwitch(newValue, false);
-                KeyguardSliceProvider sliceProvider = KeyguardSliceProvider.getAttachedInstance();
-                if (sliceProvider != null)
-                    sliceProvider.setPulseOnNewTracks(showPulseOnNewTracks);
-                break;
-            default:
-                break;
          }
     }
     // End Extra BaseStatusBarMethods.
