@@ -159,7 +159,7 @@ public class ThemeOverlayControllerTest extends SysuiTestCase {
     }
 
     @Test
-    public void onWallpaperColorsChanged_setsTheme_whenForeground() {
+    public void onWallpaperColorsChanged_setsTheme() {
         // Should ask for a new theme when wallpaper colors change
         WallpaperColors mainColors = new WallpaperColors(Color.valueOf(Color.RED),
                 Color.valueOf(Color.BLUE), null);
@@ -189,35 +189,10 @@ public class ThemeOverlayControllerTest extends SysuiTestCase {
 
         // But should change theme after changing wallpapers
         clearInvocations(mThemeOverlayApplier);
-        Intent intent = new Intent(Intent.ACTION_WALLPAPER_CHANGED);
-        intent.putExtra(WallpaperManager.EXTRA_FROM_FOREGROUND_APP, true);
-        mBroadcastReceiver.getValue().onReceive(null, intent);
-        mColorsListener.getValue().onColorsChanged(new WallpaperColors(Color.valueOf(Color.BLACK),
-                null, null), WallpaperManager.FLAG_SYSTEM, USER_SYSTEM);
-        verify(mThemeOverlayApplier).applyCurrentUserOverlays(any(), any(), anyInt(), any());
-    }
-
-    @Test
-    public void onWallpaperColorsChanged_setsTheme_skipWhenBackground() {
-        // Should ask for a new theme when wallpaper colors change
-        WallpaperColors mainColors = new WallpaperColors(Color.valueOf(Color.RED),
-                Color.valueOf(Color.BLUE), null);
-        mColorsListener.getValue().onColorsChanged(mainColors, WallpaperManager.FLAG_SYSTEM,
-                USER_SYSTEM);
-        ArgumentCaptor<Map<String, OverlayIdentifier>> themeOverlays =
-                ArgumentCaptor.forClass(Map.class);
-
-        verify(mThemeOverlayApplier)
-                .applyCurrentUserOverlays(themeOverlays.capture(), any(), anyInt(), any());
-
-        // Should not change theme after changing wallpapers, if intent doesn't have
-        // WallpaperManager.EXTRA_FROM_FOREGROUND_APP set to true.
-        clearInvocations(mThemeOverlayApplier);
         mBroadcastReceiver.getValue().onReceive(null, new Intent(Intent.ACTION_WALLPAPER_CHANGED));
         mColorsListener.getValue().onColorsChanged(new WallpaperColors(Color.valueOf(Color.BLACK),
                 null, null), WallpaperManager.FLAG_SYSTEM, USER_SYSTEM);
-        verify(mThemeOverlayApplier, never())
-                .applyCurrentUserOverlays(any(), any(), anyInt(), any());
+        verify(mThemeOverlayApplier).applyCurrentUserOverlays(any(), any(), anyInt(), any());
     }
 
     @Test
@@ -534,9 +509,7 @@ public class ThemeOverlayControllerTest extends SysuiTestCase {
         // Regression test: null events should not reset the internal state and allow colors to be
         // applied again.
         clearInvocations(mThemeOverlayApplier);
-        Intent intent = new Intent(Intent.ACTION_WALLPAPER_CHANGED);
-        intent.putExtra(WallpaperManager.EXTRA_FROM_FOREGROUND_APP, true);
-        mBroadcastReceiver.getValue().onReceive(null, intent);
+        mBroadcastReceiver.getValue().onReceive(null, new Intent(Intent.ACTION_WALLPAPER_CHANGED));
         mColorsListener.getValue().onColorsChanged(null, WallpaperManager.FLAG_SYSTEM, USER_SYSTEM);
         verify(mThemeOverlayApplier, never()).applyCurrentUserOverlays(any(), any(), anyInt(),
                 any());
