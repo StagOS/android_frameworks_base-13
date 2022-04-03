@@ -105,7 +105,6 @@ class CustomThemeOverlayController @Inject constructor(
 
     override fun onTuningChanged(key: String?, newValue: String?) {
         key?.let {
-            if (it.contains(PREF_PREFIX)) {
                 customColor = Settings.Secure.getInt(mContext.contentResolver, PREF_CUSTOM_COLOR, 0) == 1
                 colorOverride = Settings.Secure.getInt(mContext.contentResolver,
                         PREF_COLOR_OVERRIDE, -1)
@@ -120,7 +119,6 @@ class CustomThemeOverlayController @Inject constructor(
                 linearLightness = Settings.Secure.getInt(mContext.contentResolver,
                         PREF_LINEAR_LIGHTNESS, 0) != 0
                 reevaluateSystemTheme(true /* forceReload */)
-	    }
         }
     }
 
