@@ -78,6 +78,7 @@ public class NavigationBarController implements
         Callbacks,
         ConfigurationController.ConfigurationListener,
         NavigationModeController.ModeChangedListener,
+        OverviewProxyService.OverviewProxyListener,
         Dumpable {
 
     private static final String TAG = NavigationBarController.class.getSimpleName();
@@ -93,6 +94,7 @@ public class NavigationBarController implements
     private final NavBarHelper mNavBarHelper;
     private int mNavMode;
     @VisibleForTesting boolean mIsLargeScreen;
+    private boolean mTaskbarShowing;
 
     /** A displayId - nav bar maps. */
     @VisibleForTesting
@@ -141,6 +143,7 @@ public class NavigationBarController implements
                 dumpManager, autoHideController, lightBarController, pipOptional,
                 backAnimation.orElse(null), taskStackChangeListeners);
         mIsLargeScreen = isLargeScreen(mContext);
+        overviewProxyService.addCallback(this);
         dumpManager.registerDumpable(this);
     }
 
@@ -149,7 +152,7 @@ public class NavigationBarController implements
         boolean isOldConfigLargeScreen = mIsLargeScreen;
         mIsLargeScreen = isLargeScreen(mContext);
         boolean willApplyConfig = mConfigChanges.applyNewConfig(mContext.getResources());
-        boolean largeScreenChanged = mIsLargeScreen != isOldConfigLargeScreen;
+        boolean largeScreenChanged = shouldShowTaskbar() != isOldConfigLargeScreen;
         // TODO(b/243765256): Disable this logging once b/243765256 is fixed.
         Log.i(DEBUG_MISSING_GESTURE_TAG, "NavbarController: newConfig=" + newConfig
                 + " mTaskbarDelegate initialized=" + mTaskbarDelegate.isInitialized()
@@ -198,6 +201,16 @@ public class NavigationBarController implements
         });
     }
 
+    @Override
+    public void onTaskbarEnabled(boolean enabled) {
+        boolean isOldConfigTablet = shouldShowTaskbar();
+        mTaskbarShowing = enabled;
+        boolean largeScreenChanged = shouldShowTaskbar() != isOldConfigTablet;
+        if (largeScreenChanged) {
+            updateNavbarForTaskbar();
+        }
+    }
+
     private void updateAccessibilityButtonModeIfNeeded() {
         final int mode = mSecureSettings.getIntForUser(
                 Settings.Secure.ACCESSIBILITY_BUTTON_MODE,
@@ -237,9 +250,8 @@ public class NavigationBarController implements
 
     /** @return {@code true} if taskbar is enabled, false otherwise */
     private boolean initializeTaskbarIfNecessary() {
-        // Enable for large screens or (phone AND flag is set); assuming phone = !mIsLargeScreen
-        boolean taskbarEnabled = mIsLargeScreen || mFeatureFlags.isEnabled(
-                Flags.HIDE_NAVBAR_WINDOW);
+        // Enable for LargeScreen or (phone AND flag is set); assuming phone = !mLargeScreen
+        boolean taskbarEnabled = shouldShowTaskbar() || mFeatureFlags.isEnabled(Flags.HIDE_NAVBAR_WINDOW);
 
         if (taskbarEnabled) {
             Trace.beginSection("NavigationBarController#initializeTaskbarIfNecessary");
@@ -468,6 +480,10 @@ public class NavigationBarController implements
         } else {
             return mTaskbarDelegate.isOverviewEnabled();
         }
+    }
+
+    private boolean shouldShowTaskbar() {
+        return mIsLargeScreen || mTaskbarShowing;
     }
 
     /** @return {@link NavigationBar} on the default display. */
