@@ -5928,6 +5928,12 @@ public final class Settings {
         public static final String DATA_DISABLED_ICON = "data_disabled_icon";
 
         /**
+         * Whether to pulse alert slider notifications
+         * @hide
+         */
+        public static final String ALERT_SLIDER_PULSE = "alert_slider_pulse";
+
+        /**
          * These are all public system settings
          *
          * @hide
