@@ -5964,6 +5964,12 @@ public final class Settings {
         public static final String NETWORK_TRAFFIC_REFRESH_INTERVAL = "network_traffic_refresh_interval";
 
         /**
+         * Whether to pulse alert slider notifications
+         * @hide
+         */
+        public static final String ALERT_SLIDER_PULSE = "alert_slider_pulse";
+
+        /**
          * Show or hide clock
          * 0 - hide
          * 1 - show (default)
