@@ -95,5 +95,7 @@ public class SystemSettings {
         Settings.System.EDGE_LIGHT_REPEAT_ANIMATION,
         Settings.System.EDGE_LIGHT_COLOR_MODE,
         Settings.System.EDGE_LIGHT_CUSTOM_COLOR,
+	Settings.System.QS_TILE_LABEL_HIDE,
+        Settings.System.QS_TILE_VERTICAL_LAYOUT,
     };
 }
