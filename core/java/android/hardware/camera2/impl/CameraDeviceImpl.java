@@ -1549,17 +1549,6 @@ public class CameraDeviceImpl extends CameraDevice
         if (inputConfig.isMultiResolution() || mForceMultiResolution) {
             MultiResolutionStreamConfigurationMap configMap = mCharacteristics.get(
                     CameraCharacteristics.SCALER_MULTI_RESOLUTION_STREAM_CONFIGURATION_MAP);
-
-	    Log.i("Testing", "Start check priv app");
-            /*
-             * don't check input format and size,
-             * if the package name is in the white list
-             */
-            if (isPrivilegedApp()) {
-                Log.w(TAG, "ignore input format/size check for white listed app");
-                return;
-            }
-	    Log.i("Testing", "Not priv app");
             int[] inputFormats = configMap.getInputFormats();
             boolean validFormat = false;
             for (int format : inputFormats) {
@@ -1588,6 +1577,14 @@ public class CameraDeviceImpl extends CameraDevice
                         inputConfig.getWidth() + "x" + inputConfig.getHeight() + " is not valid");
             }
         } else {
+            /*
+             * don't check input format and size,
+             * if the package name is in the white list
+             */
+            if (isPrivilegedApp()) {
+                Log.w(TAG, "ignore input format/size check for white listed app");
+                return;
+            }
             if (!checkInputConfigurationWithStreamConfigurations(inputConfig, /*maxRes*/false) &&
                     !checkInputConfigurationWithStreamConfigurations(inputConfig, /*maxRes*/true)) {
                 throw new IllegalArgumentException("Input config with format " +
