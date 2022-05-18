@@ -822,14 +822,6 @@ public class KeyguardIndicationController {
     }
 
     protected String computePowerIndication() {
-
-        boolean hasDashCharger = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasDashCharger);
-        boolean hasWarpCharger = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasWarpCharger);
-        boolean hasVoocCharger = mContext.getResources().getBoolean(
-                com.android.internal.R.bool.config_hasVoocCharger);
-
         int chargingId;
         if (mBatteryOverheated) {
             chargingId = R.string.keyguard_plugged_in_charging_limited;
@@ -843,23 +835,9 @@ public class KeyguardIndicationController {
         if (mPowerPluggedInWired) {
             switch (mChargingSpeed) {
                 case BatteryStatus.CHARGING_FAST:
-                    if (hasDashCharger) {
-                        chargingId = hasChargingTime
-                                ? R.string.keyguard_indication_dash_charging_time
-                                : R.string.keyguard_plugged_in_dash_charging;
-                    } else if (hasWarpCharger) {
-                        chargingId = hasChargingTime
-                                ? R.string.keyguard_indication_warp_charging_time
-                                : R.string.keyguard_plugged_in_warp_charging;
-                    } else if (hasVoocCharger) {
-                        chargingId = hasChargingTime
-                                ? R.string.keyguard_indication_vooc_charging_time
-                                : R.string.keyguard_plugged_in_vooc_charging;
-                    } else {
-                        chargingId = hasChargingTime
-                                ? R.string.keyguard_indication_charging_time_fast
-                                : R.string.keyguard_plugged_in_charging_fast;
-                    }
+                    chargingId = hasChargingTime
+                            ? R.string.keyguard_indication_charging_time_fast
+                            : R.string.keyguard_plugged_in_charging_fast;
                     break;
                 case BatteryStatus.CHARGING_SLOWLY:
                     chargingId = hasChargingTime
