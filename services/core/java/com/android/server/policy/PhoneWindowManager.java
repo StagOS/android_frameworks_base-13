@@ -4380,12 +4380,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
 
             case KeyEvent.KEYCODE_HOME:
                 if (down && !interactive) {
-                    isWakeKey = true;
-                }
-                break;
-
-            case KeyEvent.KEYCODE_HOME:
-                if (down && !interactive) {
                     isWakeKey = mWakeOnHomeKeyPress;
                     if (!isWakeKey) {
                         useHapticFeedback = false;
