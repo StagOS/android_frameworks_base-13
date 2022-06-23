@@ -5938,6 +5938,13 @@ public final class Settings {
         public static final String NOTIFICATION_MATERIAL_DISMISS_BGSTYLE = "notification_material_dismiss_bgstyle";
 
         /**
+         *  Toggle the wallpaper zoom effects
+         *  0 = 0ff, 1 = on
+         * @hide
+         */
+        public static final String DISPLAY_SETTINGS_WALLPAPER_ZOOM = "display_settings_wallpaper_zoom";
+
+        /**
          * These are all public system settings
          *
          * @hide
