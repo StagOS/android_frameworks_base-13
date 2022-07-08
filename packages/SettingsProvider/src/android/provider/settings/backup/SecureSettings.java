@@ -220,6 +220,7 @@ public class SecureSettings {
         Settings.Secure.BLUETOOTH_LE_BROADCAST_CODE,
         Settings.Secure.BLUETOOTH_LE_BROADCAST_APP_SOURCE_NAME,
         Settings.Secure.GESTURE_NAVBAR_LENGTH_MODE,
-        Settings.Secure.DOZE_ON_CHARGE
+        Settings.Secure.DOZE_ON_CHARGE,
+        Settings.Secure.SHOW_WIFI_STANDARD_ICON
     };
 }
