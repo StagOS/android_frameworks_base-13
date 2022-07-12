@@ -5816,6 +5816,15 @@ public final class Settings {
         public static final String TORCH_POWER_BUTTON_GESTURE = "torch_power_button_gesture";
 
 	/**
+          * Enable disable CustomUI
+          *   0 = disabled
+          *   1 = enabled
+          * @author vjspranav
+          * @hide
+          */
+         public static final String CUSTOM_UI_TOGGLE = "custom_ui_toggle";
+
+        /**
          * Whether allowing pocket service to register sensors and dispatch informations.
          *   0 = disabled
          *   1 = enabled
@@ -6306,6 +6315,7 @@ public final class Settings {
             PRIVATE_SETTINGS.add(STATUS_BAR_CLOCK_AUTO_HIDE_HDURATION);
             PRIVATE_SETTINGS.add(STATUS_BAR_CLOCK_AUTO_HIDE_SDURATION);
             PRIVATE_SETTINGS.add(POCKET_JUDGE);
+            PRIVATE_SETTINGS.add(CUSTOM_UI_TOGGLE);
         }
 
         /**
