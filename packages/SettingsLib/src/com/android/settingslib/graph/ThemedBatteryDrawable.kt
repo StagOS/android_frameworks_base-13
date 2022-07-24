@@ -214,7 +214,7 @@ open class ThemedBatteryDrawable(private val context: Context, frameColor: Int) 
         fillPaint.color = levelColor
 
         // Deal with unifiedPath clipping before it draws
-        if (charging) {
+        if (charging && !charging) {
             // Clip out the bolt shape
             unifiedPath.op(scaledBolt, Path.Op.DIFFERENCE)
             if (!invertFillIcon) {
@@ -248,7 +248,7 @@ open class ThemedBatteryDrawable(private val context: Context, frameColor: Int) 
             }
         }
 
-        if (charging) {
+        if (charging && !charging) {
             c.clipOutPath(scaledBolt)
             if (invertFillIcon) {
                 c.drawPath(scaledBolt, fillColorStrokePaint)
