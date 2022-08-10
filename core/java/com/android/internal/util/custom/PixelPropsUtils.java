@@ -46,10 +46,8 @@ public class PixelPropsUtils {
     private static final Map<String, ArrayList<String>> propsToKeep;
     private static final String[] extraPackagesToChange = {
         "com.android.chrome",
-        "com.android.vending",
         "com.breel.wallpapers20",
         "com.snapchat.android"
-
     };
 
     private static final String[] packagesToChangeCOD = {
