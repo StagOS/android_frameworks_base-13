@@ -63,6 +63,8 @@ import com.android.internal.R;
 import com.android.internal.statusbar.IStatusBarService;
 
 import java.util.List;
+import java.io.IOException;
+import java.lang.InterruptedException;
 
 /**
  * Some custom utilities
@@ -74,7 +76,7 @@ public class StagUtils {
 
     private static final String TAG = "StagUtils";
 
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG = true;
 
     private static final int NO_CUTOUT = -1;
 
@@ -249,6 +251,36 @@ public class StagUtils {
             }
         }
         return NO_CUTOUT;
+    }
+
+    // Method to change screen resoltution
+    public static void changeScreenResolution(String resolutionWidth, String resolutionHeight, String dpi){
+	String command1 = String.format("wm size %s", resolutionWidth + "x" + resolutionHeight);
+        String command2 = String.format("wm density %s", dpi);
+	if (DEBUG) Log.v(TAG, "Screen resolution changed to " + resolutionHeight + "x" + resolutionWidth + " and Screen Density set to " + dpi);
+	try{
+	    Runtime.getRuntime().exec(command1).waitFor();
+            Runtime.getRuntime().exec(command2).waitFor();
+        } catch (IOException e) {
+            System.err.println("StagUtils: Error changing resolution");
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            System.err.println("StagUtils: Error changing resolution");
+            e.printStackTrace();
+        }
+    }
+
+    public static void changeScreenResolution(String resolutionWidth, String dpi, float ratio){
+        int resolutionHeight = (int) ((float) Integer.parseInt(resolutionWidth) / ratio);
+	changeScreenResolution(resolutionWidth, Integer.toString(resolutionHeight), dpi);
+    }
+
+    public static void changeScreenResolution(String resolutionWidth, float diagonalLength, float ratio){
+        // Calculate screen dpi
+        int width = Integer.parseInt(resolutionWidth);
+        int height = (int) ((float) width/ratio);
+        int dpi = (int) (Math.sqrt((height*height) + (width*width)) / diagonalLength);
+	changeScreenResolution(Integer.toString(width), Integer.toString(height), Integer.toString(dpi));
     }
 
     // Method to detect whether an overlay is enabled or not
