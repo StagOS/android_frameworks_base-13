@@ -300,6 +300,8 @@ public class StagUtils {
         changeOverlay(hdOverlay, resolutionWidth.equals("720"));
         changeOverlay(fhdOverlay, resolutionWidth.equals("1080"));
         changeOverlay(qhdOverlay, resolutionWidth.equals("1440"));
+
+	restartSystemUi(ctx);
     }
 
     public static void changeScreenResolution(Context ctx, String resolutionWidth, String dpi, float ratio){
