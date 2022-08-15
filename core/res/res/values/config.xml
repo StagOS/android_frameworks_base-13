@@ -5303,4 +5303,14 @@
     <string-array name="config_serviceStateLocationAllowedPackages">
         <item>"com.android.phone"</item>
     </string-array>
+
+    <!-- List of overlays for each screen resolution, wqhd excluded as devices with wqhd will have it by default -->
+    <string-array name="config_screen_resolution_qhd_overlay_packages">
+    </string-array>
+
+    <string-array name="config_screen_resolution_fhd_overlay_packages">
+    </string-array>
+
+    <string-array name="config_screen_resolution_hd_overlay_packages">
+    </string-array>
 </resources>

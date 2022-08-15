@@ -147,4 +147,9 @@
 
     <!-- Whether doze feature is enabled by default in settings -->
     <java-symbol type="bool" name="config_doze_enabled_by_default" />
+
+    <!-- Screen resolution overlays -->
+    <java-symbol type="array" name="config_screen_resolution_hd_overlay_packages" />
+    <java-symbol type="array" name="config_screen_resolution_fhd_overlay_packages" />
+    <java-symbol type="array" name="config_screen_resolution_qhd_overlay_packages" />
 </resources>

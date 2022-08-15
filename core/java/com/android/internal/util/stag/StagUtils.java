@@ -76,7 +76,7 @@ public class StagUtils {
 
     private static final String TAG = "StagUtils";
 
-    private static final boolean DEBUG = true;
+    private static final boolean DEBUG = false;
 
     private static final int NO_CUTOUT = -1;
 
@@ -253,13 +253,36 @@ public class StagUtils {
         return NO_CUTOUT;
     }
 
+    // Method to change overlay
+    public static void changeOverlay(String[] packageName, boolean enabled){
+        if (packageName == null) {
+            return;
+        }
+        for (String pkg : packageName) {
+            if (pkg != null) {
+                try {
+                    IOverlayManager overlayManager = IOverlayManager.Stub.asInterface(
+                            ServiceManager.getService(Context.OVERLAY_SERVICE));
+                    overlayManager.setEnabled(pkg, enabled, UserHandle.USER_SYSTEM);
+                } catch (RemoteException e) {
+                    // do nothing.
+                }
+            }
+        }
+    }
+
     // Method to change screen resoltution
-    public static void changeScreenResolution(String resolutionWidth, String resolutionHeight, String dpi){
-	String command1 = String.format("wm size %s", resolutionWidth + "x" + resolutionHeight);
+    public static void changeScreenResolution(Context ctx, String resolutionWidth, String resolutionHeight, String dpi){
+        // Get array of overlays for each resolution
+        String[] hdOverlay = ctx.getResources().getStringArray(R.array.config_screen_resolution_hd_overlay_packages);
+        String[] fhdOverlay = ctx.getResources().getStringArray(R.array.config_screen_resolution_fhd_overlay_packages);
+        String[] qhdOverlay = ctx.getResources().getStringArray(R.array.config_screen_resolution_qhd_overlay_packages);
+
+        String command1 = String.format("wm size %s", resolutionWidth + "x" + resolutionHeight);
         String command2 = String.format("wm density %s", dpi);
-	if (DEBUG) Log.v(TAG, "Screen resolution changed to " + resolutionHeight + "x" + resolutionWidth + " and Screen Density set to " + dpi);
-	try{
-	    Runtime.getRuntime().exec(command1).waitFor();
+        if (DEBUG) Log.v(TAG, "Screen resolution changed to " + resolutionHeight + "x" + resolutionWidth + " and Screen Density set to " + dpi);
+        try{
+            Runtime.getRuntime().exec(command1).waitFor();
             Runtime.getRuntime().exec(command2).waitFor();
         } catch (IOException e) {
             System.err.println("StagUtils: Error changing resolution");
@@ -268,19 +291,23 @@ public class StagUtils {
             System.err.println("StagUtils: Error changing resolution");
             e.printStackTrace();
         }
+        // Change overlay for each resolution
+        changeOverlay(hdOverlay, resolutionWidth.equals("720"));
+        changeOverlay(fhdOverlay, resolutionWidth.equals("1080"));
+        changeOverlay(qhdOverlay, resolutionWidth.equals("1440"));
     }
 
-    public static void changeScreenResolution(String resolutionWidth, String dpi, float ratio){
+    public static void changeScreenResolution(Context ctx, String resolutionWidth, String dpi, float ratio){
         int resolutionHeight = (int) ((float) Integer.parseInt(resolutionWidth) / ratio);
-	changeScreenResolution(resolutionWidth, Integer.toString(resolutionHeight), dpi);
+	    changeScreenResolution(ctx, resolutionWidth, Integer.toString(resolutionHeight), dpi);
     }
 
-    public static void changeScreenResolution(String resolutionWidth, float diagonalLength, float ratio){
+    public static void changeScreenResolution(Context ctx, String resolutionWidth, float diagonalLength, float ratio){
         // Calculate screen dpi
         int width = Integer.parseInt(resolutionWidth);
         int height = (int) ((float) width/ratio);
         int dpi = (int) (Math.sqrt((height*height) + (width*width)) / diagonalLength);
-	changeScreenResolution(Integer.toString(width), Integer.toString(height), Integer.toString(dpi));
+	    changeScreenResolution(ctx, Integer.toString(width), Integer.toString(height), Integer.toString(dpi));
     }
 
     // Method to detect whether an overlay is enabled or not
