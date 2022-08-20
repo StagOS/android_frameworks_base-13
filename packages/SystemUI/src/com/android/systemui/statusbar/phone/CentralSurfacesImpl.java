@@ -68,6 +68,7 @@ import android.content.pm.IPackageManager;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.content.res.Configuration;
+import android.database.ContentObserver;
 import android.graphics.Point;
 import android.hardware.devicestate.DeviceStateManager;
 import android.metrics.LogMaker;
