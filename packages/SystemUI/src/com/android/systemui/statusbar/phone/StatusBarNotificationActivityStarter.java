@@ -568,7 +568,7 @@ class StatusBarNotificationActivityStarter implements NotificationActivityStarte
             }
         });
 
-        GameSpaceManager gameSpace = mStatusBar.getGameSpaceManager();
+        GameSpaceManager gameSpace = mCentralSurfaces.getGameSpaceManager();
         if (gameSpace != null && gameSpace.shouldSuppressFullScreenIntent()) {
             return;
         }

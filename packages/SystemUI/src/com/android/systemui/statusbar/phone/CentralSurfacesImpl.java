@@ -4092,6 +4092,7 @@ public class CentralSurfacesImpl implements CoreStartable, CentralSurfaces {
 
     // End Extra BaseStatusBarMethods.
 
+    @Override
     public GameSpaceManager getGameSpaceManager() {
         return mGameSpaceManager;
     }
