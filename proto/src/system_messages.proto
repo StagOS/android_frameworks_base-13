@@ -388,5 +388,9 @@ message SystemMessage {
     // Note: this is a base ID, multiple notifications will be posted for each
     // abusive apps, with notification ID based off this ID.
     NOTE_ABUSIVE_BG_APPS_BASE = 0xc1b2508; // 203105544
+
+    // Notify the user about optimized charge status.
+    // package: android
+    NOTE_OPTIMIZED_CHARGE = 2000;
   }
 }
