@@ -217,13 +217,6 @@ public class DataSwitchTile extends QSTileImpl<BooleanState> {
         return MetricsEvent.HORNS;
     }
 
-    @Override
-    protected String composeChangeAnnouncement() {
-        return mContext.getString(mState.value
-                ? R.string.qs_data_switch_changed_1
-                : R.string.qs_data_switch_changed_2);
-    }
-
     /**
      * Set whether to enable data for {@code subId}, also whether to disable data for other
      * subscription
