@@ -5741,11 +5741,6 @@ public final class Settings {
         public static final String USE_OLD_MOBILETYPE = "use_old_mobiletype";
 
         /**
-         * @hide
-         */
-        public static final String STATUS_BAR_BRIGHTNESS_CONTROL = "status_bar_brightness_control";
-
-        /**
          * Whether to display 4G icon instead LTE
          * @hide
          */
