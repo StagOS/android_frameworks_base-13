@@ -69,6 +69,7 @@ import com.android.systemui.statusbar.notification.row.ExpandableNotificationRow
 import com.android.systemui.statusbar.notification.row.ExpandableNotificationRowDragController;
 import com.android.systemui.statusbar.notification.row.OnUserInteractionCallback;
 import com.android.systemui.statusbar.phone.dagger.CentralSurfacesComponent;
+import com.android.systemui.statusbar.policy.GameSpaceManager;
 import com.android.systemui.statusbar.policy.HeadsUpUtil;
 import com.android.systemui.statusbar.policy.KeyguardStateController;
 import com.android.systemui.wmshell.BubblesManager;
@@ -566,6 +567,11 @@ class StatusBarNotificationActivityStarter implements NotificationActivityStarte
                 e.printStackTrace();
             }
         });
+
+        GameSpaceManager gameSpace = mStatusBar.getGameSpaceManager();
+        if (gameSpace != null && gameSpace.shouldSuppressFullScreenIntent()) {
+            return;
+        }
 
         // not immersive & a fullscreen alert should be shown
         final PendingIntent fullscreenIntent =
