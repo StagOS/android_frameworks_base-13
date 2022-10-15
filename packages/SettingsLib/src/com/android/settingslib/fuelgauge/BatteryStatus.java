@@ -78,10 +78,10 @@ public class BatteryStatus {
         this.plugged = plugged;
         this.health = health;
         this.maxChargingWattage = maxChargingWattage;
-        this.dashChargeStatus = dashChargeStatus;
-        this.warpChargeStatus = warpChargeStatus;
-        this.voocChargeStatus = voocChargeStatus;
-        this.turboPowerStatus = turboPowerStatus;
+        this.dashChargeStatus = (dashChargeStatus || oemChargeStatus);
+        this.warpChargeStatus = (warpChargeStatus || oemChargeStatus);
+        this.voocChargeStatus = (voocChargeStatus || oemChargeStatus);
+        this.turboPowerStatus = (turboPowerStatus || oemChargeStatus);
         this.oemChargeStatus = oemChargeStatus;
         this.present = present;
     }
