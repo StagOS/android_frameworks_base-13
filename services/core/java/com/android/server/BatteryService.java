@@ -523,10 +523,10 @@ public final class BatteryService extends SystemService {
         shutdownIfNoPowerLocked();
         shutdownIfOverTempLocked();
 
-        mDashCharger = mHasDashCharger && isDashCharger();
-        mWarpCharger = mHasWarpCharger && isWarpCharger();
-        mVoocCharger = mHasVoocCharger && isVoocCharger();
-        mTurboPower = mHasTurboPower && isTurboPower();
+        mDashCharger = mHasDashCharger && (isDashCharger() || isOemFastCharger());
+        mWarpCharger = mHasWarpCharger && (isWarpCharger() || isOemFastCharger());
+        mVoocCharger = mHasVoocCharger && (isVoocCharger() || isOemFastCharger());
+        mTurboPower = mHasTurboPower && (isTurboPower() || isOemFastCharger());
         mOemFastCharger = isOemFastCharger();
 
         if (force
