@@ -4861,7 +4861,7 @@ public final class NotificationPanelViewController extends PanelViewController {
             switch (key) {
                 case STATUS_BAR_QUICK_QS_PULLDOWN:
                     mOneFingerQuickSettingsIntercept =
-                            TunerService.parseInteger(newValue, 1);
+                            TunerService.parseInteger(newValue, 0);
                     break;
                 default:
                     break;
