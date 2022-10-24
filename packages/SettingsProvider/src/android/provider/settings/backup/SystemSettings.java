@@ -91,6 +91,5 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.ENABLE_RIPPLE_EFFECT,
         Settings.System.NOTIFICATION_HEADERS,
-        Settings.System.FULLSCREEN_GESTURES,
     };
 }
