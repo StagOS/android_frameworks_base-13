@@ -5714,8 +5714,15 @@ public final class Settings {
         /**
          * Enable statusbar double tap gesture to put device to sleep
          * @hide
-         */
+	 */
         public static final String DOUBLE_TAP_SLEEP_GESTURE = "double_tap_sleep_gesture";
+
+	/**
+         * Whether to hide navbar pill and keyboard space.
+         * Default 0.
+         * @hide
+         */
+        public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
 
         /**
          * Double tap on lockscreen to sleep
