@@ -88,5 +88,6 @@ public class SystemSettings {
         Settings.System.ALARM_ALERT,
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.NOTIFICATION_HEADERS,
+        Settings.System.VOLUME_PANEL_ON_LEFT,
     };
 }
