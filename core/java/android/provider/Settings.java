@@ -5731,6 +5731,13 @@ public final class Settings {
          */
         public static final String STATUS_BAR_QUICK_QS_PULLDOWN = "qs_quick_pulldown";
 
+	/**
+         * Whether to hide navbar pill and keyboard space.
+         * Default 0.
+         * @hide
+         */
+        public static final String FULLSCREEN_GESTURES = "fullscreen_gestures";
+
         /**
          * Whether to enable fingerprint wake-and-unlock.
          * @hide
