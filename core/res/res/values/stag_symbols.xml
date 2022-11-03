@@ -88,4 +88,7 @@
 
     <!-- Proximity check on screen on default -->
     <java-symbol type="bool" name="config_proximityCheckOnWakeEnabledByDefault" />
+
+     <!-- Enable face auth only when swiping security view -->
+    <java-symbol type="bool" name="config_faceAuthOnlyOnSecurityView" />
 </resources>

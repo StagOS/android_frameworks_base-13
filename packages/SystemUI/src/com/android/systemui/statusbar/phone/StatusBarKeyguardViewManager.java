@@ -152,6 +152,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             public void onFullyShown() {
                 mPrimaryBouncerAnimating = false;
                 updateStates();
+                onKeyguardBouncerFullyShownChanged(true);
                 showFaceRecognizingMessage();
             }
 
@@ -170,6 +171,7 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
             @Override
             public void onFullyHidden() {
                 mPrimaryBouncerAnimating = false;
+                onKeyguardBouncerFullyShownChanged(false);
                 updateStates();
             }
 
@@ -1173,6 +1175,10 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
         }
     };
 
+    private void onKeyguardBouncerFullyShownChanged(boolean fullyShown){
+        mKeyguardUpdateManager.onKeyguardBouncerFullyShown(fullyShown);
+    }
+    
     protected void updateStates() {
         if (!mCentralSurfacesRegistered) {
             return;

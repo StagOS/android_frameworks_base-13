@@ -161,6 +161,8 @@ import com.android.systemui.util.settings.SecureSettings;
 
 import com.google.android.collect.Lists;
 
+import com.android.internal.util.custom.faceunlock.FaceUnlockUtils;
+
 import java.io.PrintWriter;
 import java.lang.ref.WeakReference;
 import java.util.ArrayList;
@@ -478,6 +480,12 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
     SparseArray<BiometricAuthenticated> mUserFaceAuthenticated = new SparseArray<>();
 
     private static int sCurrentUser;
+
+
+    private final boolean mFaceAuthOnlyOnSecurityView;
+
+    // Face unlock
+    private static final boolean mCustomFaceUnlockSupported = FaceUnlockUtils.isFaceUnlockSupported();
 
     SettingsObserver mSettingsObserver;
 
@@ -2060,6 +2068,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         mTelephonyListenerManager = telephonyListenerManager;
         mDeviceProvisioned = isDeviceProvisionedInSettingsDb();
         mStrongAuthTracker = new StrongAuthTracker(context);
+        mFaceAuthOnlyOnSecurityView = mContext.getResources().getBoolean(
+            com.android.internal.R.bool.config_faceAuthOnlyOnSecurityView);
         mBackgroundExecutor = backgroundExecutor;
         mBroadcastDispatcher = broadcastDispatcher;
         mInteractionJankMonitor = interactionJankMonitor;
@@ -2828,8 +2838,8 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
 
         // Only listen if this KeyguardUpdateMonitor belongs to the primary user. There is an
         // instance of KeyguardUpdateMonitor for each user but KeyguardUpdateMonitor is user-aware.
-        final boolean shouldListen =
-                (mPrimaryBouncerFullyShown
+        boolean shouldListen =
+                (mPrimaryBouncerFullyShown && !mGoingToSleep
                         || mAuthInterruptActive
                         || mOccludingAppRequestingFace
                         || awakeKeyguard
@@ -2842,6 +2852,10 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                 && (!mSecureCameraLaunched || mOccludingAppRequestingFace)
                 && faceAndFpNotAuthenticated
                 && !mGoingToSleep;
+
+        if (shouldListen && mFaceAuthOnlyOnSecurityView && !mBouncerFullyShown){
+            shouldListen = false;
+        }
 
         // Aggregate relevant fields for debug logging.
         logListenerModelData(
@@ -2870,6 +2884,16 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
                     userNotTrustedOrDetectionIsNeeded));
 
         return shouldListen;
+    }
+
+
+    public void onKeyguardBouncerFullyShown(boolean fullyShow) {
+        if (mBouncerFullyShown != fullyShow){
+            mBouncerFullyShown = fullyShow;
+            if (mFaceAuthOnlyOnSecurityView){
+                updateFaceListeningState();
+            }
+        }
     }
 
     private void logListenerModelData(@NonNull KeyguardListenModel model) {
@@ -3352,11 +3376,32 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
         return mKeyguardShowing && !mKeyguardOccluded;
     }
 
+    public void onKeyguardVisibilityChanged(boolean showing) {
+        Assert.isMainThread();
+        mLogger.logKeyguardVisibilityChanged(showing);
+        mKeyguardIsVisible = showing;
+        mBouncerFullyShown = false;
+
+        if (showing) {
+            mSecureCameraLaunched = false;
+        }
+
+        for (int i = 0; i < mCallbacks.size(); i++) {
+            KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
+            if (cb != null) {
+                cb.onKeyguardVisibilityChangedRaw(showing);
+            }
+        }
+        updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE,
+                FACE_AUTH_UPDATED_KEYGUARD_VISIBILITY_CHANGED);
+    }
+
     /**
      * Handle {@link #MSG_KEYGUARD_RESET}
      */
     private void handleKeyguardReset() {
         mLogger.d("handleKeyguardReset");
+        mBouncerFullyShown = false;
         updateBiometricListeningState(BIOMETRIC_ACTION_UPDATE,
                 FACE_AUTH_UPDATED_KEYGUARD_RESET);
         mNeedsSlowUnlockTransition = resolveNeedsSlowUnlockTransition();
@@ -3461,6 +3506,7 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener, Dumpab
      * Handle {@link #MSG_REPORT_EMERGENCY_CALL_ACTION}
      */
     private void handleReportEmergencyCallAction() {
+        mBouncerFullyShown = false;
         Assert.isMainThread();
         for (int i = 0; i < mCallbacks.size(); i++) {
             KeyguardUpdateMonitorCallback cb = mCallbacks.get(i).get();
