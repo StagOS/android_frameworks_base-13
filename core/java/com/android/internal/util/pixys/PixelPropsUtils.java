@@ -359,7 +359,7 @@ public class PixelPropsUtils {
     private static void spoofBuildGms() {
         // Alter model name and fingerprint to avoid hardware attestation enforcement
         setBuildField("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
-        setBuildField("MODEL", "angler");
+        setBuildField("MODEL", Build.MODEL + "\u200b");
         if (DEBUG) Log.d(TAG, "Setting sdk to 32");
         setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.S);
     }
