@@ -671,8 +671,12 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             }
             if (wasDeviceInPocket != mIsDeviceInPocket) {
                 handleDevicePocketStateChanged();
+                //if (mKeyHandler != null) {
+                    //mKeyHandler.setIsInPocket(mIsDeviceInPocket);
+                //}
             }
         }
+
     };
 
     private static final int MSG_DISPATCH_MEDIA_KEY_WITH_WAKE_LOCK = 3;
@@ -5232,13 +5236,6 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             showPocketLock(interactive);
         } else {
             hidePocketLock(interactive);
-        }
-        for (DeviceKeyHandler handler : mDeviceKeyHandlers) {
-            try {
-                handler.onPocketStateChanged(mIsDeviceInPocket);
-            } catch (Exception e) {
-                Slog.w(TAG, "Could not notify poacket mode to device key handler", e);
-            }
         }
     }
 
