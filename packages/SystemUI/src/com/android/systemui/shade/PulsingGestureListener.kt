@@ -75,7 +75,7 @@ class PulsingGestureListener @Inject constructor(
         val tunable = Tunable { key: String?, value: String? ->
             when (key) {
                 Settings.Secure.DOUBLE_TAP_TO_WAKE ->
-                    doubleTapEnabledNative = TunerService.parseIntegerSwitch(value, false)
+                    doubleTapEnabledNative = TunerService.parseIntegerSwitch(value, true)
                 Settings.Secure.DOZE_DOUBLE_TAP_GESTURE ->
                     doubleTapEnabled = Settings.Secure.getIntForUser(context.getContentResolver(),
                             Settings.Secure.DOZE_DOUBLE_TAP_GESTURE, 1, UserHandle.USER_CURRENT) == 1;
