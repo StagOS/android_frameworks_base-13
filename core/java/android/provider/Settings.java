@@ -5621,6 +5621,15 @@ public final class Settings {
         public static final String VOLUME_PANEL_ON_LEFT = "volume_panel_on_left";
 
         /**
+         * Whether to show volume panel on the left side on landscape as well
+         * Defaults to com.android.systemui.R.bool.config_audioPanelOnLeftSide
+         * Also depends on {@link #VOLUME_PANEL_ON_LEFT}
+         * @hide
+         */
+        @Readable
+        public static final String VOLUME_PANEL_ON_LEFT_LAND = "volume_panel_on_left_land";
+
+        /**
          * IMPORTANT: If you add a new public settings you also have to add it to
          * PUBLIC_SETTINGS below. If the new setting is hidden you have to add
          * it to PRIVATE_SETTINGS below. Also add a validator that can validate
