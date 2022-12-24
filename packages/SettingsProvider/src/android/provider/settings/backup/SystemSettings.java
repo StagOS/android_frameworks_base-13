@@ -89,6 +89,7 @@ public class SystemSettings {
         Settings.System.NOTIFICATION_LIGHT_PULSE,
         Settings.System.NOTIFICATION_HEADERS,
         Settings.System.VOLUME_PANEL_ON_LEFT,
+        Settings.System.VOLUME_PANEL_ON_LEFT_LAND,
         Settings.System.EDGE_LIGHT_ENABLED,
         Settings.System.EDGE_LIGHT_ALWAYS_TRIGGER_ON_PULSE,
         Settings.System.EDGE_LIGHT_REPEAT_ANIMATION,
