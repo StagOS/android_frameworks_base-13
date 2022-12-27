@@ -48,6 +48,7 @@ import com.android.systemui.Dependency;
 import com.android.systemui.plugins.ActivityStarter;
 import com.android.systemui.R;
 import com.android.systemui.battery.BatteryMeterView;
+import com.android.systemui.statusbar.NetworkTraffic;
 import com.android.systemui.statusbar.phone.StatusBarContentInsetsProvider;
 import com.android.systemui.statusbar.phone.StatusBarIconController.TintedIconManager;
 import com.android.systemui.statusbar.phone.StatusIconContainer;
@@ -55,6 +56,9 @@ import com.android.systemui.statusbar.policy.Clock;
 import com.android.systemui.statusbar.policy.ClockEQS;
 import com.android.systemui.statusbar.policy.VariableDateView;
 import com.android.systemui.util.LargeScreenUtils;
+import com.android.systemui.tuner.TunerService;
+
+import android.provider.Settings;
 
 import java.util.List;
 
@@ -63,7 +67,10 @@ import java.util.List;
  * battery, carrier info and privacy icons) and also contains the {@link QuickQSPanel}.
  */
 public class QuickStatusBarHeader extends FrameLayout implements
-        View.OnClickListener, View.OnLongClickListener {
+        View.OnClickListener, View.OnLongClickListener, TunerService.Tunable {
+
+    private static final String NETWORK_TRAFFIC_LOCATION =
+            Settings.Secure.NETWORK_TRAFFIC_LOCATION;
 
     private boolean mExpanded;
     private boolean mQsDisabled;
@@ -129,6 +136,9 @@ public class QuickStatusBarHeader extends FrameLayout implements
     private final ActivityStarter mActivityStarter;
     private final Vibrator mVibrator;
 
+    private NetworkTraffic mNetworkTraffic;
+    private boolean mShowNetworkTraffic;
+
     public QuickStatusBarHeader(Context context, AttributeSet attrs) {
         super(context, attrs);
         mActivityStarter = Dependency.get(ActivityStarter.class);
@@ -172,7 +182,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
         // Tint for the battery icons are handled in setupHost()
         mBatteryRemainingIcon = findViewById(R.id.batteryRemainingIcon);
 
-        updateResources();
+        mNetworkTraffic = findViewById(R.id.network_traffic);
+
         Configuration config = mContext.getResources().getConfiguration();
         setDatePrivacyContainersWidth(config.orientation == Configuration.ORIENTATION_LANDSCAPE);
 
@@ -185,6 +196,11 @@ public class QuickStatusBarHeader extends FrameLayout implements
                 .addFloat(mIconContainer, "alpha", 0, 1)
                 .addFloat(mBatteryRemainingIcon, "alpha", 0, 1)
                 .build();
+
+        updateResources();
+
+        Dependency.get(TunerService.class).addTunable(this,
+                NETWORK_TRAFFIC_LOCATION);
     }
 
     void onAttach(TintedIconManager iconManager,
@@ -348,6 +364,7 @@ public class QuickStatusBarHeader extends FrameLayout implements
             }
             mBatteryRemainingIcon.updateColors(mTextColorPrimary, textColorSecondary,
                     mTextColorPrimary);
+            mNetworkTraffic.setTint(textColor);
         }
 
         MarginLayoutParams qqsLP = (MarginLayoutParams) mHeaderQsPanel.getLayoutParams();
@@ -453,7 +470,8 @@ public class QuickStatusBarHeader extends FrameLayout implements
     }
 
     void setChipVisibility(boolean visibility) {
-        if (visibility) {
+        mNetworkTraffic.setChipVisibility(visibility);
+        if (visibility || mShowNetworkTraffic) {
             // Animates the icons and battery indicator from alpha 0 to 1, when the chip is visible
             mIconsAlphaAnimator = mIconsAlphaAnimatorFixed;
             mIconsAlphaAnimator.setPosition(mKeyguardExpansionFraction);
@@ -655,5 +673,18 @@ public class QuickStatusBarHeader extends FrameLayout implements
     private void setBatteryClickable(boolean clickable) {
         mBatteryRemainingIcon.setOnClickListener(clickable ? this : null);
         mBatteryRemainingIcon.setClickable(clickable);
+    }
+
+    @Override
+    public void onTuningChanged(String key, String newValue) {
+        switch (key) {
+            case NETWORK_TRAFFIC_LOCATION:
+                mShowNetworkTraffic =
+                        TunerService.parseInteger(newValue, 0) == 2;
+                setChipVisibility(mPrivacyChip.getVisibility() == View.VISIBLE);
+                break;
+            default:
+                break;
+        }
     }
 }
