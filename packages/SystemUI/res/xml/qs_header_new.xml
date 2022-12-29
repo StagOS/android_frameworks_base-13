@@ -111,7 +111,6 @@
             />
     </Constraint>
 
-
     <Constraint
         android:id="@id/space">
         <Layout

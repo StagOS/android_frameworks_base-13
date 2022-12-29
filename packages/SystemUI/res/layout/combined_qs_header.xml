@@ -17,6 +17,7 @@
 <com.android.systemui.util.NoRemeasureMotionLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:systemui="http://schemas.android.com/apk/res-auto"
     android:id="@+id/split_shade_status_bar"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -131,6 +132,19 @@
         app:layout_constrainedWidth="true"
         app:textAppearance="@style/TextAppearance.QS.Status"
         app:layout_constraintStart_toEndOf="@id/statusIcons"
+	app:layout_constraintEnd_toStartOf="@id/networkTraffic"
+        app:layout_constraintTop_toTopOf="@id/clock"
+        app:layout_constraintBottom_toBottomOf="parent"
+    />
+
+    <com.android.systemui.statusbar.policy.NetworkTraffic
+        android:id="@+id/networkTraffic"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="4dp"
+        android:gravity="center_vertical|end"
+	app:layout_constraintStart_toEndOf="@id/batteryRemainingIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/clock"
         app:layout_constraintBottom_toBottomOf="parent"
