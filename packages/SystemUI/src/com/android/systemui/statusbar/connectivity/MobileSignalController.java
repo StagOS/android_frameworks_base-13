@@ -23,7 +23,6 @@ import android.content.BroadcastReceiver;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
-import android.content.IntentFilter;
 import android.database.ContentObserver;
 import android.net.NetworkCapabilities;
 import android.net.Uri;
@@ -337,11 +336,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         mContext.getContentResolver().registerContentObserver(Global.getUriFor(
                 Global.MOBILE_DATA + mSubscriptionInfo.getSubscriptionId()),
                 true, mObserver);
-        if (mProviderModelBehavior) {
-            mReceiverHandler.post(mTryRegisterIms);
-        }
-        mContext.registerReceiver(mVolteSwitchObserver,
-                new IntentFilter("org.codeaurora.intent.action.ACTION_ENHANCE_4G_SWITCH"));
+        mReceiverHandler.post(mTryRegisterIms);
         try {
             mImsMmTelManager.registerImsStateCallback(mContext.getMainExecutor(),
                     mImsStateCallback);
@@ -384,7 +379,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
         } catch (Exception e){
             Log.e(mTag, "unregisterListener: fail to call unregisterImsRegistrationCallback", e);
         }
-        mContext.unregisterReceiver(mVolteSwitchObserver);
         mImsMmTelManager.unregisterImsStateCallback(mImsStateCallback);
     }
 
@@ -443,7 +437,7 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             Log.d(mTag, "setListeners: register CapabilitiesCallback and RegistrationCallback");
             mImsMmTelManager.registerMmTelCapabilityCallback(mContext.getMainExecutor(),
                     mCapabilityCallback);
-            mImsMmTelManager.registerImsRegistrationCallback (mContext.getMainExecutor(),
+            mImsMmTelManager.registerImsRegistrationCallback(mContext.getMainExecutor(),
                     mRegistrationCallback);
         } catch (ImsException e) {
             Log.e(mTag, "unable to register listeners.", e);
@@ -989,13 +983,6 @@ public class MobileSignalController extends SignalController<MobileState, Mobile
             Log.d(mTag, "onCapabilitiesStatusChanged isVoiceCapable=" + mCurrentState.voiceCapable
                     + " isVideoCapable=" + mCurrentState.videoCapable);
             notifyListenersIfNecessary();
-        }
-    };
-
-    private final BroadcastReceiver mVolteSwitchObserver = new BroadcastReceiver() {
-        public void onReceive(Context context, Intent intent) {
-            Log.d(mTag, "action=" + intent.getAction());
-            notifyListeners();
         }
     };
 
