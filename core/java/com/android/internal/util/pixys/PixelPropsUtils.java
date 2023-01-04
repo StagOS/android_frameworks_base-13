@@ -19,6 +19,7 @@ package com.android.internal.util.pixys;
 
 import android.app.Application;
 import android.os.Build;
+import android.os.Build.VERSION;
 import android.os.SystemProperties;
 import android.util.Log;
 
@@ -32,7 +33,7 @@ import java.util.Map;
 public class PixelPropsUtils {
 
     private static final String TAG = PixelPropsUtils.class.getSimpleName();
-    private static final String DEVICE = "ro.pixys.device";
+    private static final String DEVICE = "ro.stag.device";
     private static final boolean DEBUG = false;
 
     private static final String SAMSUNG = "com.samsung.android.";
@@ -203,6 +204,8 @@ public class PixelPropsUtils {
                     sIsGms = true;
                     setPropValue("FINGERPRINT", "google/angler/angler:6.0/MDB08L/2343525:user/release-keys");
                     setPropValue("MODEL", "angler");
+                    if (DEBUG) Log.d(TAG, "Setting sdk to 32");
+                    setVersionField("DEVICE_INITIAL_SDK_INT", Build.VERSION_CODES.S);
                 }
                 return;
             }
@@ -246,6 +249,22 @@ public class PixelPropsUtils {
             field.setAccessible(false);
         } catch (NoSuchFieldException | IllegalAccessException e) {
             Log.e(TAG, "Failed to set prop " + key, e);
+        }
+    }
+
+    private static void setVersionField(String key, Integer value) {
+        try {
+            // Unlock
+            Field field = Build.VERSION.class.getDeclaredField(key);
+            field.setAccessible(true);
+
+            // Edit
+            field.set(null, value);
+
+            // Lock
+            field.setAccessible(false);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            Log.e(TAG, "Failed to spoof Build." + key, e);
         }
     }
 
