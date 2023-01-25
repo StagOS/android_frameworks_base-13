@@ -50,12 +50,12 @@ public class PixelPropsUtils {
     private static final Map<String, ArrayList<String>> propsToKeep;
 
     private static final String[] packagesToChangePixel7Pro = {
+            "com.google.android.apps.googleassistant",
             "com.google.android.gms",
             "com.google.android.apps.privacy.wildlife",
             "com.google.android.apps.wallpaper.pixel",
             "com.google.android.apps.wallpaper",
             "com.google.android.apps.subscriptions.red",
-            "com.google.android.inputmethod.latin",
             "com.google.android.apps.wellbeing",
             "com.google.android.as",
             "com.google.android.gms.persistent",
@@ -137,8 +137,7 @@ public class PixelPropsUtils {
             "com.google.android.youtube",
             "com.google.android.apps.youtube.kids",
             "com.google.android.apps.youtube.music",
-            "com.google.android.apps.recorder",
-            "com.google.android.apps.wearables.maestro.companion"
+            "com.google.android.apps.recorder"
     };
 
     // Codenames for currently supported Pixels by Google
