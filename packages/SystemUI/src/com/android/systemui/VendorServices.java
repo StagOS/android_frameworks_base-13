@@ -1,3 +1,4 @@
+
 /*
  * Copyright (C) 2016 The Android Open Source Project
  *
@@ -28,5 +29,4 @@ public class VendorServices implements CoreStartable {
     public void start() {
         // no-op
     }
-
 }
