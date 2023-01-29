@@ -61,4 +61,9 @@
     <!-- Udfps fingerprint animation -->
     <dimen name="udfps_animation_size">280dp</dimen>
     <dimen name="udfps_animation_offset">0dp</dimen>
+
+    <!-- Ambient indication -->
+    <dimen name="ambient_indication_icon_size">20.0dip</dimen>
+    <dimen name="ambient_indication_note_icon_size">14.0dip</dimen>
+
 </resources>
