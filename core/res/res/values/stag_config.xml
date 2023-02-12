@@ -123,4 +123,7 @@
     <!-- Whether usage of the proximity sensor during doze is supported -->
     <bool name="config_doze_proximity_sensor_supported">true</bool>
 
+
+    <!-- Boost Framework -->
+    <bool name="config_supportsBoostFramework">false</bool>
 </resources>
