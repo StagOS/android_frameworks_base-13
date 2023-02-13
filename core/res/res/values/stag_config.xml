@@ -101,14 +101,14 @@
     </string-array>
     
     <!-- Is the battery LED intrusive? Used to decide if there should be a disable option -->
-    <bool name="config_intrusiveBatteryLed">true</bool>
+    <bool name="config_intrusiveBatteryLed">false</bool>
 
     <!-- Does the device have a notification led -->
-    <bool name="config_hasNotificationLed">true</bool>
+    <bool name="config_hasNotificationLed">false</bool>
 
     <!-- Do the battery/notification LEDs support pulsing?
          Used to decide if we show pulse settings -->
-    <bool name="config_ledCanPulse">true</bool>
+    <bool name="config_ledCanPulse">false</bool>
 
     <!-- Defines the sysfs attribute path used by pocket bridge
        to communicate pocket state to the pocket judge kernel driver. -->
