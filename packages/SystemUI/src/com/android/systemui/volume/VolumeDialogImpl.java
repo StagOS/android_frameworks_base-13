@@ -490,7 +490,7 @@ public class VolumeDialogImpl implements VolumeDialog,
             }
         }
 
-        if (mVolumePanelOnLeftLand && isLandscape()) {
+        if (isLeft()) {
             mTouchableRegion.op(
                     locInWindow[0],
                     locInWindow[1] + (int) yExtraSize,
