@@ -5856,13 +5856,8 @@ public class PhoneWindowManager implements WindowManagerPolicy {
             if (StagUtils.INTENT_SCREENSHOT.equals(action)) {
                 mContext.enforceCallingOrSelfPermission(Manifest.permission.ACCESS_SURFACE_FLINGER,
                         TAG + "sendCustomAction permission denied");
-		interceptScreenshotChord(TAKE_SCREENSHOT_FULLSCREEN,
-                                     SCREENSHOT_KEY_CHORD, getScreenshotChordLongPressDelay());
-            } else if (StagUtils.INTENT_REGION_SCREENSHOT.equals(action)) {
-                mContext.enforceCallingOrSelfPermission(Manifest.permission.ACCESS_SURFACE_FLINGER,
-                        TAG + "sendCustomAction permission denied");
-		interceptScreenshotChord(TAKE_SCREENSHOT_SELECTED_REGION,
-                                     SCREENSHOT_KEY_CHORD, getScreenshotChordLongPressDelay());
+                interceptScreenshotChord(
+                        TAKE_SCREENSHOT_FULLSCREEN, SCREENSHOT_KEY_OTHER, 0 /*pressDelay*/);
             }
         }
     }
