@@ -120,4 +120,7 @@
     <!-- Defines custom OEM sensor for pocket detection. -->
     <string name="config_pocketJudgeVendorSensorName"></string>
 
+    <!-- Whether usage of the proximity sensor during doze is supported -->
+    <bool name="config_doze_proximity_sensor_supported">true</bool>
+
 </resources>

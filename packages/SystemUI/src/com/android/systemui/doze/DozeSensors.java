@@ -55,7 +55,6 @@ import com.android.systemui.util.sensors.AsyncSensorManager;
 import com.android.systemui.util.sensors.ProximitySensor;
 import com.android.systemui.util.settings.SecureSettings;
 import com.android.systemui.util.wakelock.WakeLock;
-import com.android.systemui.R;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
@@ -169,7 +168,7 @@ public class DozeSensors {
         mProximitySensor.setTag(TAG);
         mSelectivelyRegisterProxSensors = dozeParameters.getSelectivelyRegisterSensorsUsingProx();
         mListeningProxSensors = !mSelectivelyRegisterProxSensors;
-        mEnableProx = context.getResources().getBoolean(R.bool.doze_proximity_sensor_supported);
+        mEnableProx = resources.getBoolean(R.bool.config_doze_proximity_sensor_supported);
         mScreenOffUdfpsEnabled =
                 config.screenOffUdfpsEnabled(KeyguardUpdateMonitor.getCurrentUser());
         mDevicePostureController = devicePostureController;
