@@ -68,4 +68,7 @@
 
     <!-- FPSInfoService FPS Info text padding -->
     <dimen name="fps_info_text_padding">4dp</dimen>
+
+     <!-- QQS & QS margin top -->
+    <dimen name="qqs_margin_top">16dp</dimen>
 </resources>
