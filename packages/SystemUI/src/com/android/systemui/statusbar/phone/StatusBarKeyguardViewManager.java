@@ -281,8 +281,6 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
     private Handler mHandler;
     private Handler mFaceRecognizingHandler;
 
-    private Handler mHandler;
-
     private final KeyguardUpdateMonitorCallback mUpdateMonitorCallback =
             new KeyguardUpdateMonitorCallback() {
         @Override
