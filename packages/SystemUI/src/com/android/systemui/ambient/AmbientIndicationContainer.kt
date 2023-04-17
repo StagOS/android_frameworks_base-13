@@ -1,4 +1,4 @@
-package com.android.systemui.ambient
+package com.statix.android.systemui.ambient
 
 import android.animation.Animator
 import android.animation.AnimatorListenerAdapter
@@ -270,7 +270,7 @@ class AmbientIndicationContainer(private val context: Context, attrs: AttributeS
         textColorAnimator = ValueAnimator.ofArgb(defaultColor, dozeColor)
         textColorAnimator!!.interpolator = Interpolators.LINEAR_OUT_SLOW_IN
         textColorAnimator!!.duration = 500L
-        textColorAnimator!!.addUpdateListener({_ -> 
+        textColorAnimator!!.addUpdateListener({_ ->
             textView.setTextColor(textColorAnimator!!.animatedValue as Int)
             iconView.imageTintList = ColorStateList.valueOf(textColorAnimator!!.animatedValue as Int)
         })

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:forceHasOverlappingRendering="false"
-    android:layout_marginBottom="71.0dip"
+    android:layout_marginBottom="5.0dip"
     android:orientation="vertical"
     android:paddingTop="8.0dip">
 

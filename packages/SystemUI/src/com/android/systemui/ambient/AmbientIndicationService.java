@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.android.systemui.ambient;
+package com.statix.android.systemui.ambient;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;

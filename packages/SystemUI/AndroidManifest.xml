@@ -340,6 +340,10 @@
     <!-- To broadcast status of the GameSpaceManager -->
     <uses-permission android:name="android.permission.MANAGE_GAME_MODE" />
 
+        <!-- Now Playing -->
+    <permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION" android:protectionLevel="signature|system"/>
+    <uses-permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION"/>
+
     <!-- Pulse -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
 
@@ -354,10 +358,6 @@
 
     <!-- DataSwitch tile -->
     <uses-permission android:name="android.permission.WRITE_APN_SETTINGS" />
-
-    <!-- Now Playing -->
-    <permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION" android:protectionLevel="signature|system"/>
-    <uses-permission android:name="com.google.android.ambientindication.permission.AMBIENT_INDICATION"/>
 
     <!-- Smartspace -->
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY"/>
