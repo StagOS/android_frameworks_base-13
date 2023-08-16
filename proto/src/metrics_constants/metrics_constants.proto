@@ -7441,5 +7441,7 @@ message MetricsEvent {
     // CustomSettings constant
     HORNS = 2500;
 
+    // Panel for Mobile Data
+    PANEL_MOBILE_DATA = 2004;
   }
 }
